@@ -9,4 +9,21 @@ function counter(state = { count: 0 }, action) {
 		}
 }
 
-export default counter
+function todolist(state = [], action){
+	switch (action.type) {
+		case 'add_item':
+			return [...state, {
+				id:action.id,
+				text:action.text,
+				completed:action.completed
+			}]
+		case 'show_item' : 
+			 return state.map(todo =>
+        		(todo.id === action.id) ? {...todo, completed: !todo.completed} : todo
+      )
+    default:
+      return state
+	}
+}
+
+export default {counter, todolist}

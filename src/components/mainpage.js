@@ -10,6 +10,7 @@ const Header = () => (
         <li><Link to='/roster'>Roster</Link></li>
         <li><Link to='/schedule'>Schedule</Link></li>
         <li><Link to='/Counter'>Counter</Link></li>
+          <li><Link to='/Todo'>Todo</Link></li>
       </ul>
     </nav>
   </header>

@@ -1,18 +1,19 @@
-import { createStore, applyMiddleware } from 'redux'
-import increaseAction from './../action/action'
-import counter from './../reducer/reducer'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import {increaseAction} from './../action/action'
+import reducer from './../reducer/reducer'
 import thunk from 'redux-thunk';
 
 
 // Store
 const store = createStore(
-	counter,
+	combineReducers(reducer),
 	applyMiddleware(thunk)
 	)
 // Map Redux state to component props
 function mapStateToProps(state) {
 	return {
-		value: state.count
+		value: state.counter.count,
+		todolist:state.todolist
 	}
 }
 // Map Redux actions to component props
