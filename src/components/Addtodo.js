@@ -4,7 +4,6 @@ import { additem } from './../action/action'
 
 let Addtodo = ({ dispatch }) => {
   let input
-
   return (
     <div>
       <form

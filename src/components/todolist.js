@@ -4,16 +4,23 @@ import Addtodo from './Addtodo'
 import { connect } from 'react-redux'
 import {mapStateToProps,mapDispatchToProps} from '../store/store'
 
-const Todoitem = item => (
-	<li
-		style = {{
-			textDecoration: item.completed ? 'line-through' : 'none'
-		}}
-	>
-		{item.text}
-	</li>
-	) 
 
+class Todoitem extends Component {
+	render() {
+		const {text, completed,onClick} = this.props
+		return (
+			<li
+			style = {{
+				textDecoration: completed ? 'line-through' : 'none'
+			}}
+			onClick={onClick}
+
+			>
+			{text}
+			</li>
+		)
+	}
+}
 Todoitem.propTypes = {
   completed: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired
@@ -22,8 +29,7 @@ Todoitem.propTypes = {
 
 class TodoList extends Component {
 	render() {
-		const { todolist} = this.props;
-		console.log(todolist)
+		const { todolist, DoneitemClick} = this.props;
 		if(todolist.length < 1)
 			return null
 		else
@@ -31,7 +37,7 @@ class TodoList extends Component {
 				<ul>
 					{
 						todolist.map(todo => (
-						<Todoitem key={todo.id} {...todo} />
+						<Todoitem key={todo.id} {...todo} onClick={e =>{DoneitemClick(todo.id)}} />
 						))
 					}
 				</ul>
@@ -49,6 +55,9 @@ class TodoList extends Component {
 //     }).isRequired
 //   ).isRequired,
 // }
+
+
+
 
 TodoList = connect(
 	mapStateToProps,

@@ -13,3 +13,10 @@ export const additem = text => {
 
 export const showitem = { type:'show_item'}
 
+export const doneitem = id => {
+	return {
+		type:'done_item',
+		id
+	}
+}
+

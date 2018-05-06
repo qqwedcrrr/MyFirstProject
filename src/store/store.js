@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
-import {increaseAction} from './../action/action'
+import {increaseAction, doneitem} from './../action/action'
 import reducer from './../reducer/reducer'
 import thunk from 'redux-thunk';
 
@@ -19,7 +19,8 @@ function mapStateToProps(state) {
 // Map Redux actions to component props
 function mapDispatchToProps(dispatch) {
 	return {
-		onIncreaseClick: () => dispatch(increaseAction)
+		onIncreaseClick: () => dispatch(increaseAction),
+		DoneitemClick: id => dispatch(doneitem(id))
 	}
 }
 

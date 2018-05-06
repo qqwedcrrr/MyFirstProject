@@ -18,9 +18,13 @@ function todolist(state = [], action){
 				completed:action.completed
 			}]
 		case 'show_item' : 
-			 return state.map(todo =>
+			return state.map(todo =>
+        		(todo.id === action.id) ? {...todo, completed: todo.completed} : todo
+      		)
+      	case 'done_item' : 
+			return state.map(todo =>
         		(todo.id === action.id) ? {...todo, completed: !todo.completed} : todo
-      )
+      		)
     default:
       return state
 	}

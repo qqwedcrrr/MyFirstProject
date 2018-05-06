@@ -1,4 +1,4 @@
-import React , { Component } from 'react'
+import React  from 'react'
 
 function daysBetween(DateOne,DateTwo){ 
 	    var OneMonth = DateOne.substring(5,DateOne.lastIndexOf ('/'));  
