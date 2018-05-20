@@ -6,6 +6,7 @@ import {store} from './store/store'
 import { BrowserRouter } from 'react-router-dom';
 import Header from './components/mainpage'
 import Main from './config/router'
+import './index.css'
 
 
 const App = () => (

@@ -1,0 +1,47 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'start' ]
+2 info using npm@3.10.10
+3 info using node@v6.9.5
+4 verbose run-script [ 'prestart', 'start', 'poststart' ]
+5 info lifecycle myfirstapp@0.1.0~prestart: myfirstapp@0.1.0
+6 silly lifecycle myfirstapp@0.1.0~prestart: no script for prestart, continuing
+7 info lifecycle myfirstapp@0.1.0~start: myfirstapp@0.1.0
+8 verbose lifecycle myfirstapp@0.1.0~start: unsafe-perm in lifecycle true
+9 verbose lifecycle myfirstapp@0.1.0~start: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;F:\MyFirstProject\node_modules\.bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;D:\Git\cmd;C:\Program Files\nodejs\;C:\Users\Administrator\AppData\Roaming\npm;C:\Users\Administrator\AppData\Local\GitHubDesktop\bin
+10 verbose lifecycle myfirstapp@0.1.0~start: CWD: F:\MyFirstProject
+11 silly lifecycle myfirstapp@0.1.0~start: Args: [ '/d /s /c', 'react-scripts start' ]
+12 info lifecycle myfirstapp@0.1.0~start: Failed to exec start script
+13 verbose stack Error: myfirstapp@0.1.0 start: `react-scripts start`
+13 verbose stack spawn C:\Windows\system32\cmd.exe ENOENT
+13 verbose stack     at exports._errnoException (util.js:1022:11)
+13 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:193:32)
+13 verbose stack     at onErrorNT (internal/child_process.js:359:16)
+13 verbose stack     at _combinedTickCallback (internal/process/next_tick.js:74:11)
+13 verbose stack     at process._tickCallback (internal/process/next_tick.js:98:9)
+14 verbose pkgid myfirstapp@0.1.0
+15 verbose cwd F:\MyFirstProject
+16 error Windows_NT 6.1.7601
+17 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "start"
+18 error node v6.9.5
+19 error npm  v3.10.10
+20 error file C:\Windows\system32\cmd.exe
+21 error path C:\Windows\system32\cmd.exe
+22 error code ELIFECYCLE
+23 error errno ENOENT
+24 error syscall spawn C:\Windows\system32\cmd.exe
+25 error myfirstapp@0.1.0 start: `react-scripts start`
+25 error spawn C:\Windows\system32\cmd.exe ENOENT
+26 error Failed at the myfirstapp@0.1.0 start script 'react-scripts start'.
+26 error Make sure you have the latest version of node.js and npm installed.
+26 error If you do, this is most likely a problem with the myfirstapp package,
+26 error not with npm itself.
+26 error Tell the author that this fails on your system:
+26 error     react-scripts start
+26 error You can get information on how to open an issue for this project with:
+26 error     npm bugs myfirstapp
+26 error Or if that isn't available, you can get their info via:
+26 error     npm owner ls myfirstapp
+26 error There is likely additional logging output above.
+27 verbose exit [ 1, true ]
