@@ -2,3 +2,41 @@ body, html, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, header, menu, sectio
     padding: 0;
     margin: 0;
 }
+
+body, textarea, select, input, button {
+    font-size: 12px;
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-text-size-adjust: none;
+}
+
+input, textarea, select, button, meter, progress {
+    -webkit-writing-mode: horizontal-tb !important;
+}
+
+input, textarea, select, button {
+    text-rendering: auto;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+}
+
+input {
+    -webkit-appearance: textfield;
+    background-color: white;
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    padding: 1px;
+    border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+}
+

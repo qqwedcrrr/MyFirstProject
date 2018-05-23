@@ -34,5 +34,141 @@ li>span>a {
 
 .navlist{
 	float: left;
+}
 
+.navlist>li{
+	position: relative;
+}
+.cor{
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: 64px;
+	width: 12px;
+	height: 7px;
+	margin-left: -6px;
+	overflow: hidden;
+	background: url('./../../resource/topbar.png') no-repeat 0 9999px;
+	background-position: -226px 0;
+}
+
+.hot{
+	display: block;
+    position: absolute;
+    top: 21px;
+    left: 100px;
+    width: 28px;
+    height: 19px;
+    background: url('./../../resource/topbar.png') no-repeat 0 9999px;
+    background-position: -190px 0;
+}
+
+.navuser{
+	float: right;
+    height: 45px;
+    margin: 19px 0 0 20px;
+    padding: 0 22px 0 0;
+    position: relative;
+    background: url('./../../resource/topbar.png') no-repeat 0 9999px;
+    background-position: right -47px;
+}
+
+.navusermsg{
+	top: -5px;
+    left: 20px;
+    position: absolute;
+    display: inline-block;
+    min-width: 17px;
+    height: 17px;
+    padding: 0 4px;
+    box-sizing: border-box;
+    background: #C20C0C;
+    border-radius: 18px;
+    border: 1px solid #242424;
+    line-height: 16px;
+    font-size: 12px;
+    white-space: nowrap;
+    color: #fff;
+    text-align: center;
+    font-style: normal;
+}
+
+.navideo{
+	float: right;
+    width: 90px;
+    height: 32px;
+    margin: 19px 0 0 12px;
+    box-sizing: border-box;
+    padding-left: 32px;
+    background: url('./../../resource/topbar.png') no-repeat 0 9999px;
+    background-position: 0 -140px;
+    line-height: 33px;
+    color: #ccc;
+}
+
+.navseach{
+	float: right;
+    width: 158px;
+    height: 32px;
+    position: relative;
+    zoom:1;
+    display: block;
+}
+.navsch{
+	margin-top: 19px;
+	background: url('./../../resource/topbar.png') no-repeat 0 9999px;
+    background-position: 0 -99px;
+    background-color: #fff;
+    border-radius: 32px;
+    float: right;
+    width: 158px;
+    height: 32px;
+}
+
+.schparent{
+	display: block;
+    position: relative;
+    margin: 8px 0 0 30px;
+}
+
+.schinput{
+	width: 95%;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    color: #333;
+    line-height: 16px;
+    opacity: 1;
+    border: 0;
+}
+
+.schtext{
+	display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90%;
+    color: #9b9b9b;
+    cursor: text;
+}
+
+.nav2list{
+	z-index: 90;
+    height: 35px;
+    box-sizing: border-box;
+    background-color: #C20C0C;
+    border-bottom: 1px solid #a40011;
+}
+
+.nav2main{
+	width: 1100px;
+    height: 34px;
+    margin: 0 auto;
+    position: relative;
+    zoom:1;
+}
+
+.nav2ul{
+	float: left;
+    padding-left: 180px;
 }

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import usericon from './../resource/usericon.jpg'
 import './componetsCss/Roster.css'
+import NavBar2 from './common'
 
 const navBar = {
 	position:'absolute',
@@ -13,7 +15,6 @@ const top = {
 	zIndex:'1000',
 	boxSizing:'border-box',
 	backgroundColor:'#242424',
-	borderBottom:'1px solid #000'
 }
 
 const headerBar = {
@@ -38,14 +39,29 @@ class Roster extends Component {
 							<a className="logoAtag" hidefocus="true" href="/#">网易云音乐</a>
 						</h1>
 						<ul className="navlist">
-							<li><span><a>发现音乐</a></span></li>
-							<li><span><a>我的音乐</a></span></li>
-							<li><span><a>朋友</a></span></li>
-							<li><span><a>商城</a></span></li>
-							<li><span><a>音乐人</a></span></li>
-							<li><span><a>下载客户端</a></span></li>
+							<li><span><a>发现音乐</a><sub className="cor">&nbsp;</sub></span></li>
+							<li><span><a>我的音乐</a><sub className="cor">&nbsp;</sub></span></li>
+							<li><span><a>朋友</a><sub className="cor">&nbsp;</sub></span></li>
+							<li><span><a>商城</a><sub className="cor">&nbsp;</sub></span></li>
+							<li><span><a>音乐人</a><sub className="cor">&nbsp;</sub></span></li>
+							<li><span><a>下载客户端</a><sub className="cor">&nbsp;</sub></span><sub className="hot">&nbsp;</sub></li>
 						</ul>
+						<div className="navuser">
+							<img src={usericon} width="30" height="30" />
+							<a></a>
+							<i className="navusermsg">3</i>
+						</div>
+						<a className="navideo">视频投稿</a>
+						<div className="navseach">
+							<div className="navsch">
+								<span className="schparent">
+									<input type="text" className="schinput" />
+									<label className="schtext">音乐/视频/电台/用户</label>
+								</span>
+							</div>
+						</div>
 					</div>
+					<NavBar2 />
 				</div>
 			</div>
 		)
