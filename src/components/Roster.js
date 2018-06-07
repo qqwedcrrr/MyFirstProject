@@ -7,7 +7,8 @@ const navBar = {
 	position:'absolute',
 	left:'0',
 	width:'100%',
-	zIndex:'99'
+	zIndex:'99',
+	clear:'both'
 }
 
 const top = {

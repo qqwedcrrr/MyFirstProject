@@ -1,4 +1,4 @@
-body, html, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, header, menu, section, p, input, td, th, ins {
+body, html, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, header, menu, section, p, input, td, th, ins, li {
     padding: 0;
     margin: 0;
 }
@@ -40,3 +40,29 @@ input {
     border-image: initial;
 }
 
+ul li{
+list-style: none;
+}
+
+a{
+	text-decoration: none;
+}
+
+a em{
+	display: inline-block;
+	height: 20px;
+	padding: 0 13px;
+	margin:7px 17px 0;
+	border-radius: 20px;
+	line-height: 21px;
+}
+
+a, a *, * a {
+	cursor: pointer;
+}
+
+i, em {
+	font-style: inherit;
+	text-align: left;
+	font-size: inherit;
+}

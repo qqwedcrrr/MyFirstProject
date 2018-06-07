@@ -46,9 +46,8 @@ const nav2list = {
 class Nav2item extends Component{
 	render(){
 		const {text} = this.props 
-		console.log(text)
 		return (
-			<li>{text}</li> 
+			<li className="nav2item"><a hidefocus="true" href="#" style={{color:'#fff', fontSize:'12px',}}><em>{text}</em></a></li> 
 		)
 	}
 }
