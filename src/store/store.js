@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
-import {increaseAction, doneitem} from './../action/action'
+import {increaseAction, doneitem, navchoose} from './../action/action'
 import reducer from './../reducer/reducer'
 import thunk from 'redux-thunk';
 
@@ -11,16 +11,20 @@ const store = createStore(
 	)
 // Map Redux state to component props
 function mapStateToProps(state) {
+	console.log(state)
 	return {
 		value: state.counter.count,
-		todolist:state.todolist
+		todolist:state.todolist,
+		chooseid: state.navchooser
 	}
 }
 // Map Redux actions to component props
 function mapDispatchToProps(dispatch) {
 	return {
 		onIncreaseClick: () => dispatch(increaseAction),
-		DoneitemClick: id => dispatch(doneitem(id))
+		DoneitemClick: id => dispatch(doneitem(id)),
+		navClick: id => dispatch(navchoose(id))
+
 	}
 }
 
