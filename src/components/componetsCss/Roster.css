@@ -39,8 +39,11 @@ li>span>a {
 .navlist>li{
 	position: relative;
 }
+.navlist>li:hover{
+	background-color: #000;
+}
 .cor{
-	display: block;
+	display: none;
 	position: absolute;
 	left: 50%;
 	top: 64px;
@@ -50,6 +53,10 @@ li>span>a {
 	overflow: hidden;
 	background: url('./../../resource/topbar.png') no-repeat 0 9999px;
 	background-position: -226px 0;
+}
+
+li:hover >span>sub {
+	display: block !important;
 }
 
 .hot{
@@ -170,5 +177,16 @@ li>span>a {
 
 .nav2ul{
 	float: left;
-    padding-left: 180px;
+    margin-left: 180px;
+    height: 34px;
+}
+
+.nav2item{
+	text-align: center;
+	height: 34px;
+	padding: 0;
+}
+
+.nav2item>a:hover em{
+	background-color: #9B0909;
 }
