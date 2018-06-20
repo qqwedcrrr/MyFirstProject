@@ -55,15 +55,17 @@ class Nav2item extends Component{
 class NavBar2 extends Component {
 	render(){
 		const {chooseid} = this.props;
+		let Id 
 		if(chooseid == null)
-			return null
+			Id = "first";
 		else
+			Id = chooseid;
 		return (
 			<div className="nav2list">
 				<div className="nav2main">
 					<ul className="nav2ul">
 						{
-							nav2list[chooseid].map(todo =>(
+							nav2list[Id].map(todo =>(
 								<Nav2item key={todo.id} {...todo} onClick={{javascript:void(0)}} />
 							))
 						}
@@ -73,6 +75,8 @@ class NavBar2 extends Component {
 		)
 	}
 }
+
+
 
 
 export default NavBar2
