@@ -4,6 +4,7 @@ import './componetsCss/Roster.css'
 import NavBar2 from './common'
 import { connect } from 'react-redux'
 import {mapStateToProps,mapDispatchToProps} from '../store/store'
+import Maincontent from './163content'
 
 const navBar = {
 	position:'absolute',
@@ -52,58 +53,64 @@ class Roster extends Component {
 	render(){
 		const {navClick, chooseid, id} = this.props
 		return(
-			<div style={navBar}>
-				<div style={top}>
-					<div style={headerBar}>
-						<h1 className="logo">
-							<a className="logoAtag" hidefocus="true" href="/#">网易云音乐</a>
-						</h1>
-						<ul className="navlist">
-						{
-							navlist.map(item =>(
-								<Navitem key={item.id} {...item} {...this.props} onClick={e =>{navClick(item.id)}} />
-							))
-						}
-							<li><span><a>下载客户端</a><sub className="cor">&nbsp;</sub></span><sub className="hot">&nbsp;</sub></li>
-						</ul>
-						<div className="navuser">
-							<img src={usericon} width="30" height="30" />
-							<a></a>
-							<i className="navusermsg">3</i>
-						</div>
-						<a className="navideo">视频投稿</a>
-						<div className="navseach">
-							<div className="navsch">
-								<span className="schparent">
-									<input type="text" className="schinput" />
-									<label className="schtext">音乐/视频/电台/用户</label>
-								</span>
+			<div>
+				<div style={navBar}>
+					<div style={top}>
+						<div style={headerBar}>
+							<h1 className="logo">
+								<a className="logoAtag" hidefocus="true" href="/#">网易云音乐</a>
+							</h1>
+							<ul className="navlist">
+							{
+								navlist.map(item =>(
+									<Navitem key={item.id} {...item} {...this.props} onClick={e =>{navClick(item.id)}} />
+								))
+							}
+								<li><span><a>下载客户端</a><sub className="cor">&nbsp;</sub></span><sub className="hot">&nbsp;</sub></li>
+							</ul>
+							<div className="navuser">
+								<a><img src={usericon} width="30" height="30" />
+								</a>
+								<i className="navusermsg">3</i>
+							</div>
+							<a className="navideo">视频投稿</a>
+							<div className="navseach">
+								<div className="navsch">
+									<span className="schparent">
+										<input type="text" className="schinput" />
+										<label className="schtext">音乐/视频/电台/用户</label>
+									</span>
+								</div>
 							</div>
 						</div>
+						<NavBar2 {...chooseid} />
 					</div>
-					<NavBar2 {...chooseid} />
 				</div>
+				<Maincontent />
 			</div>
 		)
 	}
 }
 
 class Navitem extends Component{
-
 	render(){
 		const {text, onClick, id,chooseid} = this.props;
-		let chooseitem = null;
+		let chooseitem = null;	
 		if(chooseid.id == id){
 			chooseitem = {
-				display:'block'
+				display:true
 			}
 		}
 		else
 			chooseitem = {
-				display:'none'
+				display:false
+			}
+		if(chooseid.chooseid == null && id == 1)
+			chooseitem = {
+				display:true
 			}
 		return (
-			<li style={{backgroundColor: chooseid.id == id ? '#000' : '#242424'}}><span><a onClick={onClick}>{text}</a><sub style={chooseitem} className="cor">&nbsp;</sub></span></li>
+			<li style={{backgroundColor: chooseitem.display ? '#000' : '#242424'}}><span><a onClick={onClick}>{text}</a><sub style={{display: chooseitem.display ? "block" : "none"}} className="cor">&nbsp;</sub></span></li>
 		)
 	}
 }
