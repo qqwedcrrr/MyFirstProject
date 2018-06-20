@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import usericon from './../resource/usericon.jpg'
 import './componetsCss/Roster.css'
 import NavBar2 from './common'
+import { connect } from 'react-redux'
+import {mapStateToProps,mapDispatchToProps} from '../store/store'
 
 const navBar = {
 	position:'absolute',
@@ -24,14 +26,31 @@ const headerBar = {
 	height:'70px'
 }
 
-
-
-
+const navlist = [
+		{
+		id:1,
+		text:'发现音乐'
+		},{
+		id:2,
+		text:'我的音乐'
+		},{
+		id:3,
+		text:'朋友'
+		},{
+		id:4,
+		text:'商城'
+		},{
+		id:5,
+		text:'音乐人'
+		}
+]
+	
 class Roster extends Component {
 	constructor(props) {
     	super(props);
 	}
 	render(){
+		const {navClick, chooseid, id} = this.props
 		return(
 			<div style={navBar}>
 				<div style={top}>
@@ -40,11 +59,11 @@ class Roster extends Component {
 							<a className="logoAtag" hidefocus="true" href="/#">网易云音乐</a>
 						</h1>
 						<ul className="navlist">
-							<li><span><a>发现音乐</a><sub className="cor">&nbsp;</sub></span></li>
-							<li><span><a>我的音乐</a><sub className="cor">&nbsp;</sub></span></li>
-							<li><span><a>朋友</a><sub className="cor">&nbsp;</sub></span></li>
-							<li><span><a>商城</a><sub className="cor">&nbsp;</sub></span></li>
-							<li><span><a>音乐人</a><sub className="cor">&nbsp;</sub></span></li>
+						{
+							navlist.map(item =>(
+								<Navitem key={item.id} {...item} {...this.props} onClick={e =>{navClick(item.id)}} />
+							))
+						}
 							<li><span><a>下载客户端</a><sub className="cor">&nbsp;</sub></span><sub className="hot">&nbsp;</sub></li>
 						</ul>
 						<div className="navuser">
@@ -62,12 +81,37 @@ class Roster extends Component {
 							</div>
 						</div>
 					</div>
-					<NavBar2 />
+					<NavBar2 {...chooseid} />
 				</div>
 			</div>
 		)
 	}
 }
+
+class Navitem extends Component{
+
+	render(){
+		const {text, onClick, id,chooseid} = this.props;
+		let chooseitem = null;
+		if(chooseid.id == id){
+			chooseitem = {
+				display:'block'
+			}
+		}
+		else
+			chooseitem = {
+				display:'none'
+			}
+		return (
+			<li style={{backgroundColor: chooseid.id == id ? '#000' : '#242424'}}><span><a onClick={onClick}>{text}</a><sub style={chooseitem} className="cor">&nbsp;</sub></span></li>
+		)
+	}
+}
+
+Roster = connect(
+	mapStateToProps,
+	mapDispatchToProps
+	)(Roster)
 
 
 export default Roster

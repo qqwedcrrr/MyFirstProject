@@ -20,3 +20,9 @@ export const doneitem = id => {
 	}
 }
 
+export const navchoose = id => {
+	return {
+		type:'nav_choose',
+		id
+	}
+}

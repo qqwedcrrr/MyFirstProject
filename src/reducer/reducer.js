@@ -30,4 +30,27 @@ function todolist(state = [], action){
 	}
 }
 
-export default {counter, todolist}
+function navchooser(state = {id:null, chooseid:null }, action){
+	const chooseid = state.chooseid
+	switch (action.type) {	
+		case 'nav_choose': 
+			if(action.id === 1)
+				return{
+					id:action.id,
+					chooseid:'first'}
+			if(action.id === 2)
+				return{
+					id:action.id,
+					chooseid:'second'}
+			if(action.id === 3)
+				return{
+					id:action.id,
+					chooseid:'third'}
+			else
+				return state	
+	default:
+		return state
+	}
+}
+
+export default {counter, todolist,navchooser}

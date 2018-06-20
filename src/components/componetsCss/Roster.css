@@ -39,9 +39,6 @@ li>span>a {
 .navlist>li{
 	position: relative;
 }
-.navlist>li:hover{
-	background-color: #000;
-}
 .cor{
 	display: none;
 	position: absolute;
@@ -53,10 +50,6 @@ li>span>a {
 	overflow: hidden;
 	background: url('./../../resource/topbar.png') no-repeat 0 9999px;
 	background-position: -226px 0;
-}
-
-li:hover >span>sub {
-	display: block !important;
 }
 
 .hot{
