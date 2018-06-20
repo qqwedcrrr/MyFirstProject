@@ -11,7 +11,6 @@ const store = createStore(
 	)
 // Map Redux state to component props
 function mapStateToProps(state) {
-	console.log(state)
 	return {
 		value: state.counter.count,
 		todolist:state.todolist,
