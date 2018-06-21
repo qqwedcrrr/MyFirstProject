@@ -4,7 +4,7 @@ import Roster from './../components/Roster'
 import Home from './../components/Home'
 import Schedule from './../components/Schedule'
 import Counter from './../components/Counter'
-import Todo from './../components/todolist'
+import Todo from './../components/Todolist'
 
 // const Main = () => (
 //   <main>
