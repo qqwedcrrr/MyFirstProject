@@ -1,8 +1,7 @@
 .viewpageBG{
-	background:url('./../../resource/bgcolor1.jpg');
-	background-repeat: repeat-x;
+	background-repeat: repeat-x !important;
 	width: 100%;
-	height: 300px;
+	height: 336px;
 	position: relative;
 }
 .wrap{
@@ -15,6 +14,49 @@
 	z-index: 10;
 	width: 982px;
 	height: 336px;
-	position: relative;
 	zoom:1;
+}
+.VPright{
+	z-index: 20;
+	position: absolute;
+	top:0;
+	right: -1px;
+	width: 254px;
+	height:336px;
+	text-align: center;
+	background:url('./../../resource/download.png');
+}
+.downloadtag{
+	display: block;
+	width: 215px;
+	height: 56px;
+	margin:212px 0 0 19px;
+	background-position: 0 9999px;
+	text-indent: -9999px;
+}
+.downloadtag~p{
+	margin:10px auto;
+	text-align: center;
+	color: #8d8d8d;
+}
+.shadowl{
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -20px;
+	width: 20px;
+	height: 336px;
+	background-position: -1px 0 !important;
+	background: url('./../../resource/banner.png') no-repeat;
+}
+.shadowr{
+	display: block;
+	position: absolute;
+	top: 0;
+	left: auto;
+	right: -20px;
+	width: 20px;
+	height: 336px;
+	background-position: -20px 0 !important;
+	background: url('./../../resource/banner.png') no-repeat;
 }
