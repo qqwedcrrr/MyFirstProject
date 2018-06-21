@@ -30,33 +30,72 @@ const viewPage = [
 	},
 ]
 
-	var i = 1
-	
+	var i = 1;
+	const fadeIn = {
+		transition:'opacity 1s ease-in 0s',
+		opacity:'1'
+	}
+	const fadeOut = {
+		transition:'opacity 1s ease-out 0s',
+		opacity:'0.2'
+	}
+	const fadeOver = {
+		transition:'none',
+		opacity:'1'
+	}
 class Viewpage extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
 			viewpageimg:viewPage[0].src,
-			bgcolor:viewPage[0].bgcolor
+			bgcolor:viewPage[0].bgcolor,
+			fadeInOut:fadeOver,
+			flag:3
 		}
 	};
-	
 	componentDidMount() {
-	    this.timerID = setInterval(
-	      i => this.tick(),
-	      4000
-	    );
-  	}
+			this.timeId = setInterval(
+			i=>this.showfade(), 1000)
 
-    componentWillUnmount() {
-    	clearInterval(this.timerID);
   	}
-    tick() {
-	  	i = i == 4 ? 0 : i;
+    componentWillUnmount() {
+    	clearInterval(this.timeId)
+  	}
+  	showfade(){
+  		i = i == 4 ? 0 : i;
+  		switch(this.state.flag){
+			case 1:
+	    		this.fadein();  		
+	    		break;
+	    	case 2:
+	    		this.fadeout();
+	    		break;
+	    	case 3:
+	    		this.tick()
+	    		break;
+		}
+  	}
+	fadein() {
 		this.setState({
+			fadeInOut:fadeIn,
 			viewpageimg:viewPage[i].src,
-			bgcolor:viewPage[i++].bgcolor
-		});
+			bgcolor:viewPage[i++].bgcolor,
+			flag:3
+		})
+	}
+
+	fadeout(){
+		this.setState({
+			fadeInOut:fadeOut,
+			flag:1
+		})
+	}
+
+    tick() {
+		this.setState({
+			fadeInOut:fadeOver,
+			flag:2
+		})
     }
 
 	render(){
@@ -65,7 +104,7 @@ class Viewpage extends Component{
 				<div className="wrap">
 					<div className="VPleft">
 						<a className="logoAtag" hidefocus="true" href="/#">
-						<img src={this.state.viewpageimg} width="730" height="336" />
+						<img src={this.state.viewpageimg} style={this.state.fadeInOut} width="730" height="336" />
 						</a>	
 					</div>
 					<div className="VPright">
