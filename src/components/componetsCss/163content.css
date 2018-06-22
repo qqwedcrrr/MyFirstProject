@@ -46,8 +46,8 @@
 	left: -20px;
 	width: 20px;
 	height: 336px;
-	background-position: -1px 0 !important;
 	background: url('./../../resource/banner.png') no-repeat;
+	background-position: -1px 0;
 }
 .shadowr{
 	display: block;
@@ -57,6 +57,47 @@
 	right: -20px;
 	width: 20px;
 	height: 336px;
-	background-position: -20px 0 !important;
 	background: url('./../../resource/banner.png') no-repeat;
+	background-position: -20px 0;
+	
 }
+.viewPageL{
+	display: block;
+	position: absolute;
+	top: 50%;
+	margin-top: -31px;
+	width: 37px;
+	height: 63px;
+	text-indent: -9999px;
+	left: -68px;
+	background: url('./../../resource/banner.png') no-repeat;
+	background-position: 0 -360px;
+}
+.viewPageR{
+	display: block;
+	position: absolute;
+	top: 50%;
+	margin-top: -31px;
+	width: 37px;
+	height: 63px;
+	right: -68px;
+	text-indent: -9999px;
+	background: url('./../../resource/banner.png') no-repeat;
+	background-position: 0 -508px;
+}
+.viewpagePointlist{
+	position: absolute;
+	top: 310px;
+	left: 0;
+	width: 730px;
+	height: 20px;
+	text-align: center;
+}
+.viewpagePoint{
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background: url('./../../resource/banner.png') no-repeat;
+	background-position:3px -343px;
+}
+
