@@ -73,6 +73,9 @@
 	background: url('./../../resource/banner.png') no-repeat;
 	background-position: 0 -360px;
 }
+.viewPageL:hover {
+	background-position: 0 -430px !important;
+}
 .viewPageR{
 	display: block;
 	position: absolute;
@@ -84,6 +87,9 @@
 	text-indent: -9999px;
 	background: url('./../../resource/banner.png') no-repeat;
 	background-position: 0 -508px;
+}
+.viewPageR:hover {
+	background-position: 0 -578px !important;
 }
 .viewpagePointlist{
 	position: absolute;
@@ -100,4 +106,6 @@
 	background: url('./../../resource/banner.png') no-repeat;
 	background-position:3px -343px;
 }
-
+.viewpagePoint:hover{
+	background-position: -16px -343px !important;
+}

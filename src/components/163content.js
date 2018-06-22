@@ -52,7 +52,9 @@ class Viewpage extends Component{
 			fadeInOut:fadeOver,
 			flag:3
 		};
-		this.handlePointClick = this.handlePointClick.bind(this)
+		this.handlePointClick = this.handlePointClick.bind(this);
+		this.handleLeftClick = this.handleLeftClick.bind(this);
+		this.handleRightClick = this.handleRightClick.bind(this)
 	};
 	
 	handlePointClick(id){
@@ -61,6 +63,35 @@ class Viewpage extends Component{
 			fadeInOut:fadeIn,
 			viewpageimg:viewPage[id-1].src,
 			bgcolor:viewPage[id-1].bgcolor,
+			flag:3
+		})
+	}
+
+	handleRightClick(){
+		if(i == 4)
+			i=1;
+		else{
+			i+=1;
+		}
+		this.setState({
+			fadeInOut:fadeIn,
+			viewpageimg:viewPage[i-1].src,
+			bgcolor:viewPage[i-1].bgcolor,
+			flag:3
+		})
+
+	}
+
+	handleLeftClick(){
+		if(i == 1){
+			i = 4;
+		}
+		else
+			i-=1;
+		this.setState({
+			fadeInOut:fadeIn,
+			viewpageimg:viewPage[i-1].src,
+			bgcolor:viewPage[i-1].bgcolor,
 			flag:3
 		})
 	}
@@ -74,12 +105,12 @@ class Viewpage extends Component{
     	clearInterval(this.timeId)
   	}
   	showfade(){
-  		i = i == 4 ? 0 : i;
   		switch(this.state.flag){
 			case 1:
 	    		this.fadein();  		
 	    		break;
 	    	case 2:
+	    	i = i == 4 ? 0 : i;
 	    		this.fadeout();
 	    		break;
 	    	case 3:
@@ -128,8 +159,8 @@ class Viewpage extends Component{
 						<a className="logoAtag" hidefocus="true" href="/#">
 						<img src={this.state.viewpageimg} style={this.state.fadeInOut} width="730" height="336" />
 						</a>
-						<a hidefocus="true" href="javasript:void(0)" className="viewPageL">&lt;</a>	
-						<a hidefocus="true" href="javasript:void(0)" className="viewPageR">&gt;</a>
+						<a hidefocus="true" href="javascript:void(0)" className="viewPageL" onClick={e=>{this.handleLeftClick()}}>&lt;</a>	
+						<a hidefocus="true" href="javascript:void(0)" className="viewPageR" onClick={e=>{this.handleRightClick()}}>&gt;</a>
 						<div className="viewpagePointlist">
 						{
 							viewPage.map(item=>(
@@ -153,7 +184,7 @@ class Viewpage extends Component{
 }
 
 const ViewpagePoint = ({onClick, pointid, dataIndex}) => (
-	<a hidefocus="true" href="javasript:void(0)" className="viewpagePoint" onClick={onClick} style={{ backgroundPosition: dataIndex == pointid ? '-16px -343px' : '3px -343px'}}></a>
+	<a hidefocus="true" href="javascript:void(0)" className="viewpagePoint" onClick={onClick} style={{ backgroundPosition: dataIndex == pointid ? '-16px -343px' : '3px -343px'}}></a>
 )
 
 class Lcontent extends Component{	
