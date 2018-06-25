@@ -109,3 +109,26 @@
 .viewpagePoint:hover{
 	background-position: -16px -343px !important;
 }
+.LConMain {
+	margin-left: 251px;
+}
+.LConMain>div{
+	padding: 20px 20px 40px;
+}
+.LConNavi{
+	height: 33px;
+	padding: 0 10px 0 34px;
+	background: url('./../../resource/LContent.png') no-repeat;
+	background-position: -255px -156px;
+	border-bottom: 2px solid #c10d0c;
+}
+.LCNaviTitle{
+	float: left;
+	font-size: 20px;
+	font-weight: normal;
+	line-height: 28px;
+}
+.LCNaviTab{
+	float: left;
+	margin:7px 0 0 20px;
+}

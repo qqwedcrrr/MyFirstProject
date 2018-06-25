@@ -4,7 +4,7 @@ import './componetsCss/Roster.css'
 import NavBar2 from './common'
 import { connect } from 'react-redux'
 import {mapStateToProps,mapDispatchToProps} from '../store/store'
-import Maincontent from './163content'
+import Viewpagecontent from './163content'
 
 const navBar = {
 	position:'absolute',
@@ -86,7 +86,7 @@ class Roster extends Component {
 						<NavBar2 {...chooseid} />
 					</div>
 				</div>
-				<Maincontent />
+				<Viewpagecontent />
 			</div>
 		)
 	}

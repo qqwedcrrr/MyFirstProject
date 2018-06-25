@@ -30,6 +30,34 @@ const viewPage = [
 	},
 ]
 
+const lcnaviTab = [
+	{
+		id:1,
+		text:'华语',
+		href:''
+	},
+	{
+		id:2,
+		text:'流行',
+		href:''
+	},
+	{
+		id:3,
+		text:'摇滚',
+		href:''
+	},
+	{
+		id:4,
+		text:'华语',
+		href:''
+	},
+	{
+		id:5,
+		text:'华语',
+		href:''
+	},
+]
+
 	var i = 1;
 	const fadeIn = {
 		transition:'opacity 1s ease-in 0s',
@@ -193,13 +221,28 @@ class Lcontent extends Component{
 	};
 	render(){
 		return (
-			<div>
+			<div className="LConMain">
+				<div>
+					<div>
+						<div className="LConNavi">
+							<a href="#" className="LCNaviTitle">热门推荐</a>
+							<div className="LCNaviTab">
+								
+							</div>
+						</div>	
+						<div>
+							
+						</div>
+					</div>
+				</div>
 			</div>
-		)
-		
+		)	
 	}
-
 }
+
+const LCNaviTab = ({onClick, pointid, dataIndex}) => (
+	<a hidefocus="true" href="javascript:void(0)" className="viewpagePoint" onClick={onClick} style={{ backgroundPosition: dataIndex == pointid ? '-16px -343px' : '3px -343px'}}></a>
+)
 
 class Rcontent extends Component {
 	constructor(props){
@@ -215,12 +258,21 @@ class Rcontent extends Component {
 	}
 }
 
-
-
 const Maincontent = () => (
+	<div style={{ width:'980px', minHeight:'700px', margin:'0 auto', backgroundColor:'#fff',border:'1px solid #d3d3d3', borderWidth:'0 1px'}}>
+		<div style={{float:'left',width:'100%',marginRight:'-250px'}}>
+			<Lcontent />
+			<Rcontent />
+		</div>
+	</div>
+)
+
+
+
+const Viewpagecontent = () => (
   <div style={{position:'absolute',marginTop:'105px',width:"100%"}}>
   	<Viewpage />
   </div>
 )
 
-export default Maincontent
+export default Viewpagecontent
