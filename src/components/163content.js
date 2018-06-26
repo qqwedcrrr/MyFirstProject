@@ -227,8 +227,16 @@ class Lcontent extends Component{
 						<div className="LConNavi">
 							<a href="#" className="LCNaviTitle">热门推荐</a>
 							<div className="LCNaviTab">
-								
+								{
+									lcnaviTab.map(item =>(
+										<LCNaviTab key={item.id} item={item} />
+									))
+								}						
 							</div>
+							<span className="more" >
+									<a hidefocus="true" href="javascript:void(0)" className="LCNavioption">更多</a>	
+									<i className="moregt">&nbsp;</i>
+							</span>	
 						</div>	
 						<div>
 							
@@ -240,8 +248,11 @@ class Lcontent extends Component{
 	}
 }
 
-const LCNaviTab = ({onClick, pointid, dataIndex}) => (
-	<a hidefocus="true" href="javascript:void(0)" className="viewpagePoint" onClick={onClick} style={{ backgroundPosition: dataIndex == pointid ? '-16px -343px' : '3px -343px'}}></a>
+const LCNaviTab = ({onClick, item}) => (
+	<div style={{display:'inline'}}>
+	<a hidefocus="true" href="javascript:void(0)" className="LCNavioption" onClick={onClick}>{item.text}</a>
+	<span className="line" style={{display:item.id == 5 ? 'none': 'inline'}}>|</span>
+	</div>
 )
 
 class Rcontent extends Component {
@@ -259,10 +270,12 @@ class Rcontent extends Component {
 }
 
 const Maincontent = () => (
-	<div style={{ width:'980px', minHeight:'700px', margin:'0 auto', backgroundColor:'#fff',border:'1px solid #d3d3d3', borderWidth:'0 1px'}}>
-		<div style={{float:'left',width:'100%',marginRight:'-250px'}}>
+	<div style={{ width:'100%', backgroundColor:'#fff', position:'absolute',marginTop:'440px'}}>
+		<div style={{border:'1px solid #d3d3d3', borderWidth:'0 1px', width:'980px',minHeight:'700px', margin:'0 auto'}}>
+			<div style={{float:'left',width:'100%',marginRight:'-250px'}}>
 			<Lcontent />
 			<Rcontent />
+			</div>
 		</div>
 	</div>
 )
@@ -275,4 +288,4 @@ const Viewpagecontent = () => (
   </div>
 )
 
-export default Viewpagecontent
+export {Viewpagecontent,Maincontent}
