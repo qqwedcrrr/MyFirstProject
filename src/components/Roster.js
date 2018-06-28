@@ -106,19 +106,20 @@ class Navitem extends Component{
 		let password = '493105923';
 		let nowadate = new Date();
 		nowadate = nowadate.getTime();
-		fetch(`${url}/login/cellphone?phone=${phone}&password=${password}&timestamp=${nowadate}`).then(data =>{
-			console.log(data.json())
-		},()=>{
-			console.log('err')
-		}).then(
-			fetch(`${url}/user/subcount/?timestamp=${nowadate}`).then(data =>{
+		//&timestamp=${nowadate}
+		// fetch(`${url}/login/cellphone?phone=${phone}&password=${password}&timestamp=${nowadate}`).then(data =>{
+		// 	console.log(data.json())
+		// },()=>{
+		// 	console.log('err')
+		// }).then(
+			fetch(`${url}/banner`).then(data =>{
 				let savedata = data.json();
 				console.log(savedata)
 			},()=>{
 				console.log('err1')
 			})
-		)
-		console.log('tagclick')
+		// )
+		// console.log('tagclick')
 	}
 
 	render(){

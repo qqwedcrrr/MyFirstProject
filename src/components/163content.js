@@ -30,6 +30,8 @@ const viewPage = [
 	},
 ]
 
+const url = 'http://localhost:3001'
+
 const lcnaviTab = [
 	{
 		id:1,
@@ -58,7 +60,7 @@ const lcnaviTab = [
 	},
 ]
 
-	var i = 1;
+	var i = 0;
 	const fadeIn = {
 		transition:'opacity 1s ease-in 0s',
 		opacity:'1'
@@ -71,6 +73,9 @@ const lcnaviTab = [
 		transition:'none',
 		opacity:'1'
 	}
+	let banner = [];
+	let maxlength = 0;
+
 class Viewpage extends Component{
 	constructor(props){
 		super(props);
@@ -84,45 +89,72 @@ class Viewpage extends Component{
 		this.handleLeftClick = this.handleLeftClick.bind(this);
 		this.handleRightClick = this.handleRightClick.bind(this)
 	};
+
+	componentWillMount() {
+		let phone = '15656000329';
+		let password = '493105923';
+		let nowadate = new Date();
+		nowadate = nowadate.getTime();
+		// fetch(`${url}/login/cellphone?phone=${phone}&password=${password}&timestamp=${nowadate}`).then(data =>{
+		// 	console.log(data.json())
+		// },()=>{
+		// 	console.log('err')
+		// }).then(
+			fetch(`${url}/banner`).then(res =>{
+				return res.json()
+				//maxlength = data.banners.length
+			},()=>{
+				console.log('err1')
+			}).then(json =>{
+				banner = json.banners;
+				maxlength = json.banners.length-1;
+			})
+		// )
+	}
 	
 	handlePointClick(id){
 		i = id;
 		this.setState({
 			fadeInOut:fadeIn,
-			viewpageimg:viewPage[id-1].src,
-			bgcolor:viewPage[id-1].bgcolor,
+			viewpageimg:banner[i].picUrl,
+			bgcolor:banner[i].backgroundUrl,
 			flag:3
 		})
+		console.log(i)
 	}
 
 	handleRightClick(){
-		if(i == 4)
-			i=1;
+		if(i == maxlength)
+			i=0;
 		else{
 			i+=1;
 		}
 		this.setState({
 			fadeInOut:fadeIn,
-			viewpageimg:viewPage[i-1].src,
-			bgcolor:viewPage[i-1].bgcolor,
+			viewpageimg:banner[i].picUrl,
+			bgcolor:banner[i].backgroundUrl,
 			flag:3
 		})
 
 	}
 
 	handleLeftClick(){
-		if(i == 1){
-			i = 4;
+
+		if(i == 0){
+			i = maxlength;
 		}
 		else
 			i-=1;
 		this.setState({
 			fadeInOut:fadeIn,
-			viewpageimg:viewPage[i-1].src,
-			bgcolor:viewPage[i-1].bgcolor,
+			viewpageimg:banner[i].picUrl,
+			bgcolor:banner[i].backgroundUrl,
 			flag:3
 		})
+
 	}
+
+	
 
 	componentDidMount() {
 		this.timeId = setInterval(
@@ -133,12 +165,12 @@ class Viewpage extends Component{
     	clearInterval(this.timeId)
   	}
   	showfade(){
+  		console.log(i);	
   		switch(this.state.flag){
 			case 1:
 	    		this.fadein();  		
 	    		break;
 	    	case 2:
-	    	i = i == 4 ? 0 : i;
 	    		this.fadeout();
 	    		break;
 	    	case 3:
@@ -153,11 +185,15 @@ class Viewpage extends Component{
 		}
   	}
 	fadein() {
-		this.setState({
+		return new Promise((resolve,reject)=>{
+			this.setState({
 			fadeInOut:fadeIn,
-			viewpageimg:viewPage[i].src,
-			bgcolor:viewPage[i++].bgcolor,
+			viewpageimg:banner[i].picUrl,
+			bgcolor:banner[i].backgroundUrl,
 			flag:3
+			})
+		}).then(()=>{
+				i == maxlength ? i=0 : i++;
 		})
 	}
 
@@ -191,8 +227,8 @@ class Viewpage extends Component{
 						<a hidefocus="true" href="javascript:void(0)" className="viewPageR" onClick={e=>{this.handleRightClick()}}>&gt;</a>
 						<div className="viewpagePointlist">
 						{
-							viewPage.map(item=>(
-								<ViewpagePoint key={item.id} pointid={i} dataIndex={item.id} onClick={e=>{this.handlePointClick(item.id)}}  />
+							banner.map((item,index)=>(
+								<ViewpagePoint key={index} pointid={i} dataIndex={index} onClick={e=>{this.handlePointClick(index)}}  />
 							))
 						}
 						</div>	
