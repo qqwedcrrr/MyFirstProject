@@ -1,13 +1,6 @@
 import React, { Component } from 'react'
 import './componetsCss/163content.css'
-import viewpage1 from './../resource/viewpage1.jpg'
-import viewpage2 from './../resource/viewpage2.jpg'
-import viewpage3 from './../resource/viewpage3.jpg'
-import viewpage4 from './../resource/viewpage4.jpg'
-import bgcolor1 from './../resource/bgcolor1.jpg'
-import bgcolor2 from './../resource/bgcolor2.jpg'
-import bgcolor3 from './../resource/bgcolor3.jpg'
-import bgcolor4 from './../resource/bgcolor4.jpg'
+
 
 
 const viewPage = [
@@ -94,6 +87,7 @@ class Viewpage extends Component{
 			},()=>{
 				console.log('err1')
 			}).then(json =>{
+				console.log(json)
 				banner = json.banners;
 				maxlength = json.banners.length-1;
 				for(let i = 0; i< maxlength+1;i++){
@@ -103,7 +97,15 @@ class Viewpage extends Component{
 			})
 		 // )
 	}
+
+	async login(){
+
+	}
 	
+	async fetchPicture(){
+
+	}
+
 	handlePointClick(id){
 		i = id;
 		this.setState({
