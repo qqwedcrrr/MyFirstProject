@@ -107,17 +107,17 @@ class Navitem extends Component{
 		let nowadate = new Date();
 		nowadate = nowadate.getTime();
 		//&timestamp=${nowadate}
-		// fetch(`${url}/login/cellphone?phone=${phone}&password=${password}&timestamp=${nowadate}`).then(data =>{
-		// 	console.log(data.json())
-		// },()=>{
-		// 	console.log('err')
-		// }).then(
-			fetch(`${url}/banner`).then(data =>{
-				let savedata = data.json();
-				console.log(savedata)
-			},()=>{
-				console.log('err1')
-			})
+		fetch(`${url}/login/cellphone?phone=${phone}&password=${password}&timestamp=${nowadate}`).then(data =>{
+			console.log(data.json())
+		},()=>{
+			console.log('err')
+		}) // .then(
+			// fetch(`${url}/banner`).then(data =>{
+			// 	let savedata = data.json();
+			// 	console.log(savedata)
+			// },()=>{
+			// 	console.log('err1')
+			// })
 		// )
 		// console.log('tagclick')
 	}

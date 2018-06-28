@@ -12,22 +12,9 @@ import bgcolor4 from './../resource/bgcolor4.jpg'
 
 const viewPage = [
 	{
-		id:1,
-		src:viewpage1,
-		bgcolor:bgcolor1
-	},{
-		id:2,
-		src:viewpage2,
-		bgcolor:bgcolor2
-	},{
-		id:3,
-		src:viewpage3,
-		bgcolor:bgcolor3
-	},{
-		id:4,
-		src:viewpage4,
-		bgcolor:bgcolor4
-	},
+		src:'',
+		bgcolor:''
+	}
 ]
 
 const url = 'http://localhost:3001'
@@ -80,10 +67,10 @@ class Viewpage extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			viewpageimg:viewPage[0].src,
-			bgcolor:viewPage[0].bgcolor,
+			viewpageimg:'',
+			bgcolor:'',
 			fadeInOut:fadeOver,
-			flag:3
+			flag:2
 		};
 		this.handlePointClick = this.handlePointClick.bind(this);
 		this.handleLeftClick = this.handleLeftClick.bind(this);
@@ -101,6 +88,7 @@ class Viewpage extends Component{
 		// 	console.log('err')
 		// }).then(
 			fetch(`${url}/banner`).then(res =>{
+				console.log(res)
 				return res.json()
 				//maxlength = data.banners.length
 			},()=>{
@@ -108,8 +96,12 @@ class Viewpage extends Component{
 			}).then(json =>{
 				banner = json.banners;
 				maxlength = json.banners.length-1;
+				for(let i = 0; i< maxlength+1;i++){
+					viewPage[i] = new Image();
+					viewPage[i].src = banner[i].picUrl
+				}
 			})
-		// )
+		 // )
 	}
 	
 	handlePointClick(id){
@@ -133,13 +125,12 @@ class Viewpage extends Component{
 			fadeInOut:fadeIn,
 			viewpageimg:banner[i].picUrl,
 			bgcolor:banner[i].backgroundUrl,
-			flag:3
+			flag:1
 		})
 
 	}
 
 	handleLeftClick(){
-
 		if(i == 0){
 			i = maxlength;
 		}
@@ -165,13 +156,14 @@ class Viewpage extends Component{
     	clearInterval(this.timeId)
   	}
   	showfade(){
-  		console.log(i);	
   		switch(this.state.flag){
 			case 1:
-	    		this.fadein();  		
+	    		this.fadein();		
 	    		break;
 	    	case 2:
-	    		this.fadeout();
+	    		this.fadeout().then(
+					i == maxlength ? i=0 : i++,
+				);  
 	    		break;
 	    	case 3:
 	    		this.tick().then(
@@ -185,22 +177,20 @@ class Viewpage extends Component{
 		}
   	}
 	fadein() {
-		return new Promise((resolve,reject)=>{
-			this.setState({
+		this.setState({
 			fadeInOut:fadeIn,
 			viewpageimg:banner[i].picUrl,
 			bgcolor:banner[i].backgroundUrl,
 			flag:3
-			})
-		}).then(()=>{
-				i == maxlength ? i=0 : i++;
 		})
 	}
 
 	fadeout(){
-		this.setState({
-			fadeInOut:fadeOut,
-			flag:1
+		return new Promise((resolve,reject)=>{
+			this.setState({
+				fadeInOut:fadeOut,
+				flag:1
+			})
 		})
 	}
 
@@ -274,9 +264,9 @@ class Lcontent extends Component{
 									<i className="moregt">&nbsp;</i>
 							</span>	
 						</div>	
-						<div>
-							
-						</div>
+						<ul className="LCcontent">
+
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -286,8 +276,20 @@ class Lcontent extends Component{
 
 const LCNaviTab = ({onClick, item}) => (
 	<div style={{display:'inline'}}>
-	<a hidefocus="true" href="javascript:void(0)" className="LCNavioption" onClick={onClick}>{item.text}</a>
-	<span className="line" style={{display:item.id == 5 ? 'none': 'inline'}}>|</span>
+		<a hidefocus="true" href="javascript:void(0)" className="LCNavioption" onClick={onClick}>{item.text}</a>
+		<span className="line" style={{display:item.id == 5 ? 'none': 'inline'}}>|</span>
+	</div>
+)
+
+const LCcontentItem = ({onClick,itme}) =>(
+	<div className="">
+		<img src="" alt=""/>
+		<a></a>
+		<div>
+			<a></a>
+			<span className="shadowl"></span>
+			<span className="shadowr"></span>
+		</div>
 	</div>
 )
 

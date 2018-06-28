@@ -91,6 +91,7 @@
 .viewPageR:hover {
 	background-position: 0 -578px !important;
 }
+
 .viewpagePointlist{
 	position: absolute;
 	top: 310px;
@@ -155,4 +156,7 @@
 	height: 12px;
 	background: url('./../../resource/LContent.png') no-repeat;
 	background-position: 0px -240px;
+}
+.LCcontent{
+	margin: 20px 0 0 -42px;
 }
