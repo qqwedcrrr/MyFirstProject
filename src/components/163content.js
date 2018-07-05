@@ -10,7 +10,9 @@ const viewPage = [
 	}
 ]
 
-const url = 'http://localhost:3001'
+const url = 'http://localhost:3001';
+let nowadate = new Date();
+nowadate = nowadate.getTime();
 
 const lcnaviTab = [
 	{
@@ -55,7 +57,12 @@ const lcnaviTab = [
 	}
 	let banner = [];
 	let maxlength = 0;
-
+	const content = [{
+		src:'',
+		name:'',
+		title:''
+	}]
+	
 class Viewpage extends Component{
 	constructor(props){
 		super(props);
@@ -73,37 +80,29 @@ class Viewpage extends Component{
 	componentWillMount() {
 		let phone = '15656000329';
 		let password = '493105923';
-		let nowadate = new Date();
-		nowadate = nowadate.getTime();
-		// fetch(`${url}/login/cellphone?phone=${phone}&password=${password}&timestamp=${nowadate}`).then(data =>{
-		// 	console.log(data.json())
-		// },()=>{
-		// 	console.log('err')
-		// }).then(
-			fetch(`${url}/banner`).then(res =>{
-				console.log(res)
-				return res.json()
-				//maxlength = data.banners.length
-			},()=>{
-				console.log('err1')
-			}).then(json =>{
-				console.log(json)
-				banner = json.banners;
-				maxlength = json.banners.length-1;
-				for(let i = 0; i< maxlength+1;i++){
-					viewPage[i] = new Image();
-					viewPage[i].src = banner[i].picUrl
-				}
+		let viewPage = this.fetchPicture('/banner').then(res =>{
+			banner = res.banners;
+			maxlength = res.banners.length-1;
+			for(let i = 0; i< maxlength+1;i++){
+				viewPage[i] = new Image();
+				viewPage[i].src = banner[i].picUrl
+			}
+			this.setState({
+				fadeInOut:fadeIn,
+				viewpageimg:banner[0].picUrl,
+				bgcolor:banner[0].backgroundUrl,
+				flag:1
 			})
-		 // )
+		});
 	}
 
-	async login(){
-
-	}
-	
-	async fetchPicture(){
-
+	async fetchPicture(newurl){
+		try{
+			let res = await fetch(`${url}${newurl}?timestamp=${nowadate}`,{withCredentials: true});
+			return res.json()
+		}catch(e){
+			console.log(`err in fetch ${newurl}`)
+		}
 	}
 
 	handlePointClick(id){
@@ -245,8 +244,35 @@ const ViewpagePoint = ({onClick, pointid, dataIndex}) => (
 
 class Lcontent extends Component{	
 	constructor(props){
-		super(props)
+		super(props);
+		this.state={
+			playlist:[]
+		}
 	};
+
+	componentWillMount(){
+		let contentitme = this.fetchPicture('/top/playlist?limit=8&order=hot').then(res =>{
+		content.playlist = res.playlists;
+		console.log(res.playlists)
+		for(let i = 0;i<res.playlists.length;i++){
+			console.log(res.playlists[i].coverImgUrl)
+			content[i].src = res.playlists[i].coverImgUrl
+			content[i].src = new Image();
+			content[i].name = res.playlists[i].name
+			content[i].title = res.playlists[i].description
+		}
+		})
+	}
+
+	async fetchPicture(newurl){
+		try{
+			let res = await fetch(`${url}${newurl}?timestamp=${nowadate}`,{withCredentials: true});
+			return res.json()
+		}catch(e){
+			console.log(`err in fetch ${newurl}`)
+		}
+	}	
+
 	render(){
 		return (
 			<div className="LConMain">
@@ -267,7 +293,11 @@ class Lcontent extends Component{
 							</span>	
 						</div>	
 						<ul className="LCcontent">
-
+							{
+								content.map((item,index) =>(
+									<LCcontentItem key={index} item={item} />
+								))
+							}
 						</ul>
 					</div>
 				</div>
@@ -283,17 +313,22 @@ const LCNaviTab = ({onClick, item}) => (
 	</div>
 )
 
-const LCcontentItem = ({onClick,itme}) =>(
-	<div className="">
-		<img src="" alt=""/>
-		<a></a>
-		<div>
-			<a></a>
-			<span className="shadowl"></span>
-			<span className="shadowr"></span>
+const LCcontentItem = (item) =>(
+
+	<li>
+		<div className="LContentitem">
+			<img src={item.coverImgUrl} alt=""/>
+			<a title={item.description} backgroundImage={{}} style={{ width:'100%',position:'absolute'}}>{item.name}</a>
+			<div className="LCIbottom">
+				<a className="bottomIcon"></a>
+				<span className="icon-headset"></span>
+				<span className="ns"></span>
+			</div>
 		</div>
-	</div>
+	</li>
+
 )
+
 
 class Rcontent extends Component {
 	constructor(props){
