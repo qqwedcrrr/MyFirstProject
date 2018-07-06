@@ -2,14 +2,6 @@ import React, { Component } from 'react'
 import './componetsCss/163content.css'
 
 
-
-const viewPage = [
-	{
-		src:'',
-		bgcolor:''
-	}
-]
-
 const url = 'http://localhost:3001';
 let nowadate = new Date();
 nowadate = nowadate.getTime();
@@ -57,12 +49,8 @@ const lcnaviTab = [
 	}
 	let banner = [];
 	let maxlength = 0;
-	const content = [{
-		src:'',
-		name:'',
-		title:''
-	}]
-	
+
+
 class Viewpage extends Component{
 	constructor(props){
 		super(props);
@@ -244,23 +232,27 @@ const ViewpagePoint = ({onClick, pointid, dataIndex}) => (
 
 class Lcontent extends Component{	
 	constructor(props){
-		super(props);
-		this.state={
-			playlist:[]
+		super(props)
+		this.state = {
+			content:[]
 		}
 	};
 
 	componentWillMount(){
-		let contentitme = this.fetchPicture('/top/playlist?limit=8&order=hot').then(res =>{
-		content.playlist = res.playlists;
-		console.log(res.playlists)
-		for(let i = 0;i<res.playlists.length;i++){
-			console.log(res.playlists[i].coverImgUrl)
-			content[i].src = res.playlists[i].coverImgUrl
-			content[i].src = new Image();
-			content[i].name = res.playlists[i].name
-			content[i].title = res.playlists[i].description
-		}
+		let contentitem = this.fetchPicture('/top/playlist?limit=8&order=hot').then(res =>{
+			let playlist = res.playlists;
+			console.log(playlist)
+			let content = [];
+			for(let i = 0;i<res.playlists.length;i++){
+				content[i]  = new Image();
+				content[i].src  = playlist[i].coverImgUrl
+				content[i].name = playlist[i].name
+				content[i].title = playlist[i].description
+				content[i].hot = playlist[i].trackCount
+				this.setState({
+					content:content
+				})
+			}
 		})
 	}
 
@@ -294,7 +286,7 @@ class Lcontent extends Component{
 						</div>	
 						<ul className="LCcontent">
 							{
-								content.map((item,index) =>(
+								this.state.content.map((item,index) =>(
 									<LCcontentItem key={index} item={item} />
 								))
 							}
@@ -313,20 +305,19 @@ const LCNaviTab = ({onClick, item}) => (
 	</div>
 )
 
-const LCcontentItem = (item) =>(
+const LCcontentItem = ({item}) =>(
 
-	<li>
+	<li className="LContentli">
 		<div className="LContentitem">
-			<img src={item.coverImgUrl} alt=""/>
-			<a title={item.description} backgroundImage={{}} style={{ width:'100%',position:'absolute'}}>{item.name}</a>
+			<img src={item.src} width="140" height="140" alt=""/>
+			<a title={item.title} className="itemClick"></a>
 			<div className="LCIbottom">
-				<a className="bottomIcon"></a>
+				<a className="bottomIcon">{item.name}</a>
 				<span className="icon-headset"></span>
-				<span className="ns"></span>
+				<span className="ns">{item.hot}万</span>
 			</div>
 		</div>
 	</li>
-
 )
 
 

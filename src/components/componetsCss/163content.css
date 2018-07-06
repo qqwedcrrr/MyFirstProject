@@ -160,10 +160,18 @@
 .LCcontent{
 	margin: 20px 0 0 -42px;
 }
-.LContent li{
+.LCcontent>li{
 	width:140px;
 	height: 204px;
 	padding-left: 42px;
+}
+.itemClick{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: block;
 }
 .LContentitem{
 	width: 140px;
@@ -177,6 +185,7 @@
 	left: 0;
 	width: 100%;
 	height: 27px;
+	background: url('./../../resource/coverall.png') no-repeat;
 	background-position: 0 -537px;
 	color: #ccc;
 	display: block;
@@ -187,6 +196,7 @@
 	bottom: 5px;
 	width: 16px;
 	height: 17px;
+	background: url('./../../resource/LContent.png') no-repeat;
 	background-position: 0 0;
 	display: inline-block;
 	float: right;
@@ -195,10 +205,12 @@
 	float: left;
 	width: 14px;
 	height: 11px;
+	background: url('./../../resource/iconall.png') no-repeat;
 	background-position: 0 -24px;
 	margin:9px 5px 9px 10px;
 }
 .ns{
+	font-size: 12px;
 	float: left;
-	margin:7px 0 0 0;
+	margin:8px 0 0 0;
 }
