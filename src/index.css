@@ -40,7 +40,7 @@ input {
     border-image: initial;
 }
 
-ul li{
+ul,li{
 list-style: none;
 }
 
@@ -69,4 +69,16 @@ i, em {
 
 div {
     display: block;
+}
+
+h1,h2,h3,h4{
+	font-size: 100%;
+}
+
+body {
+	font-size: 12px;
+}
+
+li{
+    display: list-item;
 }

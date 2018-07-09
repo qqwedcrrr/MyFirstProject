@@ -234,14 +234,14 @@ class Lcontent extends Component{
 	constructor(props){
 		super(props)
 		this.state = {
-			content:[]
+			content:[],
+
 		}
 	};
 
 	componentWillMount(){
-		let contentitem = this.fetchPicture('/top/playlist?limit=8&order=hot').then(res =>{
+		let contentitem = this.fetchPicture(`/top/playlist?limit=8&order=hot?timestamp=${nowadate}`).then(res =>{
 			let playlist = res.playlists;
-			console.log(playlist)
 			let content = [];
 			for(let i = 0;i<res.playlists.length;i++){
 				content[i]  = new Image();
@@ -254,11 +254,21 @@ class Lcontent extends Component{
 				})
 			}
 		})
+		//artist/desc?id=6452
+		// let singeritem = this.fetchPicture('/artist/list?cat=5001&limit=5').then(res =>{
+		// 	console.log(res)
+		// })
+		let singeritem = fetch(`${url}/user/detail?uid=29879272`).then(res =>{
+			return res.json()
+		}).then(res =>{
+			console.log(res)
+		})
+		
 	}
 
 	async fetchPicture(newurl){
 		try{
-			let res = await fetch(`${url}${newurl}?timestamp=${nowadate}`,{withCredentials: true});
+			let res = await fetch(`${url}${newurl}`,{withCredentials: true});
 			return res.json()
 		}catch(e){
 			console.log(`err in fetch ${newurl}`)
@@ -312,12 +322,23 @@ const LCcontentItem = ({item}) =>(
 			<img src={item.src} width="140" height="140" alt=""/>
 			<a title={item.title} className="itemClick"></a>
 			<div className="LCIbottom">
-				<a className="bottomIcon">{item.name}</a>
+				<a className="bottomIcon"></a>
 				<span className="icon-headset"></span>
 				<span className="ns">{item.hot}万</span>
 			</div>
 		</div>
+		<p className="LCname"><a>{item.name}</a></p>
 	</li>
+)
+
+const RCloginConfirm = () => (
+	<div className="RCloginconf">
+		<div style={{margin:'20px 20px'}}>
+			<p style={{width:'205px', lineHeight:'22px',color:'#666'}}>登录网易云音乐，可以享受无限收藏的乐趣，并且无限同步到手机</p>
+		</div>
+		<a className="lgcf-btn">用户登录</a>
+	</div>
+
 )
 
 
@@ -327,7 +348,8 @@ class Rcontent extends Component {
 	};
 	render(){
 		return (
-			<div>
+			<div className="RCcontent">
+				<RCloginConfirm />
 			</div>
 
 		)
@@ -337,13 +359,44 @@ class Rcontent extends Component {
 
 const Maincontent = () => (
 	<div style={{ width:'100%', backgroundColor:'#fff', position:'absolute',marginTop:'440px'}}>
-		<div style={{border:'1px solid #d3d3d3', borderWidth:'0 1px', width:'980px',minHeight:'700px', margin:'0 auto'}}>
-			<div style={{float:'left',width:'100%',marginRight:'-250px'}}>
-			<Lcontent />
-			<Rcontent />
+		<div className="maincontent" >
+			<div style={{float:'left',width:'100%',marginRight:'-250px', position:'relative'}}>
+				<Lcontent />
+			</div>
+			<div className="RCborder">
+				<Rcontent />
+				<RCsinger />
 			</div>
 		</div>
 	</div>
+)
+
+const RCsinger = () => (
+	<div className="Rsg-navi">
+		<h3 className="Rsg-navict">
+			<span style={{float:'left', fontWeight:'bold'}}>入驻歌手</span>
+			<a className="Rsg-sm">查看全部 &gt;</a>
+		</h3>
+		<ul className="Rsg-list">
+			
+		</ul>	
+	</div>
+)
+
+const Getsinger = () =>(
+	<li>
+		<a className="sg-item">
+			<div className="sg-icon">
+				<img className="sg-icon" src='' />
+			</div>
+			<div className="sg-info">
+				<h4>
+					<span className="sg-id">{}</span>
+				</h4>
+				<p className="sg-name"></p>
+			</div>
+		</a>
+	</li>
 )
 
 
