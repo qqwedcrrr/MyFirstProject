@@ -70,6 +70,7 @@ class Viewpage extends Component{
 		let password = '493105923';
 		let viewPage = this.fetchPicture('/banner').then(res =>{
 			banner = res.banners;
+			console.log(res)
 			maxlength = res.banners.length-1;
 			for(let i = 0; i< maxlength+1;i++){
 				viewPage[i] = new Image();
@@ -79,6 +80,7 @@ class Viewpage extends Component{
 				fadeInOut:fadeIn,
 				viewpageimg:banner[0].picUrl,
 				bgcolor:banner[0].backgroundUrl,
+				url:banner[0].url,
 				flag:1
 			})
 		});
@@ -99,6 +101,7 @@ class Viewpage extends Component{
 			fadeInOut:fadeIn,
 			viewpageimg:banner[i].picUrl,
 			bgcolor:banner[i].backgroundUrl,
+			url:banner[i].url,
 			flag:3
 		})
 		console.log(i)
@@ -114,6 +117,7 @@ class Viewpage extends Component{
 			fadeInOut:fadeIn,
 			viewpageimg:banner[i].picUrl,
 			bgcolor:banner[i].backgroundUrl,
+			url:banner[i].url,
 			flag:1
 		})
 
@@ -129,6 +133,7 @@ class Viewpage extends Component{
 			fadeInOut:fadeIn,
 			viewpageimg:banner[i].picUrl,
 			bgcolor:banner[i].backgroundUrl,
+			url:banner[i].url,
 			flag:3
 		})
 
@@ -170,6 +175,7 @@ class Viewpage extends Component{
 			fadeInOut:fadeIn,
 			viewpageimg:banner[i].picUrl,
 			bgcolor:banner[i].backgroundUrl,
+			url:banner[i].url,
 			flag:3
 		})
 	}
@@ -199,7 +205,7 @@ class Viewpage extends Component{
 			<div className="viewpageBG" style={{backgroundImage:"url('"+this.state.bgcolor+"')"}}>
 				<div className="wrap">
 					<div className="VPleft">
-						<a className="logoAtag" hidefocus="true" href="/#">
+						<a className="logoAtag" hidefocus="true" href={this.state.url} >
 						<img src={this.state.viewpageimg} style={this.state.fadeInOut} width="730" height="336" />
 						</a>
 						<a hidefocus="true" href="javascript:void(0)" className="viewPageL" onClick={e=>{this.handleLeftClick()}}>&lt;</a>	
@@ -235,6 +241,7 @@ class Lcontent extends Component{
 		super(props)
 		this.state = {
 			content:[],
+			singer:[]
 
 		}
 	};
@@ -253,17 +260,7 @@ class Lcontent extends Component{
 					content:content
 				})
 			}
-		})
-		//artist/desc?id=6452
-		// let singeritem = this.fetchPicture('/artist/list?cat=5001&limit=5').then(res =>{
-		// 	console.log(res)
-		// })
-		let singeritem = fetch(`${url}/user/detail?uid=29879272`).then(res =>{
-			return res.json()
-		}).then(res =>{
-			console.log(res)
-		})
-		
+		})	
 	}
 
 	async fetchPicture(newurl){
@@ -341,64 +338,126 @@ const RCloginConfirm = () => (
 
 )
 
+const Rcontent = () =>(
+	<div className="RCcontent">
+		<RCloginConfirm />
+		<RCsinger />
+	</div>
+)
 
-class Rcontent extends Component {
-	constructor(props){
-		super(props)
-	};
-	render(){
-		return (
-			<div className="RCcontent">
-				<RCloginConfirm />
-			</div>
-
-		)
-		
-	}
-}
 
 const Maincontent = () => (
 	<div style={{ width:'100%', backgroundColor:'#fff', position:'absolute',marginTop:'440px'}}>
 		<div className="maincontent" >
 			<div style={{float:'left',width:'100%',marginRight:'-250px', position:'relative'}}>
 				<Lcontent />
+				<NewAlbum />
 			</div>
 			<div className="RCborder">
 				<Rcontent />
-				<RCsinger />
 			</div>
 		</div>
 	</div>
 )
 
-const RCsinger = () => (
-	<div className="Rsg-navi">
-		<h3 className="Rsg-navict">
-			<span style={{float:'left', fontWeight:'bold'}}>入驻歌手</span>
-			<a className="Rsg-sm">查看全部 &gt;</a>
-		</h3>
-		<ul className="Rsg-list">
-			
-		</ul>	
-	</div>
-)
+class RCsinger extends Component{
+	constructor(props){
+		super(props);
+		this.state={
+			singer:[]
+		}
+	};
 
-const Getsinger = () =>(
+	componentWillMount(){
+		let singer =[]
+		let singeritem = this.fetchPicture('/artist/list?cat=5001&limit=5').then(res =>{	
+			for(let i = 0;i<res.artists.length;i++){
+				let info = {
+					nickname:res.artists[i].name,
+					iconUrl:res.artists[i].img1v1Url
+				}
+				singer.push(info)
+			}
+			this.setState({
+				singer:singer
+			})
+		})
+	}
+
+	async fetchSinger(newurl){
+		try{
+			let res = await fetch(`${url}/user/detail?uid=${newurl}`,{withCredentials: true});
+			return res.json()
+		}catch(e){
+			console.log(`err in fetch singer ${newurl}`)
+		}
+	}
+
+	async fetchPicture(newurl){
+		try{
+			let res = await fetch(`${url}${newurl}`,{withCredentials: true});
+			return res.json()
+		}catch(e){
+			console.log(`err in fetch ${newurl}`)
+		}
+	}	
+	render() {
+		return (
+			<div className="Rsg-navi">
+				<h3 className="Rsg-navict">
+					<span style={{float:'left', fontWeight:'bold'}}>入驻歌手</span>
+					<a className="Rsg-sm">查看全部 &gt;</a>
+				</h3>
+				<ul className="Rsg-list">
+					{
+						this.state.singer.map((item,index) =>(
+							<Getsinger key={index} {...item} />
+						)) 
+					} 
+				</ul>	
+			</div>
+		);
+	}
+}
+
+const Getsinger = item =>(
 	<li>
-		<a className="sg-item">
+		<a className="sg-item" href="#">
 			<div className="sg-icon">
-				<img className="sg-icon" src='' />
+				<img className="sg-icon" src={item.iconUrl} />
 			</div>
 			<div className="sg-info">
 				<h4>
-					<span className="sg-id">{}</span>
+					<span className="sg-id">{item.nickname}</span>
 				</h4>
-				<p className="sg-name"></p>
+				<p className="sg-name">音乐人</p>
 			</div>
 		</a>
 	</li>
 )
 
+const NewAlbum = () =>(
+	<div className="LConMain">
+		<div>
+			<div>
+				<div className="LConNavi">
+					<a href="#" className="LCNaviTitle">新碟上架</a>
+					<span className="more" >
+							<a hidefocus="true" href="javascript:void(0)" className="LCNavioption">更多</a>	
+							<i className="moregt">&nbsp;</i>
+					</span>	
+				</div>	
+			</div>
+			<div className="newalbum">
+				<div className="NAinner">
+					<a></a>
+					<a></a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+)
 
 
 const Viewpagecontent = () => (
