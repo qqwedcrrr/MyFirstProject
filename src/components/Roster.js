@@ -97,29 +97,6 @@ class Navitem extends Component{
 	constructor(props){
 		super(props);
 
-		this.handleTagClick = this.handleTagClick.bind(this)
-	}
-
-	handleTagClick(){
-		const url = 'http://localhost:3001'
-		let phone = '15656000329';
-		let password = '493105923';
-		let nowadate = new Date();
-		nowadate = nowadate.getTime();
-		//&timestamp=${nowadate}
-		fetch(`${url}/login/cellphone?phone=${phone}&password=${password}&timestamp=${nowadate}`).then(data =>{
-			console.log(data.json())
-		},()=>{
-			console.log('err')
-		}) // .then(
-			// fetch(`${url}/banner`).then(data =>{
-			// 	let savedata = data.json();
-			// 	console.log(savedata)
-			// },()=>{
-			// 	console.log('err1')
-			// })
-		// )
-		// console.log('tagclick')
 	}
 
 	render(){
@@ -139,7 +116,7 @@ class Navitem extends Component{
 				display:true
 			}
 		return (
-			<li style={{backgroundColor: chooseitem.display ? '#000' : '#242424'}}><span><a onClick={this.handleTagClick}>{text}</a><sub style={{display: chooseitem.display ? "block" : "none"}} className="cor">&nbsp;</sub></span></li>
+			<li style={{backgroundColor: chooseitem.display ? '#000' : '#242424'}}><span><a className="navclick" onClick={onClick}>{text}</a><sub style={{display: chooseitem.display ? "block" : "none"}} className="cor">&nbsp;</sub></span></li>
 		)
 	}
 }

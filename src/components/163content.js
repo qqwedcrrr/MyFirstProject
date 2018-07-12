@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import './componetsCss/163content.css'
 
 
-const url = 'http://localhost:3001';
+//const url = 'http://47.97.214.91:3389';
+const url = 'http://localhost:3001'
 let nowadate = new Date();
 nowadate = nowadate.getTime();
 
@@ -47,6 +48,8 @@ const lcnaviTab = [
 		transition:'none',
 		opacity:'1'
 	}
+	
+	let clock
 	let banner = [];
 	let maxlength = 0;
 
@@ -58,7 +61,8 @@ class Viewpage extends Component{
 			viewpageimg:'',
 			bgcolor:'',
 			fadeInOut:fadeOver,
-			flag:2
+			flag:2,
+			dir:1
 		};
 		this.handlePointClick = this.handlePointClick.bind(this);
 		this.handleLeftClick = this.handleLeftClick.bind(this);
@@ -70,7 +74,6 @@ class Viewpage extends Component{
 		let password = '493105923';
 		let viewPage = this.fetchPicture('/banner').then(res =>{
 			banner = res.banners;
-			console.log(res)
 			maxlength = res.banners.length-1;
 			for(let i = 0; i< maxlength+1;i++){
 				viewPage[i] = new Image();
@@ -78,9 +81,9 @@ class Viewpage extends Component{
 			}
 			this.setState({
 				fadeInOut:fadeIn,
-				viewpageimg:banner[0].picUrl,
-				bgcolor:banner[0].backgroundUrl,
-				url:banner[0].url,
+				viewpageimg:banner[i].picUrl ? banner[i].picUrl : banner[0].picUrl,
+				bgcolor:banner[i].backgroundUrl ? banner[i].backgroundUrl : banner[0].backgroundUrl,
+				url:banner[i].url ? banner[i].url : banner[0].url,
 				flag:1
 			})
 		});
@@ -104,89 +107,110 @@ class Viewpage extends Component{
 			url:banner[i].url,
 			flag:3
 		})
-		console.log(i)
 	}
 
 	handleRightClick(){
-		if(i == maxlength)
-			i=0;
-		else{
-			i+=1;
-		}
+		// if(i == maxlength)
+		// 	i=0;
+		// else{
+		// 	i+=1;
+		// }
+		// this.setState({
+		// 	fadeInOut:fadeIn,
+		// 	viewpageimg:banner[i].picUrl,
+		// 	bgcolor:banner[i].backgroundUrl,
+		// 	url:banner[i].url,
+		// 	flag:1
+		// })
+		clearInterval(clock)
 		this.setState({
-			fadeInOut:fadeIn,
-			viewpageimg:banner[i].picUrl,
-			bgcolor:banner[i].backgroundUrl,
-			url:banner[i].url,
-			flag:1
+			flag:2
+		},()=>{
+		this.showfade()
 		})
 
 	}
 
 	handleLeftClick(){
-		if(i == 0){
-			i = maxlength;
-		}
-		else
-			i-=1;
+		clearInterval(clock)
 		this.setState({
-			fadeInOut:fadeIn,
-			viewpageimg:banner[i].picUrl,
-			bgcolor:banner[i].backgroundUrl,
-			url:banner[i].url,
-			flag:3
+			dir:-1,
+			flag:2
+		},()=>{
+		this.showfade()
 		})
-
 	}
 
 	
 
 	componentDidMount() {
-		this.timeId = setInterval(
+		clock = setInterval(
 		i=>this.showfade(), 1000)
-	
   	}
+
+
     componentWillUnmount() {
-    	clearInterval(this.timeId)
+    	clearInterval(clock)
   	}
   	showfade(){
+  		clearInterval(clock)
   		switch(this.state.flag){
 			case 1:
-	    		this.fadein();		
+				
+	    		this.fadein().then(
+						clock = setTimeout(()=>{
+							this.showfade()
+						}, 1000)
+	    		);		
 	    		break;
 	    	case 2:
 	    		this.fadeout().then(
-					i == maxlength ? i=0 : i++,
-				);  
+						clock = setTimeout(()=>{
+							this.showfade()
+						}, 1000)
+	    		);  
 	    		break;
 	    	case 3:
 	    		this.tick().then(
-	    			clearInterval(this.timeId)).then(
-						setTimeout(()=>{
-							this.timeId = setInterval(
-							i=>this.showfade(), 1000)
+						clock = setTimeout(()=>{
+							this.showfade()
 						}, 3000)
 	    		);
 	    		break;
 		}
   	}
 	fadein() {
-		this.setState({
+		return new Promise((resolve,reject)=>{
+			this.setState({
 			fadeInOut:fadeIn,
 			viewpageimg:banner[i].picUrl,
 			bgcolor:banner[i].backgroundUrl,
 			url:banner[i].url,
 			flag:3
+			})
 		})
 	}
 
 	fadeout(){
-		return new Promise((resolve,reject)=>{
-			this.setState({
-				fadeInOut:fadeOut,
-				flag:1
+		if(this.state.dir>0){
+    		i == maxlength ? i=0 : i++
+    		return new Promise((resolve,reject)=>{
+				this.setState({
+					fadeInOut:fadeOut,
+					flag:1
+				})
 			})
-		})
+    	}else{
+    		i == 0 ? i = maxlength : i--
+    		return new Promise((resolve,reject)=>{
+				this.setState({
+					fadeInOut:fadeOut,
+					flag:1,
+					dir:1
+				})
+			})
+    	}
+		
 	}
 
     tick() {
@@ -450,14 +474,30 @@ const NewAlbum = () =>(
 			</div>
 			<div className="newalbum">
 				<div className="NAinner">
-					<a></a>
-					<a></a>
+					<Albumlist />
 				</div>
 			</div>
 		</div>
 	</div>
-
 )
+
+class Albumlist extends Component{
+	constructor(props){
+		super(props)
+	};
+
+	render(){
+		return (
+			<div>
+				<a hidefocus="true" className="Albumleft"></a>
+					<ul>
+						
+					</ul>
+				<a hidefocus="true" className="Albumright"></a>
+			</div>
+		)
+	}
+}
 
 
 const Viewpagecontent = () => (
