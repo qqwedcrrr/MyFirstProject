@@ -476,6 +476,9 @@ class Albumlist extends Component{
 		this.state={
 			Album:[]
 		}
+
+		this.handleLeftClick = this.handleLeftClick.bind(this)
+		this.handleRightClick = this.handleRightClick.bind(this)
 	};
 
 	componentWillMount(){
@@ -502,7 +505,16 @@ class Albumlist extends Component{
 		}catch(e){
 			console.log(`err in fetch ${newurl}`)
 		}
+	}
+
+	handleLeftClick(){
+
 	}	
+	
+	handleRightClick(){
+
+	}
+
 
 	render(){
 		if(this.state.Album == []){
@@ -511,15 +523,17 @@ class Albumlist extends Component{
 		else
 		return (
 			<div>
-				<a hidefocus="true" className="Albumleft"></a>
-					<ul style={{margin:'30px 10px 0 10px',height:'150px',overflow:'hidden'}}>
+				<a onClick={this.handleLeftClick} hidefocus="true" className="Albumleft"></a>
+				<div className="albshowdiv" >
+					<ul className="albshowul">
 						{
 							this.state.Album.map((data,index)=>(
 								<Albumitem key={index} {...data} />
 							))	
 						}
 					</ul>
-				<a hidefocus="true" className="Albumright"></a>
+				</div>
+				<a onClick={this.handleLeftClick} hidefocus="true" className="Albumright"></a>
 			</div>
 		)
 	}

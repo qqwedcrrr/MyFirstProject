@@ -367,7 +367,7 @@
 	display: inline;
 	width: 118px;
 	height: 150px;
-	margin-left: 11px;
+	margin-left: 10px;
 	background: url('./../../resource/LContent.png') no-repeat;
 	background-position: -260px 100px;
 }
@@ -378,8 +378,12 @@
 	background-position: 0 -570px;	
 }
 .ablock{
+	width: 100px;
+	white-space: nowrap;
+	overflow: hidden;
 	display: block;
 	margin-top: 5px;
+	text-overflow: ellipsis;
 }
 .albumname{
 	margin-top: 20px;
@@ -387,4 +391,17 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: 100px;
+}
+.albshowdiv{
+	width: 645px;
+	margin:30px 20px 0 15px;
+	overflow: hidden;
+	float: left;
+}
+.albshowul{
+	width: 800px;
+	height: 150px;
+	overflow: hidden;
+	display: inline;
+	float: left;
 }
