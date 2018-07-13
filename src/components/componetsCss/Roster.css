@@ -123,6 +123,9 @@ li>span>a {
     width: 158px;
     height: 32px;
 }
+.navclick{
+    display: block;
+}
 
 .schparent{
 	display: block;

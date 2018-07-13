@@ -35,11 +35,8 @@ var nowDay = new Date();
 
 const Home = () => (
   <div>
-					<div>
-						{days}
-					</div>
 				  <div>
-				    <h1>Welcome to the Tornadoes Website!</h1>
+				    <h1 style={{fontSize:'30px'}}>Welcome to the Zitao Personal Website!</h1>
 				  </div>
 				</div>
 )
