@@ -517,7 +517,6 @@ class Albumlist extends Component{
 	handleLeftClick(){
 		let coord = this.state.coord;
 		coord+=645
-		let list = this.state.Album;
 		const moveLeft = 'left 1s ease-out 0s'
 		this.setState({
 			move:moveLeft,
@@ -530,7 +529,6 @@ class Albumlist extends Component{
 	handleRightClick(){
 		let coord = this.state.coord;
 		coord-=645
-		let list = this.state.Album;
 		const moveLeft = 'left 1s ease-out 0s'
 		this.setState({
 			move:moveLeft,
@@ -541,7 +539,6 @@ class Albumlist extends Component{
 	}
 
 	onTransitionEnd(){
-		console.log(this.state.dir)
 		const nomove = 'none'
 		let coord = this.state.coord;
 		let list = this.state.Album;		
@@ -567,15 +564,15 @@ class Albumlist extends Component{
 		return (
 			<div>
 				<a onClick={this.handleLeftClick} disabled={this.state.disabled}  hidefocus="true" className="Albumleft"></a>
-					<div className="albcontainer">
-						<ul style={{transition:`${this.state.move}`,left:`${this.state.coord}px`}} onTransitionEnd={this.onTransitionEnd} ref="albumlist" className="alb-list">
-							{
-								this.state.Album.map((data,index)=>(
-									<Albumitem key={index} {...data} />
-								))	
-							}
-						</ul>
-					</div>
+				<div className="albcontainer">
+					<ul style={{transition:`${this.state.move}`,left:`${this.state.coord}px`}} onTransitionEnd={this.onTransitionEnd} ref="albumlist" className="alb-list">
+						{
+							this.state.Album.map((data,index)=>(
+								<Albumitem key={index} {...data} />
+							))	
+						}
+					</ul>
+				</div>
 				<a onClick={this.handleRightClick} disabled={this.state.disabled} hidefocus="true" className="Albumright"></a>
 			</div>
 		)
