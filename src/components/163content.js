@@ -486,7 +486,10 @@ class Albumlist extends Component{
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		let imgs = []
+=======
+>>>>>>> parent of c7c06dd1... new update
 =======
 >>>>>>> parent of c7c06dd1... new update
 =======
@@ -522,7 +525,10 @@ class Albumlist extends Component{
 <<<<<<< HEAD
 		let coord = this.state.coord;
 		coord+=645
+<<<<<<< HEAD
 		let list = this.state.Album;
+=======
+>>>>>>> parent of c7c06dd1... new update
 		const moveLeft = 'left 1s ease-out 0s'
 		this.setState({
 			move:moveLeft,
@@ -540,7 +546,10 @@ class Albumlist extends Component{
 <<<<<<< HEAD
 		let coord = this.state.coord;
 		coord-=645
+<<<<<<< HEAD
 		let list = this.state.Album;
+=======
+>>>>>>> parent of c7c06dd1... new update
 		const moveLeft = 'left 1s ease-out 0s'
 		this.setState({
 			move:moveLeft,
@@ -588,10 +597,14 @@ class Albumlist extends Component{
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				<a onClick={this.handleLeftClick}  hidefocus="true" className="Albumleft"></a>
 =======
 				<a onClick={this.handleLeftClick} disabled={this.state.disabled}  hidefocus="true" className="Albumleft"></a>
 <<<<<<< HEAD
+>>>>>>> parent of c7c06dd1... new update
+=======
+				<a onClick={this.handleLeftClick} disabled={this.state.disabled}  hidefocus="true" className="Albumleft"></a>
 >>>>>>> parent of c7c06dd1... new update
 =======
 				<a onClick={this.handleLeftClick} disabled={this.state.disabled}  hidefocus="true" className="Albumleft"></a>
@@ -610,6 +623,7 @@ class Albumlist extends Component{
 						}
 					</ul>
 				</div>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -632,6 +646,9 @@ class Albumlist extends Component{
 						</ul>
 					</div>
 >>>>>>> parent of 686b60fe... new update
+				<a onClick={this.handleRightClick} disabled={this.state.disabled} hidefocus="true" className="Albumright"></a>
+>>>>>>> parent of c7c06dd1... new update
+=======
 				<a onClick={this.handleRightClick} disabled={this.state.disabled} hidefocus="true" className="Albumright"></a>
 >>>>>>> parent of c7c06dd1... new update
 			</div>
