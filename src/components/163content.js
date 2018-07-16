@@ -488,6 +488,7 @@ class Albumlist extends Component{
 
 	componentWillMount(){
 		let Album =[]
+		let imgs = []
 		let Albumitem = this.fetchPicture('/top/album?offset=0&limit=10').then(res =>{	
 			for(let i = 0;i<res.albums.length;i++){
 				let info = {
@@ -495,6 +496,8 @@ class Albumlist extends Component{
 					alumname:res.albums[i].name,
 					iconUrl:res.albums[i].picUrl
 				}
+				let img = new Image();
+				img.src = info.iconUrl;
 				Album.push(info)
 			}
 			
@@ -516,26 +519,32 @@ class Albumlist extends Component{
 
 	handleLeftClick(){
 		let coord = this.state.coord;
-		coord+=645
-		const moveLeft = 'left 1s ease-out 0s'
-		this.setState({
-			move:moveLeft,
-			coord:coord,
-			dir:'Left',
-			disabled:'disabled'
-		})
+		let disabled = this.state.disabled
+		if(disabled != 'disabled'){
+			coord+=645
+			const moveLeft = 'left 1s ease-out 0s'
+			this.setState({
+				move:moveLeft,
+				coord:coord,
+				dir:'Left',
+				disabled:'disabled'
+			})
+		}
 	}
 
 	handleRightClick(){
 		let coord = this.state.coord;
-		coord-=645
-		const moveLeft = 'left 1s ease-out 0s'
-		this.setState({
-			move:moveLeft,
-			coord:coord,
-			dir:'right',
-			disabled:'disabled'
-		})
+		let disabled = this.state.disabled
+		if(disabled != 'disabled'){
+			coord-=645
+			const moveLeft = 'left 1s ease-out 0s'
+			this.setState({
+				move:moveLeft,
+				coord:coord,
+				dir:'right',
+				disabled:'disabled'
+			})
+		}
 	}
 
 	onTransitionEnd(){
@@ -563,7 +572,7 @@ class Albumlist extends Component{
 	
 		return (
 			<div>
-				<a onClick={this.handleLeftClick} disabled={this.state.disabled}  hidefocus="true" className="Albumleft"></a>
+				<a onClick={this.handleLeftClick}  hidefocus="true" className="Albumleft"></a>
 				<div className="albcontainer">
 					<ul style={{transition:`${this.state.move}`,left:`${this.state.coord}px`}} onTransitionEnd={this.onTransitionEnd} ref="albumlist" className="alb-list">
 						{
@@ -573,7 +582,7 @@ class Albumlist extends Component{
 						}
 					</ul>
 				</div>
-				<a onClick={this.handleRightClick} disabled={this.state.disabled} hidefocus="true" className="Albumright"></a>
+				<a onClick={this.handleRightClick} hidefocus="true" className="Albumright"></a>
 			</div>
 		)
 	}
