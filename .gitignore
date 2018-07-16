@@ -3,3 +3,7 @@ node_modules/.bin/atob.cmd
 node_modules/
 build/
 cmd.exe
+public/manifest.json
+public/favicon.ico
+public/index.html
+public/manifest.json
