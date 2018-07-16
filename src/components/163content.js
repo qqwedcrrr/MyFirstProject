@@ -522,6 +522,7 @@ class Albumlist extends Component{
 <<<<<<< HEAD
 		let coord = this.state.coord;
 		coord+=645
+		let list = this.state.Album;
 		const moveLeft = 'left 1s ease-out 0s'
 		this.setState({
 			move:moveLeft,
@@ -539,6 +540,7 @@ class Albumlist extends Component{
 <<<<<<< HEAD
 		let coord = this.state.coord;
 		coord-=645
+		let list = this.state.Album;
 		const moveLeft = 'left 1s ease-out 0s'
 		this.setState({
 			move:moveLeft,
@@ -550,6 +552,29 @@ class Albumlist extends Component{
 =======
 >>>>>>> b7cb5168c667dfbf04bb847126903681f5bc1c75
 
+<<<<<<< HEAD
+=======
+	onTransitionEnd(){
+		console.log(this.state.dir)
+		const nomove = 'none'
+		let coord = this.state.coord;
+		let list = this.state.Album;		
+		if(this.state.dir == "right"){
+			coord+=645
+			list.splice(list.length,0,list[5],list[6],list[7],list[8],list[9])
+			list.splice(0,5)
+		}else{
+			coord-=645
+			list.splice(0,0,list[5],list[6],list[7],list[8],list[9])
+			list.splice(10,5)
+		}
+			this.setState({
+				Album:list,	
+				coord:coord,
+				move:nomove,
+				disabled:'false'
+		})	
+>>>>>>> parent of 686b60fe... new update
 	}
 
 
@@ -566,6 +591,7 @@ class Albumlist extends Component{
 				<a onClick={this.handleLeftClick}  hidefocus="true" className="Albumleft"></a>
 =======
 				<a onClick={this.handleLeftClick} disabled={this.state.disabled}  hidefocus="true" className="Albumleft"></a>
+<<<<<<< HEAD
 >>>>>>> parent of c7c06dd1... new update
 =======
 				<a onClick={this.handleLeftClick} disabled={this.state.disabled}  hidefocus="true" className="Albumleft"></a>
@@ -595,6 +621,17 @@ class Albumlist extends Component{
 				<a onClick={this.handleRightClick} disabled={this.state.disabled} hidefocus="true" className="Albumright"></a>
 >>>>>>> parent of c7c06dd1... new update
 =======
+=======
+					<div className="albcontainer">
+						<ul style={{transition:`${this.state.move}`,left:`${this.state.coord}px`}} onTransitionEnd={this.onTransitionEnd} ref="albumlist" className="alb-list">
+							{
+								this.state.Album.map((data,index)=>(
+									<Albumitem key={index} {...data} />
+								))	
+							}
+						</ul>
+					</div>
+>>>>>>> parent of 686b60fe... new update
 				<a onClick={this.handleRightClick} disabled={this.state.disabled} hidefocus="true" className="Albumright"></a>
 >>>>>>> parent of c7c06dd1... new update
 			</div>
