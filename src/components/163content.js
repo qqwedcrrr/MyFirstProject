@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import './componetsCss/163content.css'
 
 
-const url = 'http://47.97.214.91:3389';
-
+//const url = 'http://47.97.214.91:3389';
+const url = 'http://localhost:3001'
 let nowadate = new Date();
 nowadate = nowadate.getTime();
 
@@ -48,7 +48,6 @@ const lcnaviTab = [
 		transition:'none',
 		opacity:'1'
 	}
-	
 	
 	let clock
 	let banner = [];
@@ -470,26 +469,26 @@ const NewAlbum = () =>(
 		</div>
 	</div>
 )
+
 class Albumlist extends Component{
 	constructor(props){
 		super(props)
 		this.state={
-			Album:[],
-			move:fadeOver,
-			dir:'',
-			coord:-645,
-			disabled:'false'
+			Album:[]
 		}
 
 		this.handleLeftClick = this.handleLeftClick.bind(this)
 		this.handleRightClick = this.handleRightClick.bind(this)
-		this.onTransitionEnd = this.onTransitionEnd.bind(this)
 	};
 
 	componentWillMount(){
 		let Album =[]
+<<<<<<< HEAD
 		let imgs = []
 		let Albumitem = this.fetchPicture('/top/album?offset=0&limit=10').then(res =>{	
+=======
+		let Albumitem = this.fetchPicture('/top/album?offset=0&limit=20').then(res =>{	
+>>>>>>> b7cb5168c667dfbf04bb847126903681f5bc1c75
 			for(let i = 0;i<res.albums.length;i++){
 				let info = {
 					singername:res.albums[i].artist.name,
@@ -500,8 +499,6 @@ class Albumlist extends Component{
 				img.src = info.iconUrl;
 				Album.push(info)
 			}
-			
-			Album.splice(10,0,Album[0],Album[1],Album[2],Album[3],Album[4])
 			this.setState({
 				Album:Album
 			})
@@ -515,9 +512,10 @@ class Albumlist extends Component{
 		}catch(e){
 			console.log(`err in fetch ${newurl}`)
 		}
-	}	
+	}
 
 	handleLeftClick(){
+<<<<<<< HEAD
 		let coord = this.state.coord;
 		let disabled = this.state.disabled
 		if(disabled != 'disabled'){
@@ -531,8 +529,13 @@ class Albumlist extends Component{
 			})
 		}
 	}
+=======
+>>>>>>> b7cb5168c667dfbf04bb847126903681f5bc1c75
 
+	}	
+	
 	handleRightClick(){
+<<<<<<< HEAD
 		let coord = this.state.coord;
 		let disabled = this.state.disabled
 		if(disabled != 'disabled'){
@@ -546,35 +549,28 @@ class Albumlist extends Component{
 			})
 		}
 	}
+=======
+>>>>>>> b7cb5168c667dfbf04bb847126903681f5bc1c75
 
-	onTransitionEnd(){
-		const nomove = 'none'
-		let coord = this.state.coord;
-		let list = this.state.Album;		
-		if(this.state.dir == "right"){
-			coord+=645
-			list.splice(list.length,0,list[5],list[6],list[7],list[8],list[9])
-			list.splice(0,5)
-		}else{
-			coord-=645
-			list.splice(0,0,list[5],list[6],list[7],list[8],list[9])
-			list.splice(10,5)
-		}
-			this.setState({
-				Album:list,	
-				coord:coord,
-				move:nomove,
-				disabled:'false'
-		})	
 	}
 
+
 	render(){
-	
+		if(this.state.Album == []){
+			return <div></div>
+		}
+		else
 		return (
 			<div>
+<<<<<<< HEAD
 				<a onClick={this.handleLeftClick}  hidefocus="true" className="Albumleft"></a>
 				<div className="albcontainer">
 					<ul style={{transition:`${this.state.move}`,left:`${this.state.coord}px`}} onTransitionEnd={this.onTransitionEnd} ref="albumlist" className="alb-list">
+=======
+				<a onClick={this.handleLeftClick} hidefocus="true" className="Albumleft"></a>
+				<div className="albshowdiv" >
+					<ul className="albshowul">
+>>>>>>> b7cb5168c667dfbf04bb847126903681f5bc1c75
 						{
 							this.state.Album.map((data,index)=>(
 								<Albumitem key={index} {...data} />
@@ -582,7 +578,11 @@ class Albumlist extends Component{
 						}
 					</ul>
 				</div>
+<<<<<<< HEAD
 				<a onClick={this.handleRightClick} hidefocus="true" className="Albumright"></a>
+=======
+				<a onClick={this.handleLeftClick} hidefocus="true" className="Albumright"></a>
+>>>>>>> b7cb5168c667dfbf04bb847126903681f5bc1c75
 			</div>
 		)
 	}
