@@ -484,7 +484,10 @@ class Albumlist extends Component{
 	componentWillMount(){
 		let Album =[]
 <<<<<<< HEAD
+<<<<<<< HEAD
 		let imgs = []
+=======
+>>>>>>> parent of c7c06dd1... new update
 		let Albumitem = this.fetchPicture('/top/album?offset=0&limit=10').then(res =>{	
 =======
 		let Albumitem = this.fetchPicture('/top/album?offset=0&limit=20').then(res =>{	
@@ -495,8 +498,6 @@ class Albumlist extends Component{
 					alumname:res.albums[i].name,
 					iconUrl:res.albums[i].picUrl
 				}
-				let img = new Image();
-				img.src = info.iconUrl;
 				Album.push(info)
 			}
 			this.setState({
@@ -517,17 +518,14 @@ class Albumlist extends Component{
 	handleLeftClick(){
 <<<<<<< HEAD
 		let coord = this.state.coord;
-		let disabled = this.state.disabled
-		if(disabled != 'disabled'){
-			coord+=645
-			const moveLeft = 'left 1s ease-out 0s'
-			this.setState({
-				move:moveLeft,
-				coord:coord,
-				dir:'Left',
-				disabled:'disabled'
-			})
-		}
+		coord+=645
+		const moveLeft = 'left 1s ease-out 0s'
+		this.setState({
+			move:moveLeft,
+			coord:coord,
+			dir:'Left',
+			disabled:'disabled'
+		})
 	}
 =======
 >>>>>>> b7cb5168c667dfbf04bb847126903681f5bc1c75
@@ -537,17 +535,14 @@ class Albumlist extends Component{
 	handleRightClick(){
 <<<<<<< HEAD
 		let coord = this.state.coord;
-		let disabled = this.state.disabled
-		if(disabled != 'disabled'){
-			coord-=645
-			const moveLeft = 'left 1s ease-out 0s'
-			this.setState({
-				move:moveLeft,
-				coord:coord,
-				dir:'right',
-				disabled:'disabled'
-			})
-		}
+		coord-=645
+		const moveLeft = 'left 1s ease-out 0s'
+		this.setState({
+			move:moveLeft,
+			coord:coord,
+			dir:'right',
+			disabled:'disabled'
+		})
 	}
 =======
 >>>>>>> b7cb5168c667dfbf04bb847126903681f5bc1c75
@@ -563,7 +558,11 @@ class Albumlist extends Component{
 		return (
 			<div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 				<a onClick={this.handleLeftClick}  hidefocus="true" className="Albumleft"></a>
+=======
+				<a onClick={this.handleLeftClick} disabled={this.state.disabled}  hidefocus="true" className="Albumleft"></a>
+>>>>>>> parent of c7c06dd1... new update
 				<div className="albcontainer">
 					<ul style={{transition:`${this.state.move}`,left:`${this.state.coord}px`}} onTransitionEnd={this.onTransitionEnd} ref="albumlist" className="alb-list">
 =======
@@ -579,10 +578,14 @@ class Albumlist extends Component{
 					</ul>
 				</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 				<a onClick={this.handleRightClick} hidefocus="true" className="Albumright"></a>
 =======
 				<a onClick={this.handleLeftClick} hidefocus="true" className="Albumright"></a>
 >>>>>>> b7cb5168c667dfbf04bb847126903681f5bc1c75
+=======
+				<a onClick={this.handleRightClick} disabled={this.state.disabled} hidefocus="true" className="Albumright"></a>
+>>>>>>> parent of c7c06dd1... new update
 			</div>
 		)
 	}
