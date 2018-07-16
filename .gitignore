@@ -1,3 +1,14 @@
 
+<<<<<<< HEAD
 node_modules/.cache/babel-loader/4a17eb5390e9c1b34d30ce8877d03870e6506cc7.json.gz
 node_modules/
+=======
+node_modules/.bin/atob.cmd
+node_modules/
+build/
+cmd.exe
+public/manifest.json
+public/favicon.ico
+public/index.html
+public/manifest.json
+>>>>>>> bussines
