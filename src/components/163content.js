@@ -485,7 +485,10 @@ class Albumlist extends Component{
 		let Album =[]
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		let imgs = []
+=======
+>>>>>>> parent of c7c06dd1... new update
 =======
 >>>>>>> parent of c7c06dd1... new update
 		let Albumitem = this.fetchPicture('/top/album?offset=0&limit=10').then(res =>{	
@@ -559,7 +562,11 @@ class Albumlist extends Component{
 			<div>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				<a onClick={this.handleLeftClick}  hidefocus="true" className="Albumleft"></a>
+=======
+				<a onClick={this.handleLeftClick} disabled={this.state.disabled}  hidefocus="true" className="Albumleft"></a>
+>>>>>>> parent of c7c06dd1... new update
 =======
 				<a onClick={this.handleLeftClick} disabled={this.state.disabled}  hidefocus="true" className="Albumleft"></a>
 >>>>>>> parent of c7c06dd1... new update
@@ -579,10 +586,14 @@ class Albumlist extends Component{
 				</div>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				<a onClick={this.handleRightClick} hidefocus="true" className="Albumright"></a>
 =======
 				<a onClick={this.handleLeftClick} hidefocus="true" className="Albumright"></a>
 >>>>>>> b7cb5168c667dfbf04bb847126903681f5bc1c75
+=======
+				<a onClick={this.handleRightClick} disabled={this.state.disabled} hidefocus="true" className="Albumright"></a>
+>>>>>>> parent of c7c06dd1... new update
 =======
 				<a onClick={this.handleRightClick} disabled={this.state.disabled} hidefocus="true" className="Albumright"></a>
 >>>>>>> parent of c7c06dd1... new update
