@@ -515,7 +515,6 @@ class Albumlist extends Component{
 	}
 
 	handleLeftClick(){
-		console.log(this.state)
 		let coord = this.state.coord;
 		let disabled = this.state.disabled
 		if(disabled != 'disabled'){
