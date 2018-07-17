@@ -31,7 +31,6 @@ function todolist(state = [], action){
 }
 
 function navchooser(state = {id:null, chooseid:null }, action){
-	const chooseid = state.chooseid
 	switch (action.type) {	
 		case 'nav_choose': 
 			if(action.id === 1)

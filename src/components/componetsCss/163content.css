@@ -122,7 +122,7 @@
 	margin-right: 251px;
 }
 .LConMain>div{
-	padding: 20px 20px 40px;
+	padding: 20px 20px 20px;
 }
 
 .LConNavi{
@@ -145,6 +145,7 @@
 }
 .LCNavioption{
 	color:#666;
+	margin-right: 4px;
 }
 .LCNavioption:hover{
 	text-decoration: underline;
@@ -164,6 +165,7 @@
 	height: 12px;
 	background: url('./../../resource/LContent.png') no-repeat;
 	background-position: 0px -240px;
+	vertical-align: middle;
 }
 .LCcontent{
 	margin: 20px 0 0 -42px;
@@ -407,4 +409,14 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: 100px;
+}
+.song-list{
+	height: 472px;
+	margin-top: 20px;
+	padding-left: 1px;
+	background: url('./../../resource/songlist.png')
+}
+.songlist-header{
+	height: 100px;
+	padding: 20px 0 0 19px;
 }

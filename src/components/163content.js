@@ -2,10 +2,14 @@ import React, { Component } from 'react'
 import './componetsCss/163content.css'
 
 
-const url = 'http://47.97.214.91:3389';
-//const url = 'http://localhost:3001'
+//const url = 'http://47.97.214.91:3389';
+const url = 'http://localhost:3001'
 let nowadate = new Date();
 nowadate = nowadate.getTime();
+let i = 0;
+let clock
+let banner = [];
+let maxlength = 0;
 
 const lcnaviTab = [
 	{
@@ -35,24 +39,27 @@ const lcnaviTab = [
 	},
 ]
 
-	var i = 0;
-	const fadeIn = {
-		transition:'opacity 1s ease-in 0s',
-		opacity:'1'
-	}
-	const fadeOut = {
-		transition:'opacity 1s ease-out 0s',
-		opacity:'0.2'
-	}
-	const fadeOver = {
-		transition:'none',
-		opacity:'1'
-	}
-	
-	let clock
-	let banner = [];
-	let maxlength = 0;
+const fadeIn = {
+	transition:'opacity 1s ease-in 0s',
+	opacity:'1'
+}
+const fadeOut = {
+	transition:'opacity 1s ease-out 0s',
+	opacity:'0.2'
+}
+const fadeOver = {
+	transition:'none',
+	opacity:'1'
+}
 
+async function fetchPicture(newurl){
+	try{
+		let res = await fetch(`${url}${newurl}`,{withCredentials: true});
+		return res.json()
+	}catch(e){
+		console.log(`err in fetch ${newurl}`)
+	}
+}
 
 class Viewpage extends Component{
 	constructor(props){
@@ -70,9 +77,9 @@ class Viewpage extends Component{
 	};
 
 	componentWillMount() {
-		let phone = '15656000329';
-		let password = '493105923';
-		let viewPage = this.fetchPicture('/banner').then(res =>{
+		// let phone = '15656000329';
+		// let password = '493105923';
+		let viewPage = fetchPicture('/banner').then(res =>{
 			banner = res.banners;
 			maxlength = res.banners.length-1;
 			for(let i = 0; i< maxlength+1;i++){
@@ -89,15 +96,6 @@ class Viewpage extends Component{
 		});
 	}
 
-	async fetchPicture(newurl){
-		try{
-			let res = await fetch(`${url}${newurl}?timestamp=${nowadate}`,{withCredentials: true});
-			return res.json()
-		}catch(e){
-			console.log(`err in fetch ${newurl}`)
-		}
-	}
-
 	handlePointClick(id){
 		i = id;
 		this.setState({
@@ -110,18 +108,6 @@ class Viewpage extends Component{
 	}
 
 	handleRightClick(){
-		// if(i == maxlength)
-		// 	i=0;
-		// else{
-		// 	i+=1;
-		// }
-		// this.setState({
-		// 	fadeInOut:fadeIn,
-		// 	viewpageimg:banner[i].picUrl,
-		// 	bgcolor:banner[i].backgroundUrl,
-		// 	url:banner[i].url,
-		// 	flag:1
-		// })
 		clearInterval(clock)
 		this.setState({
 			flag:2
@@ -141,13 +127,10 @@ class Viewpage extends Component{
 		})
 	}
 
-	
-
 	componentDidMount() {
 		clock = setInterval(
 		i=>this.showfade(), 1000)
   	}
-
 
     componentWillUnmount() {
     	clearInterval(clock)
@@ -176,6 +159,9 @@ class Viewpage extends Component{
 						}, 3000)
 	    		);
 	    		break;
+	    	default: 
+	    		console.log("err")
+	    		break;
 		}
   	}
 	fadein() {
@@ -192,7 +178,7 @@ class Viewpage extends Component{
 
 	fadeout(){
 		if(this.state.dir>0){
-    		i == maxlength ? i=0 : i++
+    		i === maxlength ? i=0 : i++
     		return new Promise((resolve,reject)=>{
 				this.setState({
 					fadeInOut:fadeOut,
@@ -200,7 +186,7 @@ class Viewpage extends Component{
 				})
 			})
     	}else{
-    		i == 0 ? i = maxlength : i--
+    		i === 0 ? i = maxlength : i--
     		return new Promise((resolve,reject)=>{
 				this.setState({
 					fadeInOut:fadeOut,
@@ -229,7 +215,7 @@ class Viewpage extends Component{
 				<div className="wrap">
 					<div className="VPleft">
 						<a className="logoAtag" hidefocus="true" href={this.state.url} >
-						<img src={this.state.viewpageimg} style={this.state.fadeInOut} width="730" height="336" />
+						<img src={this.state.viewpageimg} style={this.state.fadeInOut} width="730" height="336" alt="" />
 						</a>
 						<a hidefocus="true" href="javascript:void(0)" className="viewPageL" onClick={e=>{this.handleLeftClick()}}>&lt;</a>	
 						<a hidefocus="true" href="javascript:void(0)" className="viewPageR" onClick={e=>{this.handleRightClick()}}>&gt;</a>
@@ -256,7 +242,7 @@ class Viewpage extends Component{
 }
 
 const ViewpagePoint = ({onClick, pointid, dataIndex}) => (
-	<a hidefocus="true" href="javascript:void(0)" className="viewpagePoint" onClick={onClick} style={{ backgroundPosition: dataIndex == pointid ? '-16px -343px' : '3px -343px'}}></a>
+	<a hidefocus="true" href="javascript:void(0)" className="viewpagePoint" onClick={onClick} style={{ backgroundPosition: dataIndex === pointid ? '-16px -343px' : '3px -343px'}}></a>
 )
 
 class Lcontent extends Component{	
@@ -270,7 +256,7 @@ class Lcontent extends Component{
 	};
 
 	componentWillMount(){
-		let contentitem = this.fetchPicture(`/top/playlist?limit=8&order=hot?timestamp=${nowadate}`).then(res =>{
+		fetchPicture(`/top/playlist?limit=8&order=hot?timestamp=${nowadate}`).then(res =>{
 			let playlist = res.playlists;
 			let content = [];
 			for(let i = 0;i<res.playlists.length;i++){
@@ -284,15 +270,6 @@ class Lcontent extends Component{
 			}
 		})	
 	}
-
-	async fetchPicture(newurl){
-		try{
-			let res = await fetch(`${url}${newurl}`,{withCredentials: true});
-			return res.json()
-		}catch(e){
-			console.log(`err in fetch ${newurl}`)
-		}
-	}	
 
 	render(){
 		return (
@@ -330,7 +307,7 @@ class Lcontent extends Component{
 const LCNaviTab = ({onClick, item}) => (
 	<div style={{display:'inline'}}>
 		<a hidefocus="true" href="javascript:void(0)" className="LCNavioption" onClick={onClick}>{item.text}</a>
-		<span className="line" style={{display:item.id == 5 ? 'none': 'inline'}}>|</span>
+		<span className="line" style={{display:item.id === 5 ? 'none': 'inline'}}>|</span>
 	</div>
 )
 
@@ -374,6 +351,7 @@ const Maincontent = () => (
 			<div style={{float:'left',width:'100%',marginRight:'-250px', position:'relative'}}>
 				<Lcontent />
 				<NewAlbum />
+				<Songlist />
 			</div>
 			<div className="RCborder">
 				<Rcontent />
@@ -392,7 +370,7 @@ class RCsinger extends Component{
 
 	componentWillMount(){
 		let singer =[]
-		let singeritem = this.fetchPicture('/artist/list?cat=5001&limit=5').then(res =>{	
+		fetchPicture('/artist/list?cat=5001&limit=5').then(res =>{	
 			for(let i = 0;i<res.artists.length;i++){
 				let info = {
 					nickname:res.artists[i].name,
@@ -405,15 +383,7 @@ class RCsinger extends Component{
 			})
 		})
 	}
-
-	async fetchPicture(newurl){
-		try{
-			let res = await fetch(`${url}${newurl}`,{withCredentials: true});
-			return res.json()
-		}catch(e){
-			console.log(`err in fetch ${newurl}`)
-		}
-	}	
+	
 	render() {
 		return (
 			<div className="Rsg-navi">
@@ -437,7 +407,7 @@ const Getsinger = item =>(
 	<li>
 		<a className="sg-item" href="#">
 			<div className="sg-icon">
-				<img className="sg-icon" src={item.iconUrl} />
+				<img className="sg-icon" src={item.iconUrl} width="" height="" alt="" />
 			</div>
 			<div className="sg-info">
 				<h4>
@@ -488,7 +458,7 @@ class Albumlist extends Component{
 	componentWillMount(){
 		let Album =[]
 		let imgs = []
-		let Albumitem = this.fetchPicture('/top/album?offset=0&limit=10').then(res =>{	
+		fetchPicture('/top/album?offset=0&limit=10').then(res =>{	
 			for(let i = 0;i<res.albums.length;i++){
 				let info = {
 					singername:res.albums[i].artist.name,
@@ -499,25 +469,17 @@ class Albumlist extends Component{
 				img.src = info.iconUrl;
 				Album.push(info)
 			}
+			Album.push(Album[0],Album[1],Album[2],Album[3],Album[4])
 			this.setState({
 				Album:Album
 			})
 		})
 	}
 
-	async fetchPicture(newurl){
-		try{
-			let res = await fetch(`${url}${newurl}`,{withCredentials: true});
-			return res.json()
-		}catch(e){
-			console.log(`err in fetch ${newurl}`)
-		}
-	}
-
 	handleLeftClick(){
 		let coord = this.state.coord;
 		let disabled = this.state.disabled
-		if(disabled != 'disabled'){
+		if(disabled !== 'disabled'){
 			coord+=645
 			const moveLeft = 'left 1s ease-out 0s'
 			this.setState({
@@ -533,7 +495,7 @@ class Albumlist extends Component{
 	handleRightClick(){
 		let coord = this.state.coord;
 		let disabled = this.state.disabled
-		if(disabled != 'disabled'){
+		if(disabled !== 'disabled'){
 			coord-=645
 			const moveLeft = 'left 1s ease-out 0s'
 			this.setState({
@@ -545,13 +507,11 @@ class Albumlist extends Component{
 		}
 	}
 
-
 	onTransitionEnd(){
-		console.log(this)
 		const nomove = 'none'
 		let coord = this.state.coord;
-		let list = this.state.Album;		
-		if(this.state.dir == "right"){
+		let list = this.state.Album;	
+		if(this.state.dir === "right"){
 			coord+=645
 			list.splice(list.length,0,list[5],list[6],list[7],list[8],list[9])
 			list.splice(0,5)
@@ -567,10 +527,8 @@ class Albumlist extends Component{
 				disabled:'false'
 		})	
 	}
-
-
 	render(){
-		if(this.state.Album == []){
+		if(this.state.Album === []){
 			return <div></div>
 		}
 		else
@@ -601,6 +559,92 @@ const Albumitem = data => (
 		<p className='albumname'>{data.alumname}</p>
 	</li>
 )
+
+const Songlist = () =>(
+	<div className="LConMain">
+		<div>
+			<div>
+				<div className="LConNavi">
+					<a href="#" className="LCNaviTitle">榜单</a>
+					<span className="more" >
+							<a hidefocus="true" href="javascript:void(0)" className="LCNavioption">更多</a>	
+							<i className="moregt">&nbsp;</i>
+					</span>	
+				</div>	
+			</div>
+			<div className="song-list">
+				<Getsonglist />
+			</div>
+		</div>
+	</div>
+)
+
+class Getsonglist extends Component{
+	constructor(props){
+		super(props)
+		this.state={
+			list1:[],
+			list2:[],
+			list3:[]
+		}
+	};
+
+	componentWillMount(){
+		let list1 = []
+		let list2 = []
+		let list3 = []
+		Promise.all([this.getlist('/top/list?idx=3',list1),this.getlist('/top/list?idx=0',list2),this.getlist('/top/list?idx=2',list3)]).then(		
+			this.setState({
+				list1:list1,
+				list2:list2,
+				list3:list3
+			},console.log(list1.length,list2,'keke'))
+		)
+	}
+
+	getlist(url,list){
+		fetchPicture(url).then(res =>{	
+			list.push(res.playlist.coverImgUrl)
+			for(let i = 1;i<11;i++){
+				let info = {
+					singername:res.playlist.tracks[i].name,
+					id:res.playlist.tracks[i].id,
+				}
+				list.push(info)
+			}
+			return list
+		})
+	}
+
+	render(){
+		console.log(this.state.list1)
+		return(
+			<div>
+				<div>
+					<div className="songlist-header">
+						<div>
+							<img src={this.state.list1[0]} width="80" height="80" alt=""/>
+							<a></a>
+						</div>
+					</div>
+					<ul></ul>
+				</div>
+				<div>
+					<div className="songlist-header">
+						
+					</div>
+					<ul></ul>
+				</div>
+				<div>
+					<div className="songlist-header">
+						
+					</div>
+					<ul></ul>
+				</div>
+			</div>
+		)
+	}
+}
 
 
 const Viewpagecontent = () => (

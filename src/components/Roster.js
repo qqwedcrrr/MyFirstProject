@@ -47,11 +47,8 @@ const navlist = [
 ]
 	
 class Roster extends Component {
-	constructor(props) {
-    	super(props);
-	}
 	render(){
-		const {navClick, chooseid, id} = this.props
+		const {navClick, chooseid} = this.props
 		return(
 			<div>
 				<div style={navBar}>
@@ -69,7 +66,7 @@ class Roster extends Component {
 								<li><span><a>下载客户端</a><sub className="cor">&nbsp;</sub></span><sub className="hot">&nbsp;</sub></li>
 							</ul>
 							<div className="navuser">
-								<a><img src={usericon} width="30" height="30" />
+								<a><img src={usericon} width="30" height="30" alt="" />
 								</a>
 								<i className="navusermsg">3</i>
 							</div>
@@ -94,15 +91,11 @@ class Roster extends Component {
 }
 
 class Navitem extends Component{
-	constructor(props){
-		super(props);
-
-	}
 
 	render(){
 		const {text, onClick, id,chooseid} = this.props;
 		let chooseitem = null;	
-		if(chooseid.id == id){
+		if(chooseid.id === id){
 			chooseitem = {
 				display:true
 			}
@@ -111,7 +104,7 @@ class Navitem extends Component{
 			chooseitem = {
 				display:false
 			}
-		if(chooseid.chooseid == null && id == 1)
+		if(chooseid.chooseid === null && id === 1)
 			chooseitem = {
 				display:true
 			}

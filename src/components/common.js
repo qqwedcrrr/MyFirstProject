@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
 
-
-
-
 const nav2list = {
 	first:[{
 		id:1,
