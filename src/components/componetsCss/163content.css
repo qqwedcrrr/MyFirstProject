@@ -213,6 +213,9 @@
 	display: inline-block;
 	float: right;
 }
+.bottomIcon:hover{
+	background-position: 0 -60px;
+}
 .icon-headset{
 	float: left;
 	width: 14px;
@@ -228,6 +231,12 @@
 }
 .LCname{
 	margin-top: 10px;
+}
+.LCname>a{
+	font-size: 14px;
+}
+.LCname>a:hover{
+	text-decoration: underline;
 }
 .RCcontent{
 	width: 250px;
@@ -431,7 +440,7 @@
 }
 .listiocn{
 	float:left;
-	
+	position: relative;
 }
 .list-text{
 	float: left;
@@ -439,6 +448,13 @@
 }
 .list-name{
 	font-size: 14px;
+}
+.listiocn-click{
+	position: absolute;
+	left: 0;
+	top:0;
+	width: 100%;
+	height: 100%;
 }
 .listen-button{
 	float: left;

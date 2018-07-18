@@ -632,7 +632,7 @@ class Getsonglist extends Component{
 					<div className="songlist-header">
 						<div className="listiocn">
 							<img src={this.state.list1[0].img} width="80" height="80" alt=""/>
-							<a hidefocus="true"></a>
+							<a hidefocus="true" className="listiocn-click" title={this.state.list1[0].name}></a>
 						</div>
 						<div className="list-text">
 							<h3 className="list-name">{this.state.list1[0].name}</h3>
@@ -655,7 +655,7 @@ class Getsonglist extends Component{
 					<div className="songlist-header">
 						<div className="listiocn">
 							<img src={this.state.list2[0].img} width="80" height="80" alt=""/>
-							<a hidefocus="true"></a>
+							<a hidefocus="true" className="listiocn-click" title={this.state.list2[0].name}></a>
 						</div>
 						<div className="list-text">
 							<h3 className="list-name">{this.state.list2[0].name}</h3>
@@ -678,7 +678,7 @@ class Getsonglist extends Component{
 					<div className="songlist-header">
 						<div className="listiocn">
 							<img src={this.state.list3[0].img} width="80" height="80" alt=""/>
-							<a hidefocus="true"></a>
+							<a hidefocus="true" className="listiocn-click" title={this.state.list3[0].name}></a>
 						</div>
 						<div className="list-text">
 							<h3 className="list-name">{this.state.list3[0].name}</h3>
