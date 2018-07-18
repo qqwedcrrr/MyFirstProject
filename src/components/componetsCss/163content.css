@@ -114,7 +114,7 @@
 	border: 1px solid #d3d3d3;
 	border-width: 0 1px;
 	width: 980px;
-	min-height: 900px;
+	min-height: 1500px;
 	margin:0 auto;
 	background: url('./../../resource/CTborder.png') repeat-y;
 }
@@ -413,10 +413,134 @@
 .song-list{
 	height: 472px;
 	margin-top: 20px;
-	padding-left: 1px;
 	background: url('./../../resource/songlist.png')
+}
+.songlist-part{
+	width: 228px;
+	float: left;
+}
+.slpartpadding1{
+	padding-left: 2px;
+}
+.slpartpadding{
+	padding-left: 1px;
 }
 .songlist-header{
 	height: 100px;
 	padding: 20px 0 0 19px;
+}
+.listiocn{
+	float:left;
+	
+}
+.list-text{
+	float: left;
+	margin:10px 0 0 10px;
+}
+.list-name{
+	font-size: 14px;
+}
+.listen-button{
+	float: left;
+	margin:10px 10px 0 0;
+	display: block;
+	width: 22px;
+	height: 22px;
+	background: url('./../../resource/LContent.png');
+	background-position:-267px -205px;
+}
+.listen-button:hover{
+	background-position: -267px -235px;
+}
+.add-button{
+	float: left;
+	margin-top:10px;
+	display: block;
+	width: 22px;
+	height: 22px;
+	background: url('./../../resource/LContent.png');
+	background-position:-300px -205px;
+}
+.add-button:hover{
+	background-position: -300px -235px;
+}
+.single-item{
+	height: 32px;
+}
+
+.item-num{
+	float: left;
+	padding-left: 10px;
+	position: relative;
+	width: 35px;
+	height: 32px;
+	font-size: 16px;
+	line-height: 32px;
+	text-align: center;
+	vertical-align: middle;
+}
+.item-name{
+	float: left;
+	width: 100px;
+	height: 32px;
+	line-height: 32px;
+	color: #000;
+}
+.item-name:hover{
+	text-decoration: underline;
+}
+.item-icon{
+	display: none;
+	float: left;
+	width: 70px;
+	height: 20px;
+	margin-top: 8px;
+}
+.single-item:hover > .item-icon{
+	display: block !important;
+}
+.item{
+	float: left;
+	width: 17px;
+	height: 17px;
+	vertical-align: middle;
+	display: inline-block;
+	
+}
+
+.play{
+	margin-right: 10px;
+	background: url('./../../resource/LContent.png');
+	background-position: -267px -268px;
+}
+.play:hover{
+	background-position: -267px -288px;
+}
+
+.add{
+	margin:2px 7px 0 0;
+	background: url('./../../resource/icon.png');
+	background-position: 0 -700px;
+}
+.add:hover{
+	background-position: -22px -700px;
+}
+
+.like{
+	background: url('./../../resource/LContent.png');
+	background-position: -297px -268px;
+}
+.like:hover{
+	background-position: -297px -288px;
+}
+.item-findmore{
+	height: 32px;
+}
+.findmore{
+	clear: both;
+	float: right;
+	margin:8px 30px 0 0;
+}
+.findmore:hover{
+	text-decoration: underline;
 }

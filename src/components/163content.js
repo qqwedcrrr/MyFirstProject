@@ -593,58 +593,129 @@ class Getsonglist extends Component{
 		let list1 = []
 		let list2 = []
 		let list3 = []
-		Promise.all([this.getlist('/top/list?idx=3',list1),this.getlist('/top/list?idx=0',list2),this.getlist('/top/list?idx=2',list3)]).then(		
+		Promise.all([fetchPicture('/top/list?idx=3'),fetchPicture('/top/list?idx=2'),fetchPicture('/top/list?idx=0')])
+		.then( value =>{
+			list1 = this.getlist(value[0],list1)
+			list2 = this.getlist(value[1],list2)
+			list3 = this.getlist(value[2],list3)
 			this.setState({
 				list1:list1,
 				list2:list2,
 				list3:list3
-			},console.log(list1.length,list2,'keke'))
-		)
-	}
-
-	getlist(url,list){
-		fetchPicture(url).then(res =>{	
-			list.push(res.playlist.coverImgUrl)
-			for(let i = 1;i<11;i++){
-				let info = {
-					singername:res.playlist.tracks[i].name,
-					id:res.playlist.tracks[i].id,
-				}
-				list.push(info)
-			}
-			return list
+			})
 		})
 	}
 
+	getlist(res,list){
+		let firstinfo = {
+			img:res.playlist.coverImgUrl,
+			name:res.playlist.name
+		}
+		list.push(firstinfo)
+		list[1] = []
+		for(let i = 1;i<11;i++){
+			let info = {
+				singername:res.playlist.tracks[i].name,
+				id:res.playlist.tracks[i].id,
+			}
+			list[1].push(info)
+		}
+		return list
+	}
+
 	render(){
-		console.log(this.state.list1)
+		console.log(this.state)
+		if(typeof(this.state.list1[0]) !== 'undefined')
 		return(
 			<div>
-				<div>
+				<div className="songlist-part slpartpadding">
 					<div className="songlist-header">
-						<div>
-							<img src={this.state.list1[0]} width="80" height="80" alt=""/>
-							<a></a>
+						<div className="listiocn">
+							<img src={this.state.list1[0].img} width="80" height="80" alt=""/>
+							<a hidefocus="true"></a>
+						</div>
+						<div className="list-text">
+							<h3 className="list-name">{this.state.list1[0].name}</h3>
+							<a hidefocus="true" className="listen-button"></a>
+							<a hidefocus="true" className="add-button"></a>
 						</div>
 					</div>
-					<ul></ul>
+					<ul>
+						{
+							this.state.list1[1].map((item,index) =>(
+								<Songitem key={index} item={item} index={index+1} />
+							))
+						}
+						<li className="item-findmore">
+							<a hidefocus="true" className="findmore">查看更多&gt;</a>
+						</li>
+					</ul>
 				</div>
-				<div>
+				<div className="songlist-part slpartpadding1">
 					<div className="songlist-header">
-						
+						<div className="listiocn">
+							<img src={this.state.list2[0].img} width="80" height="80" alt=""/>
+							<a hidefocus="true"></a>
+						</div>
+						<div className="list-text">
+							<h3 className="list-name">{this.state.list2[0].name}</h3>
+							<a hidefocus="true" className="listen-button"></a>
+							<a hidefocus="true" className="add-button"></a>
+						</div>
 					</div>
-					<ul></ul>
+					<ul>
+						{
+							this.state.list2[1].map((item,index) =>(
+								<Songitem key={index} item={item} index={index+1} />
+							))
+						}
+						<li className="item-findmore">
+							<a hidefocus="true" className="findmore">查看更多&gt;</a>
+						</li>
+					</ul>
 				</div>
-				<div>
+				<div className="songlist-part slpartpadding1">
 					<div className="songlist-header">
-						
+						<div className="listiocn">
+							<img src={this.state.list3[0].img} width="80" height="80" alt=""/>
+							<a hidefocus="true"></a>
+						</div>
+						<div className="list-text">
+							<h3 className="list-name">{this.state.list3[0].name}</h3>
+							<a hidefocus="true" className="listen-button"></a>
+							<a hidefocus="true" className="add-button"></a>
+						</div>
 					</div>
-					<ul></ul>
+					<ul>
+						{
+							this.state.list3[1].map((item,index) =>(
+								<Songitem key={index} item={item} index={index+1} />
+							))
+						}
+						<li className="item-findmore">
+							<a hidefocus="true" className="findmore">查看更多&gt;</a>
+						</li>
+					</ul>
 				</div>
 			</div>
 		)
+		return(
+			<div></div>
+		)
 	}
 }
+
+const Songitem = ({index,item}) => (
+	<li className="single-item">
+		<span className="item-num" style={{color: index >3 ? '#666' : '#c10d0c'}}>{index}</span>
+		<a hidefocus="true" className="item-name" href={`${url}${item.id}`}>{item.singername}</a>
+		<div className="item-icon">
+			<a hidefocus="true" className="item play" href={`${url}${item.id}`}></a>
+			<a hidefocus="true" className="item add" ></a>
+			<a hidefocus="true" className="item like" ></a>
+		</div>
+	</li>
+)
 
 
 const Viewpagecontent = () => (
