@@ -117,6 +117,7 @@
 	min-height: 1500px;
 	margin:0 auto;
 	background: url('./../../resource/CTborder.png') repeat-y;
+	background-color: #fff;
 }
 .LConMain {
 	margin-right: 251px;
@@ -289,6 +290,32 @@
 	width: 210px;
 	height: 62px;
 	background-color: #fafafa;
+}
+.apply-button{
+	border-radius: 4px;
+	text-align: center;
+	font-weight: bold;
+	color: #333;
+	margin-left:20px;
+	width:208px;
+	display: block;
+	height: 32px;
+	background: url('./../../resource/button2.png') no-repeat 0 9999px;
+	background-position: right -182px;
+}
+.apply-button>i{
+	text-align: center;
+	font-weight: bold;
+	color: #333;
+	width: 206px;
+	line-height: 32px;
+	vertical-align: middle;
+	background: url('./../../resource/button2.png') no-repeat 0 9999px;
+	background-position: 0 -59px;
+	display: block;
+}
+.apply-button:hover{
+	background-position: right -100px;
 }
 .sg-item{
 	float: left;
@@ -497,7 +524,6 @@
 }
 .item-name{
 	float: left;
-	width: 100px;
 	height: 32px;
 	line-height: 32px;
 	color: #000;
@@ -511,6 +537,12 @@
 	width: 70px;
 	height: 20px;
 	margin-top: 8px;
+}
+.single-item:hover > .item-name{
+	width: 100px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 .single-item:hover > .item-icon{
 	display: block !important;
@@ -559,4 +591,149 @@
 }
 .findmore:hover{
 	text-decoration: underline;
+}
+
+.MB-container{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	zoom:1;
+	z-index: 1001;
+	width: 100%;
+}
+.MB-maincontain{
+	position: relative;
+	
+}
+.MB-touchbar{
+	position: absolute;
+	top: -10px;
+	width: 100%;
+	height: 20px;
+	cursor: pointer;
+
+}
+.MB-main{
+	vertical-align: bottom;
+	bottom: 0;
+	margin-right: 70px;
+	height:53px;
+	display:block;
+	background: url('./../../resource/playbar.png') repeat-x;
+}
+.MB-lockbutton{
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	min-width: 70px;
+	max-width: 70px;
+	height: 63px;
+	background: url('./../../resource/playbar.png');
+	background-position: 0 -384px;
+}
+.MB-mbcontainer{
+	height: 47px;
+	width: 980px;
+	top: 6px;
+	margin: 10px 0 auto 460px;
+}
+.MB-btns{
+	width: 137px;
+	margin-top:12px;
+	float: left;
+}
+.MB-btn{
+	float: left;
+	display: block;
+	text-indent: -9999px;
+	background:url('./../../resource/playbar.png');
+}
+.MB-before{
+	width: 28px;
+	height: 28px;
+	margin:5px 8px 0 0;
+	background-position: 0 -130px;
+}
+.MB-before:hover{
+	background-position: -30px -130px
+}
+.MB-play{
+	width: 36px;
+	height: 36px;
+	margin:0 8px 0 0;
+	background-position: 0 -165px;
+}
+.MB-play:hover{
+	background-position: -40px -165px
+}
+.MB-next{
+	width: 28px;
+	height: 28px;
+	margin:5px 8px 0 0;
+	background-position: -80px -130px;
+}
+.MB-next:hover{
+	background-position: -110px -130px
+}
+.MB-icon{
+	position: relative;
+	margin:12px 15px 0 0;
+	width: 34px;
+	height: 35px;
+	float: left;
+}
+.MB-iconclick{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top:0;
+	left: 0;
+	display: block;
+	background: url('./../../resource/playbar.png');
+	background-position: 0 -80px;
+}
+.MB-songinfo{
+	float: left;
+	display: block;
+	margin:10px 0 0 0;
+}
+.MB-songname{
+	float: left;
+	max-width: 300px;
+	color: #e8e8e8;
+	line-height: 20px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.MB-songmv{
+	float: left;
+	width: 19px;
+	height: 17px;
+	margin:2px 0 0 3px;
+	background: url('./../../resource/playbar.png');
+	background-position: 0 -57px;
+}
+.MB-restinfo{
+	font-size: 12px;
+}
+.MB-singername{
+	margin:2px 0 0 3px;
+	height: 17px;
+	max-width: 220px;
+	margin-left: 15px;
+	color: #9b9b9b;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	display: inline-block;
+	float: left;
+}
+.MB-recommand{
+	float: left;
+	width: 14px;
+	height: 15px;
+	margin:2px 0 0 13px;
+	background: url('./../../resource/playbar.png');
+	background-position: -110px -103px;
 }

@@ -341,12 +341,13 @@ const Rcontent = () =>(
 	<div className="RCcontent">
 		<RCloginConfirm />
 		<RCsinger />
+		<Applyformusician />
 	</div>
 )
 
 
 const Maincontent = () => (
-	<div style={{ width:'100%', backgroundColor:'#fff', position:'absolute',marginTop:'440px'}}>
+	<div style={{ width:'100%', backgroundColor:'#f5f5f5', position:'absolute',marginTop:'440px'}}>
 		<div className="maincontent" >
 			<div style={{float:'left',width:'100%',marginRight:'-250px', position:'relative'}}>
 				<Lcontent />
@@ -418,6 +419,16 @@ const Getsinger = item =>(
 		</a>
 	</li>
 )
+
+const Applyformusician = () =>(
+	<div>
+		<a hidefocus="true" className="apply-button"><i>申请成为网易音乐人</i></a>
+	</div>
+)
+
+
+
+
 
 const NewAlbum = () =>(
 	<div className="LConMain">
@@ -724,4 +735,53 @@ const Viewpagecontent = () => (
   </div>
 )
 
-export {Viewpagecontent,Maincontent}
+class MusicBar extends Component{
+	constructor(props){
+		super(props)
+	};
+
+
+
+	render(){
+		return(
+			<div className="MB-container">
+				<div className="MB-maincontain">
+					<div className="MB-touchbar"></div>
+					<div className="MB-main">
+						<div className="MB-mbcontainer">
+							<div className="MB-btns">
+								<a hidefocus="true" className="MB-btn MB-before"></a>
+								<a hidefocus="true" className="MB-btn MB-play" ></a>
+								<a hidefocus="true" className="MB-btn MB-next" ></a>
+							</div>
+							<div className="MB-icon">
+								<img src="" alt="" width="34" height="35"/>
+								<a hidefocus="true" className="MB-iconclick"></a>
+							</div>
+							<div>
+								<div className="MB-songinfo">
+									<a hidefocus="true" className="MB-songname">nihaoya</a>
+									<a hidefocus="true" className="MB-songmv"></a>
+									<span className="MB-restinfo">
+										<a hidefocus="true" className="MB-singername">asdqwdasd</a>
+										<a hidefocus="true" className="MB-recommand"></a>
+									</span>
+								</div>
+								<div>
+									
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div className="MB-lockbutton"> 
+							
+					</div>
+				</div>
+			</div>
+		)
+	}
+}
+
+
+export {Viewpagecontent,Maincontent ,MusicBar}
