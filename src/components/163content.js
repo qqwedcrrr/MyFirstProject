@@ -215,7 +215,7 @@ class Viewpage extends Component{
 				<div className="wrap">
 					<div className="VPleft">
 						<a className="logoAtag" hidefocus="true" href={this.state.url} >
-						<img src={this.state.viewpageimg} style={this.state.fadeInOut} width="730" height="336" alt="" />
+						<img src={this.state.viewpageimg} style={this.state.fadeInOut} width="731" height="336" alt="" />
 						</a>
 						<a hidefocus="true" href="javascript:void(0)" className="viewPageL" onClick={e=>{this.handleLeftClick()}}>&lt;</a>	
 						<a hidefocus="true" href="javascript:void(0)" className="viewPageR" onClick={e=>{this.handleRightClick()}}>&gt;</a>
@@ -758,7 +758,7 @@ class MusicBar extends Component{
 								<img src="" alt="" width="34" height="35"/>
 								<a hidefocus="true" className="MB-iconclick"></a>
 							</div>
-							<div>
+							<div style={{position:'relative', marginTop:'10px',float:'left'}}>
 								<div className="MB-songinfo">
 									<a hidefocus="true" className="MB-songname">nihaoya</a>
 									<a hidefocus="true" className="MB-songmv"></a>
@@ -767,15 +767,40 @@ class MusicBar extends Component{
 										<a hidefocus="true" className="MB-recommand"></a>
 									</span>
 								</div>
-								<div>
-									
+								<div className="MB-musicbar">
+									<div className="MB-mbpassed">	
+									</div>
+									<div className="MB-mbuttoncontainer">
+										<span className="MB-mbutton"><i className="MB-mbuttonloading"></i></span>
+									</div>
+									<div className="MB-mbdownloaded"></div>
 								</div>
 							</div>
+							<div style={{position:'relative', marginTop:'30px',float:'left'}}>
+								<span className="MB-passedtime">
+									<em>00:00</em> / 00:00
+								</span>
+							</div>
+							<div style={{position:'relative', margin:'16px 0 0 35px',float:'left'}}>
+								<a hidefocus="true" className="MB-addtolist"></a>
+								<a hidefocus="true" className="MB-share" ></a>
+								<div className="MB-controlbuttons">
+									<div className="">
+									</div>
+									<a hidefocus="true" className="MB-volume" ></a>
+									<a hidefocus="true" className="MB-playdir" ></a>
+									<span className="MB-lists">
+										<span></span>
+										<a hidefocus="true" className="MB-listbutton" >0</a>
+									</span>
+								</div>
+							</div>
+							
 						</div>
 						
 					</div>
 					<div className="MB-lockbutton"> 
-							
+						<a hidefocus="true" className="MB-lockclick" ></a>
 					</div>
 				</div>
 			</div>
