@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import './componetsCss/163content.css'
 
 
-//const url = 'http://47.97.214.91:3389';
-const url = 'http://localhost:3001'
+const url = 'http://47.97.214.91:3389';
+//const url = 'http://localhost:3001'
 let nowadate = new Date();
 nowadate = nowadate.getTime();
 let i = 0;
@@ -619,7 +619,7 @@ class Getsonglist extends Component{
 
 	getlist(res,list){
 		let firstinfo = {
-			img:res.playlist.coverImgUrl,
+			img:res.playlist.coverImgUrl+'?param=100y100',
 			name:res.playlist.name
 		}
 		list.push(firstinfo)
@@ -635,7 +635,6 @@ class Getsonglist extends Component{
 	}
 
 	render(){
-		console.log(this.state)
 		if(typeof(this.state.list1[0]) !== 'undefined')
 		return(
 			<div>
@@ -758,7 +757,7 @@ class MusicBar extends Component{
 								<img src="" alt="" width="34" height="35"/>
 								<a hidefocus="true" className="MB-iconclick"></a>
 							</div>
-							<div style={{position:'relative', marginTop:'10px',float:'left'}}>
+							<div style={{position:'relative', marginTop:'10px',float:'left',width:'498px'}}>
 								<div className="MB-songinfo">
 									<a hidefocus="true" className="MB-songname">nihaoya</a>
 									<a hidefocus="true" className="MB-songmv"></a>

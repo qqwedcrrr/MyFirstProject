@@ -72,6 +72,9 @@ i, em {
 
 div {
     display: block;
+    box-sizing:content-box;
+    -moz-box-sizing:content-box; /* Firefox */
+    -webkit-box-sizing:content-box; /* Safari */
 }
 
 h1,h2,h3,h4{
