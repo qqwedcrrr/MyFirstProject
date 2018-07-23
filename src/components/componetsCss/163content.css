@@ -616,7 +616,7 @@
 .MB-main{
 	vertical-align: bottom;
 	bottom: 0;
-	margin-right: 70px;
+	margin-right: 67px;
 	height:53px;
 	display:block;
 	background: url('./../../resource/playbar.png') repeat-x;
@@ -625,8 +625,8 @@
 	position: absolute;
 	right: 0;
 	bottom: 0;
-	min-width: 70px;
-	max-width: 70px;
+	min-width: 67px;
+	max-width: 67px;
 	height: 63px;
 	background: url('./../../resource/playbar.png');
 	background-position: 0 -384px;
@@ -650,7 +650,7 @@
 	width: 137px;
 	margin-top:12px;
 	float: left;
-	margin-left: 95px;
+	margin-left: 94px;
 }
 .MB-btn{
 	float: left;

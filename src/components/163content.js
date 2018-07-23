@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import './componetsCss/163content.css'
 
 
-const url = 'http://47.97.214.91:3389';
-//const url = 'http://localhost:3001'
+//const url = 'http://47.97.214.91:3389';
+const url = 'http://localhost:3001'
 let nowadate = new Date();
 nowadate = nowadate.getTime();
 let i = 0;
@@ -737,11 +737,41 @@ const Viewpagecontent = () => (
 class MusicBar extends Component{
 	constructor(props){
 		super(props)
+		this.state={
+			iteminfo:{}
+		}
+
+		this.handlePlayClick = this.handlePlayClick.bind(this)
 	};
 
+	componentWillMount(){
+		fetchPicture('/playlist/detail?id=84593826').then(res =>{
+			let musiclist = res.playlist.tracks
+			let iteminfo = {
+				name:musiclist[5].name,
+				singername:musiclist[5].ar[0].name,
+				// url:'http://music.163.com/song/media/outer/url?id='+musiclist[5].al.id+'.mp3'
+				url:'http://www.w3school.com.cn/i/song.ogg'
+			}
+			this.setState({
+				iteminfo:iteminfo
+			})
+		})
+	}
 
+	componentWillUnmount(){
+
+	}
+
+	handlePlayClick(){
+		let audio = this.refs.audio;
+		console.log(audio)
+		audio.play()
+	}
 
 	render(){
+		console.log(this.state.iteminfo)
+		if(this.state.iteminfo !== {})
 		return(
 			<div className="MB-container">
 				<div className="MB-maincontain">
@@ -750,7 +780,7 @@ class MusicBar extends Component{
 						<div className="MB-mbcontainer">
 							<div className="MB-btns">
 								<a hidefocus="true" className="MB-btn MB-before"></a>
-								<a hidefocus="true" className="MB-btn MB-play" ></a>
+								<a hidefocus="true" className="MB-btn MB-play" onClick={this.handlePlayClick} ></a>
 								<a hidefocus="true" className="MB-btn MB-next" ></a>
 							</div>
 							<div className="MB-icon">
@@ -776,6 +806,8 @@ class MusicBar extends Component{
 								</div>
 							</div>
 							<div style={{position:'relative', marginTop:'30px',float:'left'}}>
+							<audio src={this.state.iteminfo.url}  ref="audio">
+							</audio>
 								<span className="MB-passedtime">
 									<em>00:00</em> / 00:00
 								</span>
@@ -794,9 +826,7 @@ class MusicBar extends Component{
 									</span>
 								</div>
 							</div>
-							
 						</div>
-						
 					</div>
 					<div className="MB-lockbutton"> 
 						<a hidefocus="true" className="MB-lockclick" ></a>
@@ -804,6 +834,10 @@ class MusicBar extends Component{
 				</div>
 			</div>
 		)
+		else
+			return(
+				<div></div>
+			)
 	}
 }
 
