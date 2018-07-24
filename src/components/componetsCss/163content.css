@@ -773,6 +773,7 @@
 }
 .MB-mbpassed{
 	float: left;
+	max-width: 493px;
 	height: 7px;
 	background:url('./../../resource/statbar.png');
 	background-position: left -66px;
