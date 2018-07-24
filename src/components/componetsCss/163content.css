@@ -671,9 +671,18 @@
 	width: 36px;
 	height: 36px;
 	margin:0 8px 0 0;
-	background-position: 0 -165px;
+	background-position: 0 -204px;
 }
 .MB-play:hover{
+	background-position: -40px -204px
+}
+.MB-pause{
+	width: 36px;
+	height: 36px;
+	margin:0 8px 0 0;
+	background-position: 0 -165px;
+}
+.MB-pause:hover{
 	background-position: -40px -165px
 }
 .MB-next{

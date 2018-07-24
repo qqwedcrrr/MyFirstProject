@@ -734,11 +734,44 @@ const Viewpagecontent = () => (
   </div>
 )
 
-class MusicBar extends Component{
+class MusicBarContain extends Component{
+	constructor(props){
+		super(props)
+		
+	};
+
+	componentWillUnmount(){
+
+	}
+
+	render(){
+		return(
+			<div className="MB-container">
+				<div className="MB-maincontain">
+					<div className="MB-touchbar"></div>
+					<div className="MB-main">
+						<MusicBarMaintain  />
+					</div>
+					<div className="MB-lockbutton"> 
+						<a hidefocus="true" className="MB-lockclick" ></a>
+					</div>
+				</div>
+			</div>
+		)
+	}
+}
+
+class MusicBarMaintain extends Component{
 	constructor(props){
 		super(props)
 		this.state={
-			iteminfo:{}
+			iteminfo:{},
+			status:'pause',
+			volume:100,
+			playways:'',
+			currentTime:0,
+			bufferedTime:0,
+			targetTime:1
 		}
 
 		this.handlePlayClick = this.handlePlayClick.bind(this)
@@ -750,8 +783,9 @@ class MusicBar extends Component{
 			let iteminfo = {
 				name:musiclist[5].name,
 				singername:musiclist[5].ar[0].name,
-				// url:'http://music.163.com/song/media/outer/url?id='+musiclist[5].al.id+'.mp3'
-				url:'http://www.w3school.com.cn/i/song.ogg'
+				url:'http://music.163.com/song/media/outer/url?id='+ musiclist[5].id +'.mp3',
+				iconUrl:musiclist[5].al.picUrl,
+				//url:'http://www.w3school.com.cn/i/song.ogg'
 			}
 			this.setState({
 				iteminfo:iteminfo
@@ -759,87 +793,147 @@ class MusicBar extends Component{
 		})
 	}
 
-	componentWillUnmount(){
-
-	}
-
 	handlePlayClick(){
 		let audio = this.refs.audio;
-		console.log(audio)
-		audio.play()
+		if(this.state.status === 'play'){
+			audio.pause();
+			clearInterval(this.timeId)
+			this.setState({
+				status:'pause'
+			})
+		}
+			
+		else{
+			audio.play();
+			this.timeId = setInterval(
+				()=>{this.musicBarLength()},500
+			)
+			this.setState({
+				status:'play'
+			})
+		}
 	}
 
+	componentDidMount(){
+		let audio = this.refs.audio;
+		let minute = audio.duration / 60;
+		let sec = audio.duration % 60;
+		
+	}
+
+	componentWillUnmount(){
+		clearInterval(this.timeId)
+	}
+
+	musicBarLength(){
+		let audio = this.refs.audio;
+		this.setState({
+			currentTime:audio.currentTime,
+			bufferedTime:Math.max(audio.seekable.end(0),audio.buffered.end(0)),
+			targetTime:audio.duration
+
+		})
+	}
+
+	musicplay(){
+
+	}
+
+	shouldComponentUpdate(nextProps,nextState){
+		if(nextState.iteminfo === this.state.iteminfo && nextState.volume === this.state.volume &&
+		 nextState.playways === this.state.playways && nextState.status === this.state.status)
+			return false;
+	}
+
+	// {this.state.iteminfo.url}
+
 	render(){
-		console.log(this.state.iteminfo)
-		if(this.state.iteminfo !== {})
+		console.log(this.state)
 		return(
-			<div className="MB-container">
-				<div className="MB-maincontain">
-					<div className="MB-touchbar"></div>
-					<div className="MB-main">
-						<div className="MB-mbcontainer">
-							<div className="MB-btns">
-								<a hidefocus="true" className="MB-btn MB-before"></a>
-								<a hidefocus="true" className="MB-btn MB-play" onClick={this.handlePlayClick} ></a>
-								<a hidefocus="true" className="MB-btn MB-next" ></a>
-							</div>
-							<div className="MB-icon">
-								<img src="" alt="" width="34" height="35"/>
-								<a hidefocus="true" className="MB-iconclick"></a>
-							</div>
-							<div style={{position:'relative', marginTop:'10px',float:'left',width:'498px'}}>
-								<div className="MB-songinfo">
-									<a hidefocus="true" className="MB-songname">nihaoya</a>
-									<a hidefocus="true" className="MB-songmv"></a>
-									<span className="MB-restinfo">
-										<a hidefocus="true" className="MB-singername">asdqwdasd</a>
-										<a hidefocus="true" className="MB-recommand"></a>
-									</span>
-								</div>
-								<div className="MB-musicbar">
-									<div className="MB-mbpassed">	
-									</div>
-									<div className="MB-mbuttoncontainer">
-										<span className="MB-mbutton"><i className="MB-mbuttonloading"></i></span>
-									</div>
-									<div className="MB-mbdownloaded"></div>
-								</div>
-							</div>
-							<div style={{position:'relative', marginTop:'30px',float:'left'}}>
-							<audio src={this.state.iteminfo.url}  ref="audio">
-							</audio>
-								<span className="MB-passedtime">
-									<em>00:00</em> / 00:00
-								</span>
-							</div>
+			<div className="MB-mbcontainer">
+				<div className="MB-btns">
+					<a hidefocus="true" className="MB-btn MB-before"></a>
+					<a hidefocus="true" className={this.state.status === 'play' ? "MB-btn MB-pause" : "MB-btn MB-play"} onClick={this.handlePlayClick} ></a>
+					<a hidefocus="true" className="MB-btn MB-next" ></a>
+				</div>
+				<div className="MB-icon">
+					<img src={this.state.iteminfo.iconUrl} alt="" width="34" height="35"/>
+					<a hidefocus="true" className="MB-iconclick"></a>
+				</div>
+				<div style={{position:'relative', marginTop:'10px',float:'left',width:'498px'}}>
+					<div className="MB-songinfo">
+						<a hidefocus="true" className="MB-songname">{this.state.iteminfo.name}</a>
+						<a hidefocus="true" className="MB-songmv"></a>
+						<span className="MB-restinfo">
+							<a hidefocus="true" className="MB-singername">{this.state.iteminfo.singername}</a>
+							<a hidefocus="true" className="MB-recommand"></a>
+						</span>
+					</div>
+					<audio src={this.state.iteminfo.url}  ref="audio">
+					</audio>
+					<MusicBar currentTime={this.state.currentTime} bufferedTime={this.state.bufferedTime} targetTime={this.state.targetTime} />
+				</div>
+				<div style={{position:'relative', marginTop:'30px',float:'left'}}>
+					<span className="MB-passedtime">
+						<em>00:00</em> / 00:00
+					</span>
+				</div>
 							<div style={{position:'relative', margin:'16px 0 0 35px',float:'left'}}>
-								<a hidefocus="true" className="MB-addtolist"></a>
-								<a hidefocus="true" className="MB-share" ></a>
-								<div className="MB-controlbuttons">
-									<div className="">
-									</div>
-									<a hidefocus="true" className="MB-volume" ></a>
-									<a hidefocus="true" className="MB-playdir" ></a>
-									<span className="MB-lists">
-										<span></span>
-										<a hidefocus="true" className="MB-listbutton" >0</a>
-									</span>
-								</div>
-							</div>
+					<a hidefocus="true" className="MB-addtolist"></a>
+					<a hidefocus="true" className="MB-share" ></a>
+					<div className="MB-controlbuttons">
+						<div className="">
 						</div>
-					</div>
-					<div className="MB-lockbutton"> 
-						<a hidefocus="true" className="MB-lockclick" ></a>
-					</div>
+						<a hidefocus="true" className="MB-volume" ></a>
+						<a hidefocus="true" className="MB-playdir" ></a>
+						<span className="MB-lists">
+							<span></span>
+							<a hidefocus="true" className="MB-listbutton" >0</a>
+						</span>
+				</div>
 				</div>
 			</div>
 		)
-		else
-			return(
-				<div></div>
-			)
+	}
+}
+
+class MusicBar extends Component{
+	constructor(props){
+		super(props)
+		this.state={
+			current:0,
+			buffered:0
+		}
+	}
+
+	componentWillReceiveProps(nextProps){
+		this.setState({
+			current:493*nextProps.currentTime/nextProps.targetTime,
+			buffered: 493*nextProps.bufferedTime/nextProps.targetTime
+		})
+	}
+
+
+	musicBarLength(){
+
+	}
+
+	render(){
+		
+		return(
+			<div className="MB-musicbar">
+				<div style={{width:this.state.current}} className="MB-mbpassed">	
+				</div>
+					<div className="MB-mbuttoncontainer">
+					<span className="MB-mbutton"><i className="MB-mbuttonloading"></i></span>
+				</div>
+				<div style={{width:this.state.buffered}} className="MB-mbdownloaded">
+					
+				</div>
+			</div>			
+		)
 	}
 }
 
 
-export {Viewpagecontent,Maincontent ,MusicBar}
+export {Viewpagecontent,Maincontent ,MusicBarContain}
