@@ -52,4 +52,15 @@ function navchooser(state = {id:null, chooseid:null }, action){
 	}
 }
 
-export default {counter, todolist,navchooser}
+function processclick(state = {current:null},action){
+	switch (action.type) {
+		case 'process_drop':
+			return{
+				current:action.position
+			}
+		default:
+			return state
+	}
+}
+
+export default {counter, todolist,navchooser, processclick}

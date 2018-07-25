@@ -10,6 +10,15 @@ const store = createStore(
 	applyMiddleware(thunk)
 	)
 // Map Redux state to component props
+function mapcurrentTime(state) {
+	console.log(state.processclick)
+	return {
+		position: state.processclick.current
+	}
+}
+
+
+
 function mapStateToProps(state) {
 	return {
 		value: state.counter.count,
@@ -23,8 +32,7 @@ function mapDispatchToProps(dispatch) {
 		onIncreaseClick: () => dispatch(increaseAction),
 		DoneitemClick: id => dispatch(doneitem(id)),
 		navClick: id => dispatch(navchoose(id))
-
 	}
 }
 
-export {store, mapDispatchToProps, mapStateToProps}
+export {store, mapDispatchToProps, mapStateToProps ,mapcurrentTime}

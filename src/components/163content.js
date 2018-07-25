@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import './componetsCss/163content.css'
+import { connect } from 'react-redux'
+import { mapcurrentTime,store } from '../store/store'
+import { processdrop } from './../action/action'
 
 
 //const url = 'http://47.97.214.91:3389';
@@ -78,7 +81,7 @@ class Viewpage extends Component{
 
 	componentWillMount() {
 		// let phone = '15656000329';
-		// let password = '493105923';
+		// let password = '490105923';
 		let viewPage = fetchPicture('/banner').then(res =>{
 			banner = res.banners;
 			maxlength = res.banners.length-1;
@@ -791,6 +794,8 @@ class MusicBarMaintain extends Component{
 		this.handlePlayClick = this.handlePlayClick.bind(this)
 		this.handlePastClick = this.handlePastClick.bind(this)
 		this.handleNextClick = this.handleNextClick.bind(this)
+		this.handleEnded = this.handleEnded.bind(this)
+		this.handleDirClick = this.handleDirClick.bind(this)
 	};
 
 	componentWillMount(){
@@ -810,6 +815,10 @@ class MusicBarMaintain extends Component{
 				iteminfo:iteminfo
 			})
 		})
+	}
+
+	fetchMusicUrl(id){
+		fetchPicture(`http://music.163.com/song/media/outer/url?id=${id}.mp3`)
 	}
 
 	handlePlayClick(){
@@ -835,33 +844,46 @@ class MusicBarMaintain extends Component{
 
 	handlePastClick(){
 		let audio = this.refs.audio;
+		let status = this.state.status
 		audio.pause();
 		if(this.state.id === 0){
-			console.log(this.state.iteminfo.length,this.state.id)
 			this.setState({
 				id:this.state.iteminfo.length-1
+			},()=>{
+				this.musicBarLength()
+				status === 'play' ? audio.play() : 0;
 			})
 		}else
 			this.setState({
 				id:this.state.id-1
 			},()=>{
-				audio.play()
+				this.musicBarLength()
+				status === 'play' ? audio.play() : 0;
 			})
 	}
 
 	handleNextClick(){
 		let audio = this.refs.audio;
+		let status = this.state.status
 		audio.pause();
 		if(this.state.id === this.state.iteminfo.length-1){
 			this.setState({
 				id:0
+			},()=>{
+				this.musicBarLength()
+				status === 'play' ? audio.play() : 0;
 			})
 		}else
 			this.setState({
 				id:this.state.id+1
 			},()=>{
-				audio.play()
+				this.musicBarLength()
+				status === 'play' ? audio.play() : 0;
 			})
+	}
+
+	handleDirClick(){
+
 	}
 
 	componentDidMount(){
@@ -877,10 +899,12 @@ class MusicBarMaintain extends Component{
 
 	musicBarLength(){
 		let audio = this.refs.audio;
+		let targetTime = audio.buffered.length===0 ? 0 : parseInt(audio.buffered.end(0))
+		let duration =  isNaN(parseInt(audio.duration)) ? 0 : parseInt(audio.duration)
 		this.setState({
 			currentTime:audio.currentTime,
-			bufferedTime:audio.seekable.length>0 ? parseInt(Math.max(audio.seekable.end(0),audio.buffered.end(0))) : 1,
-			targetTime:parseInt(audio.duration),
+			bufferedTime:targetTime,
+			targetTime:duration,
 			passedtime:{
 				min:this.numfix(parseInt(parseInt(audio.currentTime)/60),2),
 				sec:this.numfix(parseInt(audio.currentTime)%60,2)
@@ -894,20 +918,31 @@ class MusicBarMaintain extends Component{
 	}
 
 	numfix(num, length) {
+		if(isNaN(num))
+			num = 0
 		return ('' + num).length < length ? ((new Array(length + 1)).join('0') + num).slice(-length) : '' + num;
 	}	
 
-	musicplay(){
-
+	handleEnded(){
+		let audio = this.refs.audio
+		let status = this.state.status
+		audio.pause()
+		this.setState({
+				id:this.state.iteminfo.length-1
+			},()=>{
+				this.musicBarLength()
+				status === 'play' ? audio.play() : 0;
+		})
 	}
 
-	// shouldComponentUpdate(nextProps,nextState){
-	// 	if(nextState.iteminfo === this.state.iteminfo && nextState.volume === this.state.volume &&
-	// 	 nextState.playways === this.state.playways && nextState.status === this.state.status)
-	// 		return false;
-	// }
-
-	// {this.state.iteminfo.url}
+	componentWillReceiveProps(nextProps){
+		let audio = this.refs.audio;
+		if(this.props.position !==nextProps.position){
+			audio.currentTime = audio.duration*nextProps.position/490
+			this.musicBarLength()
+		}
+		
+	}
 
 	render(){
 		return(
@@ -926,21 +961,21 @@ class MusicBarMaintain extends Component{
 					<MusicBarControl info={this.state.iteminfo[this.state.id]} />
 					<MusicBar currentTime={this.state.currentTime} bufferedTime={this.state.bufferedTime} targetTime={this.state.targetTime} />
 				</div>
-				<audio src={this.state.iteminfo[this.state.id].url}  ref="audio">
+				<audio onEnded={this.handleEnded} src={this.state.iteminfo[this.state.id].url}  ref="audio">
 					</audio>
-				<div style={{position:'relative', marginTop:'30px',float:'left'}}>
+				<div style={{position:'relative', marginTop:'30px',float:'left',minWidth:'80px'}}>
 					<span className="MB-passedtime">
-						<em>{`${this.state.passedtime.min}:${this.state.passedtime.sec}`}</em> / {`${this.state.endtime.min}:${this.state.endtime.sec}`}
+						<em style={{minWidth:'30px',display:'inline-block'}}>{`${this.state.passedtime.min}:${this.state.passedtime.sec}`}</em> / <em style={{minWidth:'30px',display:'inline-block'}}>{`${this.state.endtime.min}:${this.state.endtime.sec}`}</em>
 					</span>
 				</div>
 							<div style={{position:'relative', margin:'16px 0 0 35px',float:'left'}}>
 					<a hidefocus="true" className="MB-addtolist"></a>
 					<a hidefocus="true" className="MB-share" ></a>
 					<div className="MB-controlbuttons">
-						<div className="">
+						<div className="MB-direminder">单曲循环
 						</div>
 						<a hidefocus="true" className="MB-volume" ></a>
-						<a hidefocus="true" className="MB-playdir" ></a>
+						<a hidefocus="true" onClick={this.handleDirClick} className="MB-playdir" ></a>
 						<span className="MB-lists">
 							<span></span>
 							<a hidefocus="true" className="MB-listbutton" >0</a>
@@ -951,6 +986,8 @@ class MusicBarMaintain extends Component{
 		)
 	}
 }
+
+MusicBarMaintain = connect(mapcurrentTime)(MusicBarMaintain)
 
 class MusicBarControl extends Component{
 	constructor(props){
@@ -988,30 +1025,66 @@ class MusicBar extends Component{
 		super(props)
 		this.state={
 			current:0,
-			buffered:0
+			buffered:0,
+			onhold:0
 		}
+		this.handleMouseDown = this.handleMouseDown.bind(this)
+		this.handleBarClick = this.handleBarClick.bind(this)
 	}
 
 	componentWillReceiveProps(nextProps){
+		if(this.state.onhold !== 1){
+			let current = 490*nextProps.currentTime/nextProps.targetTime;
+			let buffered = 490*nextProps.bufferedTime/nextProps.targetTime
+			this.setState({
+				current:isNaN(current) ? 0 : current,
+				buffered: isNaN(buffered) ? 0 : buffered
+			})
+		}
+	}
+
+
+	handleBarClick(e){
+		let X = e.clientX;
+		store.dispatch(processdrop(X-646))
 		this.setState({
-			current:493*nextProps.currentTime/nextProps.targetTime,
-			buffered: 493*nextProps.bufferedTime/nextProps.targetTime
+			current:X-646
 		})
 	}
 
+	handleMouseDown(e){
+		this.setState({
+			onhold:1
+		})
+		document.onmousemove = e =>{
+			let X = e.clientX;
+			let Y = e.clientY;
+			this.setState({
+				current:X-646
+			})
+		}
+		document.onmouseup = e =>{
+			let X = e.clientX;
+			let Y = e.clientY;
+			store.dispatch(processdrop(X-646))
+			this.setState({
+				onhold:0
+			},()=>{
+				document.onmousemove = null;
+				document.onmouseup = null;
+			})
 
-	musicBarLength(){
-
+		}
 	}
 
+
 	render(){
-		
 		return(
-			<div className="MB-musicbar">
+			<div onClick={this.handleBarClick} className="MB-musicbar">
 				<div style={{width:this.state.current}} className="MB-mbpassed">	
 				</div>
 					<div className="MB-mbuttoncontainer">
-					<span className="MB-mbutton"><i className="MB-mbuttonloading"></i></span>
+					<span onMouseDown={this.handleMouseDown} className="MB-mbutton"><i className="MB-mbuttonloading"></i></span>
 				</div>
 				<div style={{width:this.state.buffered}} className="MB-mbdownloaded">
 					

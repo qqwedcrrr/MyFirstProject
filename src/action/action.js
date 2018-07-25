@@ -26,3 +26,10 @@ export const navchoose = id => {
 		id
 	}
 }
+
+export const processdrop = position =>{
+	return {
+		type:'process_drop',
+		position
+	}
+}
