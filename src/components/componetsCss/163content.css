@@ -954,3 +954,235 @@
 .MB-listbutton:hover{
 	background-position: -42px -98px;
 }
+.MB-listcontainer{
+	position: absolute;
+	top: -294px;
+	width: 986px;
+	height: 300px;
+	margin-left: 4px;
+}
+.MB-listheader{
+	width: 100%;
+	height: 41px;
+	background: url('./../../resource/playlistbg.png') no-repeat;
+	background-position: 0 0;
+}
+.MB-headerpart1{
+	position: absolute;
+	left: 26px;
+	top: 12px;
+}
+.MB-part1{
+	color: #e2e2e2;
+	font-weight: bold;
+	font-size: 14px;
+}
+.MB-part2{
+	position: absolute;
+	left: 390px;
+	top: 12px;
+	height: 15px;
+	line-height: 15px;
+	cursor: pointer;
+	color: #ccc;
+}
+.MB-part2icon{
+	float: left;
+	margin:1px 6px 0 0;
+	width: 16px;
+	height: 16px;
+	background: url('./../../resource/playlist.png') no-repeat;
+	background-position: -24px 0 ;
+}
+.MB-line {
+	left:470px;
+	position: absolute;
+	top:12px;
+	height: 15px;
+	width: 3px;
+	border-left: 1px solid #000;
+	border-right: 1px solid #2c2c2c;
+}
+.MB-part3{
+	position: absolute;
+	left:490px;
+	top:12px;
+	height: 15px;
+	line-height: 15px;
+	cursor: pointer;
+	color: #ccc;
+}
+.MB-part3icon{
+	float: left;
+	margin:1px 6px 0 0;
+	width: 12px;
+	height: 16px;
+	background: url('./../../resource/playlist.png') no-repeat;
+	background-position: -51px 0 
+}
+.MB-part4{
+	position: absolute;
+	left: 600px;
+	top: 0px;
+	width: 346px;
+	text-align: center;
+	height: 39px;
+	line-height: 39px;
+	color: #fff;
+	font-size: 14px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	word-wrap: normal;
+}
+.MB-part4icon{
+	position: absolute;
+	top: 3px;
+	right: 8px;
+	width: 30px;
+	height: 30px;
+	overflow: hidden;
+	cursor: pointer;
+	background: url('./../../resource/playlist.png') no-repeat;
+	background-position: -195px 9px;
+}
+.MB-listbody{
+	position: absolute;
+	left: 0;
+	top: 41px;
+	width: 986px;
+	height: 260px;
+	overflow: hidden;
+	background: url('./../../resource/playlistbg.png') no-repeat;
+	background-position: -1014px 0;
+	background-repeat: repeat-y;
+}
+.MB-listbgimg{
+	top: -360px;
+	left: 2px;
+	z-index: 1;
+	height: auto;
+	opacity: 0.2;
+	border: 0;
+}
+.MB-listpart1bg{
+	position: absolute;
+	left: 2px;
+	top: 0;
+	z-index: 2;
+	width: 558px;
+	height: 260px;
+	background-color: #121212;
+	opacity: 0.5;
+}
+.MB-listpart1body{
+	position: absolute;
+	left: 2px;
+	top: 0;
+	z-index: 4;
+	height: 260px;
+	width: 553px;
+	overflow: hidden;
+}
+.MB-itempart1{
+	float: left;
+	padding-left: 10px;
+	height: 28px;
+	line-height: 28px;
+	cursor: pointer;
+	width: 10px;
+}
+.MB-itempart1icon{
+	margin-top: 8px;
+	width: 10px;
+	height: 13px;
+	background: url('./../../resource/playlist.png') no-repeat;
+	background-position: -182px 0;
+}
+.MB-itempart2{
+	float: left;
+	padding-left: 10px;
+	height: 10px;
+	width: 256px;
+	overflow: hidden;
+	white-space: nowrap;
+	line-height: 28px;
+	cursor: pointer;
+	color: #fff;
+}
+.MB-itempart3{
+	position: relative;
+	width: 78px;
+	float: left;
+	height: 28px;
+	overflow: hidden;
+	cursor: pointer;
+}
+.MB-itempart3icons{
+	display: block;
+	position: absolute;
+	right: 0;
+	top:0;
+	width: 100px;
+	height: 23px;
+	color: #fff;
+}
+.MB-part3icon{
+	float: right;
+	height: 16px;
+	overflow: hidden;
+	margin:7px 0 0 10px;
+	text-indent: -9999px;
+	background: url('./../../resource/playlist.png') no-repeat;
+}
+.icn-del{
+	width: 13px;
+	background-position: -51px 0;
+}
+.icn-dl{
+	width: 14px;
+	background-position: -57px -50px;
+}
+.icn-share{
+	width: 14px;
+	background-position: 0 0;
+}
+.icn-share{
+	width: 14px;
+	background-position: 0 0;
+}
+.icn-add{
+	width: 14px;
+	background-position: -24px 0;
+}
+.MB-itempart4{
+	float: left;
+	padding-left: 10px;
+	height: 28px;
+	line-height: 28px;
+	cursor: pointer;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 70px;
+	color: #fff;
+}
+.MB-itempart5{
+	float: left;
+	padding-left: 10px;
+	line-height: 28px;
+	overflow: hidden;
+	cursor: pointer;
+	width: 35px;
+	color:#ccc;
+}
+.MB-listpart2bg{
+	position: absolute;
+	left: 560px;
+	top: 0;
+	z-index: 3;
+	width: 420px;
+	height: 250px;
+	background-color: #121212;
+	opacity: 0.01;
+}

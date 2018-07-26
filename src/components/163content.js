@@ -5,8 +5,8 @@ import { mapcurrentTime,store } from '../store/store'
 import { processdrop,volumedrag } from './../action/action'
 
 
-const url = 'http://47.97.214.91:3389';
-//const url = 'http://localhost:3001'
+//const url = 'http://47.97.214.91:3389';
+const url = 'http://localhost:3001'
 let nowadate = new Date();
 nowadate = nowadate.getTime();
 let i = 0;
@@ -1034,9 +1034,10 @@ class MusicBarMaintain extends Component{
 					<a hidefocus="true" className="MB-btn MB-before" onClick={this.handlePastClick}></a>
 					<a hidefocus="true" className={this.state.status === 'play' ? "MB-btn MB-pause" : "MB-btn MB-play"} onClick={this.handlePlayClick} ></a>
 					<a hidefocus="true" className="MB-btn MB-next" onClick={this.handleNextClick}></a>
+					<MusicBarList />
 				</div>
 				<div className="MB-icon">
-					<img src={this.state.iteminfo[this.state.id].iconUrl} alt="" width="34" height="35"/>
+					<img src={this.state.iteminfo[this.state.id] ? this.state.iteminfo[this.state.id].iconUrl: ''} alt="" width="34" height="35"/>
 					<a hidefocus="true" className="MB-iconclick"></a>
 				</div>
 				<div style={{position:'relative', marginTop:'10px',float:'left',width:'498px'}}>
@@ -1100,7 +1101,6 @@ class MusicBarControl extends Component{
 			</div>
 		)
 	}
-
 }
 
 class MusicBar extends Component{
@@ -1219,6 +1219,87 @@ class VolumeBar extends Component{
 	}
 }
 
+const MusicBarList = () => (
+	<div className="MB-listcontainer">
+		<MBListHeader />
+		<MBListBody />
+	</div>
+)
+
+
+class MBListHeader extends Component{
+	constructor(props){
+		super(props)
+	}
+
+	render() {
+		return (
+			<div className="MB-listheader">
+					<div style={{position:'relative',height:'41px'}}>
+						<div className="MB-headerpart1">
+							<h4 className="MB-part1">播放列表(31)</h4>	
+						</div>
+						<a hidefocus="true" className="MB-part2">
+						<span className="MB-part2icon"></span>
+						收藏全部
+						</a>
+						<span className="MB-line"></span>
+						<a hidefocus="true" className="MB-part3">
+						<span className="MB-part3icon"></span>
+						清除
+						</a>
+						<p className="MB-part4">asdqadads</p>
+						<span className="MB-part4icon"></span>
+					</div>
+			</div>
+		);
+	}
+}
+
+class MBListBody extends Component{
+	constructor(props){
+		super(props)
+	}
+
+	render() {
+		return (
+			<div className="MB-listbody">
+				<img src="" alt="" className="MB-listbgimg" width="980" height="980"/>
+				<div className="MB-listpart1bg"></div>
+				<div className="MB-listpart1body">
+					<ul style={{color:"#ccc",overflow:"hidden"}}>
+						
+					</ul>
+				</div>
+				<div></div>
+				<div className="MB-listpart2bg"></div>
+			</div>
+		);
+	}
+}
+
+const MBListItem = () => (
+	<li style={{float:'left',width:'100%'}}>
+		<div className="MB-itempart1">
+			<div className="MB-itempart1icon"></div>
+		</div>
+		<div className="MB-itempart2">asdadasd</div>
+		<div className="MB-itempart3">
+			<div className="MB-itempart3icons">
+				<i className="MB-part3icon icn-del">删除</i>
+				<i className="MB-part3icon icn-dl">下载</i>
+				<i className="MB-part3icon icn-share">分享</i>
+				<i className="MB-part3icon icn-add">收藏</i>
+			</div>
+		</div>
+		<div className="MB-itempart4">
+			<span style={{whiteSpace:'nowrap',color:'#fff',lineHeight:'28px'}}>
+				<a hidefocus="true" className="MB-part3">qwesad</a>
+			</span>
+		</div>
+		<div className="MB-itempart5"></div>
+	</li>
+)
 
 
 export {Viewpagecontent,Maincontent ,MusicBarContain}
