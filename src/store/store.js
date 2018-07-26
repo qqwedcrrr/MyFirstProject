@@ -11,9 +11,9 @@ const store = createStore(
 	)
 // Map Redux state to component props
 function mapcurrentTime(state) {
-	console.log(state.processclick)
 	return {
-		position: state.processclick.current
+		position: state.processclick.current,
+		volume: state.volumeclick.volume
 	}
 }
 

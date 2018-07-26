@@ -33,3 +33,10 @@ export const processdrop = position =>{
 		position
 	}
 }
+
+export const volumedrag = volume =>{
+	return {
+		type:'volume_drag',
+		volume
+	}
+}

@@ -63,4 +63,15 @@ function processclick(state = {current:null},action){
 	}
 }
 
-export default {counter, todolist,navchooser, processclick}
+function volumeclick(state = {volume:null}, action){
+	switch(action.type) {
+		case 'volume_drag':
+			return{
+				volume:action.volume
+			}
+		default:
+			return state
+	}
+}
+
+export default {counter, todolist,navchooser, processclick,volumeclick}

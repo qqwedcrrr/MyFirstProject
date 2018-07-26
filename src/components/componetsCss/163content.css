@@ -784,7 +784,7 @@
 }
 .MB-mbutton{
 	position: absolute;
-	background: url('./../../resource/iconall.png');
+	background: url('./../../resource/iconall.png') no-repeat;
 	background-position: 0 -250px;
 	width: 22px;
 	height: 24px;
@@ -844,7 +844,7 @@
 	background-position: -147px -248px;
 	display: block;
 }
-.MB-volume{
+.MB-volumeicon{
 	float: left;
 	width: 25px;
 	height: 25px;
@@ -853,8 +853,37 @@
 	background: url('./../../resource/playbar.png') no-repeat;
 	background-position: -2px -248px;
 }
-.MB-volume:hover{
+.MB-volumeicon:hover{
 	background-position: -31px -248px;
+}
+.MB-VolBar{
+	position: absolute;
+	top:-123px;
+	left: 9px;
+	width: 32px;
+	height: 113px;
+	background: url('./../../resource/playbar.png') no-repeat;
+	background-position: 0 -503px;
+}
+.MB-Volume{
+	margin-left:14px;
+	margin-top: -10px;
+	width: 5px;
+	background: url('./../../resource/playbar.png') no-repeat;
+	background-position: -40px bottom;
+}
+.MB-Vbuttoncontainer{
+	display: block;
+	width: 18px;
+	height: 20px;
+}
+.MB-Vbutton{
+	display: inline-block;
+	margin-left: 7px;
+	width: 18px;
+	height: 18px;
+	background: url('./../../resource/iconall.png') no-repeat;
+	background-position: -40px -250px;
 }
 
 .MB-playdir{
@@ -864,7 +893,25 @@
 	margin: 0 2px 0 0;
 	text-indent: -9999px;
 	background: url('./../../resource/playbar.png') no-repeat;
+	
+}
+.MB-ordinal{
 	background-position: -3px -344px;
+}
+.MB-ordinal:hover{
+	background-position: -33px -344px
+}
+.MB-random{
+	background-position: -66px -248px;
+}
+.MB-random:hover{
+	background-position: -93px -248px;
+}
+.MB-singleloop{
+	background-position: -66px -344px;
+}
+.MB-singleloop:hover{
+	background-position: -93px -344px;
 }
 
 .MB-direminder{
@@ -893,7 +940,7 @@
 	display: block;
 	float: none;
 	width: 38px;
-	padding-left: 21px;
+	padding-left: 19px;
 	line-height: 27px;
 	text-align: center;
 	text-decoration: none;

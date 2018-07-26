@@ -2,15 +2,14 @@ import React, { Component } from 'react'
 import './componetsCss/163content.css'
 import { connect } from 'react-redux'
 import { mapcurrentTime,store } from '../store/store'
-import { processdrop } from './../action/action'
+import { processdrop,volumedrag } from './../action/action'
 
 
-//const url = 'http://47.97.214.91:3389';
-const url = 'http://localhost:3001'
+const url = 'http://47.97.214.91:3389';
+//const url = 'http://localhost:3001'
 let nowadate = new Date();
 nowadate = nowadate.getTime();
 let i = 0;
-let clock
 let banner = [];
 let maxlength = 0;
 
@@ -111,7 +110,7 @@ class Viewpage extends Component{
 	}
 
 	handleRightClick(){
-		clearInterval(clock)
+		clearInterval()
 		this.setState({
 			flag:2
 		},()=>{
@@ -121,7 +120,7 @@ class Viewpage extends Component{
 	}
 
 	handleLeftClick(){
-		clearInterval(clock)
+		clearInterval(this.timeId)
 		this.setState({
 			dir:-1,
 			flag:2
@@ -131,33 +130,33 @@ class Viewpage extends Component{
 	}
 
 	componentDidMount() {
-		clock = setInterval(
+		this.timeId = setInterval(
 		i=>this.showfade(), 1000)
   	}
 
     componentWillUnmount() {
-    	clearInterval(clock)
+    	clearInterval(this.timeId)
   	}
   	showfade(){
-  		clearInterval(clock)
+  		clearInterval(this.timeId)
   		switch(this.state.flag){
 			case 1:
 	    		this.fadein().then(
-						clock = setTimeout(()=>{
+						this.timeId = setTimeout(()=>{
 							this.showfade()
 						}, 1000)
 	    		);		
 	    		break;
 	    	case 2:
 	    		this.fadeout().then(
-						clock = setTimeout(()=>{
+						this.timeId = setTimeout(()=>{
 							this.showfade()
 						}, 1000)
 	    		);  
 	    		break;
 	    	case 3:
 	    		this.tick().then(
-						clock = setTimeout(()=>{
+						this.timeId = setTimeout(()=>{
 							this.showfade()
 						}, 3000)
 	    		);
@@ -775,8 +774,10 @@ class MusicBarMaintain extends Component{
 					iconUrl:''
 				}],
 			status:'pause',
-			volume:100,
-			playways:'',
+			playways:'ordinal',
+			waysinfo:'循环',
+			display:'none',
+			Voldisplay:'none',
 			id:0,
 			currentTime:0,
 			bufferedTime:0,
@@ -796,6 +797,7 @@ class MusicBarMaintain extends Component{
 		this.handleNextClick = this.handleNextClick.bind(this)
 		this.handleEnded = this.handleEnded.bind(this)
 		this.handleDirClick = this.handleDirClick.bind(this)
+		this.handleVolClick = this.handleVolClick.bind(this)
 	};
 
 	componentWillMount(){
@@ -883,13 +885,67 @@ class MusicBarMaintain extends Component{
 	}
 
 	handleDirClick(){
+		if(this.state.display === 'block'){
+			let promise = new Promise((res,rej) =>{
+				clearInterval(this.timeId)
+			}).then(
+				this.timeId = setTimeout(()=>{
+					this.setState({
+						display:'none'
+					})
+				},2000)
+			)
+		}else{
+			let promise = new Promise((res,rej) =>{
+				this.setState({
+					display:'block'
+				})
+			}).then(
+				this.timeId = setTimeout(()=>{
+					this.setState({
+						display:'none'
+					})
+				},2000)
+			);
+		}
+		switch(this.state.playways){
+			case 'ordinal':
+				this.setState({
+					playways:'random',
+					waysinfo:'随机'
+				})
+				break;
+			case 'random':
+				this.setState({
+					playways:'singleloop',
+					waysinfo:'单曲循环'
+				})
+				break;
+			case 'singleloop':
+				this.setState({
+					playways:'ordinal',
+					waysinfo:'循环'
+				})
+				break;
+			default:
+				console.log('err')
+		}
+	}
 
+	handleVolClick(){
+		if(this.state.Voldisplay === 'none')
+			this.setState({
+				Voldisplay:'block'
+			})
+		else
+			this.setState({
+				Voldisplay:'none'
+			})
 	}
 
 	componentDidMount(){
-		let audio = this.refs.audio;
-		let minute = audio.duration / 60;
-		let sec = audio.duration % 60;
+		let audio = this.refs.audio
+		audio.volume = 0.5;
 		
 	}
 
@@ -924,15 +980,39 @@ class MusicBarMaintain extends Component{
 	}	
 
 	handleEnded(){
-		let audio = this.refs.audio
-		let status = this.state.status
-		audio.pause()
-		this.setState({
-				id:this.state.iteminfo.length-1
-			},()=>{
-				this.musicBarLength()
-				status === 'play' ? audio.play() : 0;
-		})
+		let audio = this.refs.audio;
+		let status = this.state.status;
+		audio.pause();
+		switch(this.state.playways){
+			case 'ordinal':
+				this.setState({
+					id:this.state.id+1
+				},()=>{
+					this.musicBarLength()
+					status === 'play' ? audio.play() : 0;
+				})
+				break;
+			case 'random':
+				this.setState({
+					id:Math.floor(Math.random()*this.state.iteminfo.length+1)
+				},()=>{
+					this.musicBarLength()
+					status === 'play' ? audio.play() : 0;
+				})
+				break;
+			case 'singleloop':
+				this.setState({
+					id:this.state.id
+				},()=>{
+					this.musicBarLength()
+					status === 'play' ? audio.play() : 0;
+				})
+				break;
+			default:
+				console.log('err')
+		}
+		
+		
 	}
 
 	componentWillReceiveProps(nextProps){
@@ -942,6 +1022,9 @@ class MusicBarMaintain extends Component{
 			this.musicBarLength()
 		}
 		
+		if(this.props.volume !==nextProps.volume){
+			audio.volume = (88-nextProps.volume)/88
+		}
 	}
 
 	render(){
@@ -965,21 +1048,21 @@ class MusicBarMaintain extends Component{
 					</audio>
 				<div style={{position:'relative', marginTop:'30px',float:'left',minWidth:'80px'}}>
 					<span className="MB-passedtime">
-						<em style={{minWidth:'30px',display:'inline-block'}}>{`${this.state.passedtime.min}:${this.state.passedtime.sec}`}</em> / <em style={{minWidth:'30px',display:'inline-block'}}>{`${this.state.endtime.min}:${this.state.endtime.sec}`}</em>
+						<em style={{minWidth:'31px',display:'inline-block'}}>{`${this.state.passedtime.min}:${this.state.passedtime.sec}`}</em> / <em style={{minWidth:'31px',display:'inline-block'}}>{`${this.state.endtime.min}:${this.state.endtime.sec}`}</em>
 					</span>
 				</div>
 							<div style={{position:'relative', margin:'16px 0 0 35px',float:'left'}}>
 					<a hidefocus="true" className="MB-addtolist"></a>
 					<a hidefocus="true" className="MB-share" ></a>
 					<div className="MB-controlbuttons">
-						<div className="MB-direminder">单曲循环
-						</div>
-						<a hidefocus="true" className="MB-volume" ></a>
-						<a hidefocus="true" onClick={this.handleDirClick} className="MB-playdir" ></a>
+						<div style={{display:this.state.display}} className="MB-direminder">{this.state.waysinfo}</div>				
+						<a hidefocus="true" onClick={this.handleVolClick} className="MB-volumeicon" ></a>
+						<a hidefocus="true" onClick={this.handleDirClick} className={'MB-playdir MB-'+this.state.playways} ></a>
 						<span className="MB-lists">
 							<span></span>
-							<a hidefocus="true" className="MB-listbutton" >0</a>
+							<a hidefocus="true" className="MB-listbutton" >{this.state.iteminfo.length}</a>
 						</span>
+						<VolumeBar visiable={this.state.Voldisplay} />
 				</div>
 				</div>
 			</div>
@@ -1046,9 +1129,11 @@ class MusicBar extends Component{
 
 	handleBarClick(e){
 		let X = e.clientX;
-		store.dispatch(processdrop(X-646))
+		let musicbar = this.refs.musicbar
+		let baseX = musicbar.getBoundingClientRect().left
+		store.dispatch(processdrop(X-baseX))
 		this.setState({
-			current:X-646
+			current:X-baseX
 		})
 	}
 
@@ -1056,17 +1141,17 @@ class MusicBar extends Component{
 		this.setState({
 			onhold:1
 		})
+		let musicbar = this.refs.musicbar
+		let baseX = musicbar.getBoundingClientRect().left
 		document.onmousemove = e =>{
 			let X = e.clientX;
-			let Y = e.clientY;
 			this.setState({
-				current:X-646
+				current:X-baseX
 			})
 		}
 		document.onmouseup = e =>{
 			let X = e.clientX;
-			let Y = e.clientY;
-			store.dispatch(processdrop(X-646))
+			store.dispatch(processdrop(X-baseX))
 			this.setState({
 				onhold:0
 			},()=>{
@@ -1080,19 +1165,60 @@ class MusicBar extends Component{
 
 	render(){
 		return(
-			<div onClick={this.handleBarClick} className="MB-musicbar">
+			<div onClick={this.handleBarClick} ref="musicbar" className="MB-musicbar">
 				<div style={{width:this.state.current}} className="MB-mbpassed">	
 				</div>
 					<div className="MB-mbuttoncontainer">
 					<span onMouseDown={this.handleMouseDown} className="MB-mbutton"><i className="MB-mbuttonloading"></i></span>
 				</div>
-				<div style={{width:this.state.buffered}} className="MB-mbdownloaded">
-					
+				<div style={{width:this.state.buffered}} className="MB-mbdownloaded">					
 				</div>
 			</div>			
 		)
 	}
 }
+
+class VolumeBar extends Component{
+	constructor(props){
+		super(props)
+		this.state={
+			volume:44
+		}
+
+		this.handleMouseDown = this.handleMouseDown.bind(this)
+	}
+
+	handleMouseDown(e){
+		let volumebar = this.refs.volumebar
+		let baseY = volumebar.getBoundingClientRect().top
+		document.onmousemove = e =>{
+			e=e||window.event;
+			let Y = e.clientY;
+			let volume = Y-baseY-12
+			volume = volume > 88 ? 88 : volume;
+			volume = volume < 0 ? 0 : volume;
+			this.setState({
+				volume: volume
+			})
+			store.dispatch(volumedrag(volume))
+		}
+		document.onmouseup = e =>{		
+			document.onmousemove = null;
+			document.onmouseup = null;
+		}
+	}
+
+	render() {
+		return (
+			<div style={{display:this.props.visiable}} ref="volumebar" className="MB-VolBar">
+				<span onMouseDown={this.handleMouseDown} style={{marginTop:5+this.state.volume+'px'}} className="MB-Vbutton"></span>
+				<div  style={{height:88-this.state.volume+'px'}} className="MB-Volume">
+				</div>			
+			</div>	
+		);
+	}
+}
+
 
 
 export {Viewpagecontent,Maincontent ,MusicBarContain}
