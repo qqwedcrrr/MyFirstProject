@@ -979,7 +979,7 @@
 }
 .MB-part2{
 	position: absolute;
-	left: 390px;
+	left: 400px;
 	top: 12px;
 	height: 15px;
 	line-height: 15px;
@@ -995,17 +995,17 @@
 	background-position: -24px 0 ;
 }
 .MB-line {
-	left:470px;
+	left:480px;
 	position: absolute;
 	top:12px;
 	height: 15px;
-	width: 3px;
+	width: 0px;
 	border-left: 1px solid #000;
 	border-right: 1px solid #2c2c2c;
 }
 .MB-part3{
 	position: absolute;
-	left:490px;
+	left:492px;
 	top:12px;
 	height: 15px;
 	line-height: 15px;
@@ -1102,7 +1102,7 @@
 .MB-itempart2{
 	float: left;
 	padding-left: 10px;
-	height: 10px;
+	height: 28px;
 	width: 256px;
 	overflow: hidden;
 	white-space: nowrap;
@@ -1114,6 +1114,7 @@
 	position: relative;
 	width: 78px;
 	float: left;
+	padding-left: 10px;
 	height: 28px;
 	overflow: hidden;
 	cursor: pointer;
@@ -1127,7 +1128,16 @@
 	height: 23px;
 	color: #fff;
 }
-.MB-part3icon{
+..MB-part3icon{
+	float: left;
+	height: 16px;
+	overflow: hidden;
+	margin:1px 6px 0 0px;
+	text-indent: -9999px;
+	background: url('./../../resource/playlist.png') no-repeat;
+	background-position: -51px 0;
+}
+.MB-itempart3icon{
 	float: right;
 	height: 16px;
 	overflow: hidden;
@@ -1152,7 +1162,7 @@
 	background-position: 0 0;
 }
 .icn-add{
-	width: 14px;
+	width: 16px;
 	background-position: -24px 0;
 }
 .MB-itempart4{
@@ -1165,16 +1175,60 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	width: 70px;
-	color: #fff;
+	color: #666;
+}
+.MB-part4info{
+	cursor: pointer;
+	color: #9b9b9b;
 }
 .MB-itempart5{
 	float: left;
-	padding-left: 10px;
+	padding-left: 8px;
 	line-height: 28px;
 	overflow: hidden;
 	cursor: pointer;
 	width: 35px;
-	color:#ccc;
+	color:#666;
+}
+.MB-itempart6{
+	float: left;
+	padding-left: 6px;
+	height: 28px;
+	line-height: 28px;
+	overflow: hidden;
+	cursor: pointer;
+	width: 37px;
+}
+.MB-part6icon{
+	height: 16px;
+	float: right;
+	width: 14px;
+	margin: 7px 0 0 0;
+	overflow: hidden;
+	background: url('./../../resource/playlist.png') no-repeat;
+	background-position: -80px 0;
+}
+.MB-listscrollbar1{
+	position: absolute;
+	left: 555px;
+	top:-1px;
+	z-index: 2;
+	width: 6px;
+	height: 260px;
+	background-color: #000;
+	opacity: 0.5;
+}
+.MB-scrollbar1button{
+	display: block;
+	position: absolute;
+	left: 0;
+	width: 4px;
+	border-radius: 5px;
+	cursor: pointer;
+	height: 100px;
+	border: 1px solid #a6a6a6;
+	opacity: 0.8;
+	background: #868686;
 }
 .MB-listpart2bg{
 	position: absolute;
@@ -1185,4 +1239,77 @@
 	height: 250px;
 	background-color: #121212;
 	opacity: 0.01;
+}
+.MB-ask{
+	position: absolute;
+	right: 25px;
+	top: 12px;
+	cursor: pointer;
+	z-index: 5;
+}
+.MB-askicon{
+	display: inline-block;
+	width: 21px;
+	height: 21px;
+	background: url('./../../resource/playlist.png') no-repeat;
+	background-position: 0 -50px;
+}
+.MB-raiserror{
+	position: absolute;
+	right: 12px;
+	top: 40px;
+	box-shadow: 0 2px 3px rgba(0,0,0,0.75);
+	width:80px;
+	z-index: 5px;
+}
+.MB-raiserror>a{
+	display: block;
+	text-align: center;
+	padding: 8px 0 ;
+	color: #666;
+	background: #ebebeb;
+	text-shadow: 0 1px 0 #fff;
+}
+.MB-lyrics{
+	position: absolute;
+	right: 40px;
+	top: 0;
+	z-index: 4;
+	margin:21px 0 20px 0;
+	height: 219px;
+	width: 354px;
+	overflow: hidden;
+}
+.MB-lyricsitem{
+	color:#989898;
+	word-wrap: break-word;
+	text-align: center;
+	line-height: 32px;
+	height: auto !important;
+	min-height: 32px;
+	transition: color 0.7s linear;
+}
+.MB-listscrollbar2{
+	left: auto;
+	right: 2px;
+	position: absolute;
+	top: -1px;
+	z-index: 2;
+	width: 6px;
+	height: 260px;
+	background: #000;
+	opacity: 0.5;
+}
+.MB-scrollbar2button{
+	display: block;
+	position: absolute;
+	left: auto;
+	right: 0;
+	width: 4px;
+	border-radius: 5px;
+	cursor: pointer;
+	height: 100px;
+	border: 1px solid #a6a6a6;
+	opacity: 0.8;
+	background: #868686;
 }

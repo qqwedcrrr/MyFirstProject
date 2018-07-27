@@ -1268,11 +1268,17 @@ class MBListBody extends Component{
 				<div className="MB-listpart1bg"></div>
 				<div className="MB-listpart1body">
 					<ul style={{color:"#ccc",overflow:"hidden"}}>
-						
+						<MBListItem />
 					</ul>
 				</div>
-				<div></div>
+				<div className="MB-listscrollbar1">
+					<span className="MB-scrollbar1button"></span>
+				</div>
 				<div className="MB-listpart2bg"></div>
+				<MBLyrics />
+				<div className="MB-listscrollbar2">
+					<span className="MB-scrollbar2button"></span>
+				</div>
 			</div>
 		);
 	}
@@ -1286,19 +1292,49 @@ const MBListItem = () => (
 		<div className="MB-itempart2">asdadasd</div>
 		<div className="MB-itempart3">
 			<div className="MB-itempart3icons">
-				<i className="MB-part3icon icn-del">删除</i>
-				<i className="MB-part3icon icn-dl">下载</i>
-				<i className="MB-part3icon icn-share">分享</i>
-				<i className="MB-part3icon icn-add">收藏</i>
+				<i className="MB-itempart3icon icn-del">删除</i>
+				<i className="MB-itempart3icon icn-dl">下载</i>
+				<i className="MB-itempart3icon icn-share">分享</i>
+				<i className="MB-itempart3icon icn-add">收藏</i>
 			</div>
 		</div>
 		<div className="MB-itempart4">
-			<span style={{whiteSpace:'nowrap',color:'#fff',lineHeight:'28px'}}>
-				<a hidefocus="true" className="MB-part3">qwesad</a>
+			<span style={{whiteSpace:'nowrap',color:'#ccc',lineHeight:'28px'}}>
+				<a hidefocus="true" className="MB-part4info">qwesad</a>
+				/<span style={{whiteSpace:'nowrap',color:'#ccc'}}>asdd</span>
 			</span>
 		</div>
-		<div className="MB-itempart5"></div>
+		<div className="MB-itempart5">00:00</div>
+		<div className="MB-itempart6">
+			<a hidefocus="true" className="MB-part6icon"></a>
+		</div>
 	</li>
+)
+
+class MBLyrics extends Component{
+	constructor(props){
+		super(props)
+	}
+
+	render() {
+		return (
+			<div>
+				<div className="MB-ask">
+					<a hidefocus="true" className="MB-askicon"></a>
+				</div>
+				<div className="MB-raiserror">
+					<a hidefocus="true" className="">报错</a>
+				</div>
+				<div className="MB-lyrics">
+					<Lyricsitem />
+				</div>
+			</div>
+		);
+	}
+}
+
+const Lyricsitem = () => (
+	<p className="MB-lyricsitem">asdadaa</p>
 )
 
 
