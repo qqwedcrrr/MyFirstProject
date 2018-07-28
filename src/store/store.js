@@ -13,11 +13,10 @@ const store = createStore(
 function mapcurrentTime(state) {
 	return {
 		position: state.processclick.current,
-		volume: state.volumeclick.volume
+		volume: state.volumeclick.volume,
+		songid: state.songclick.id
 	}
 }
-
-
 
 function mapStateToProps(state) {
 	return {

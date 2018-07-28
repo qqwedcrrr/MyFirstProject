@@ -40,3 +40,10 @@ export const volumedrag = volume =>{
 		volume
 	}
 }
+
+export const songclick = id =>{
+	return{
+		type:'song_click',
+		id
+	}
+}

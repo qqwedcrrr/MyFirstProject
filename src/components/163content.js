@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './componetsCss/163content.css'
 import { connect } from 'react-redux'
 import { mapcurrentTime,store } from '../store/store'
-import { processdrop,volumedrag } from './../action/action'
+import { processdrop,volumedrag,songclick } from './../action/action'
 
 
 //const url = 'http://47.97.214.91:3389';
@@ -79,8 +79,6 @@ class Viewpage extends Component{
 	};
 
 	componentWillMount() {
-		// let phone = '15656000329';
-		// let password = '490105923';
 		let viewPage = fetchPicture('/banner').then(res =>{
 			banner = res.banners;
 			maxlength = res.banners.length-1;
@@ -460,7 +458,8 @@ class Albumlist extends Component{
 			Album:[],
 			coord:-645,
 			disabled:'false',
-			dir:''
+			dir:'',
+			display:'visible'
 		}
 
 		this.handleLeftClick = this.handleLeftClick.bind(this)
@@ -487,6 +486,12 @@ class Albumlist extends Component{
 				Album:Album
 			})
 		})
+	}
+
+	componentDidMount(){
+		setTimeout(this.setState({
+			display:'hidden'
+		}), 2000)
 	}
 
 	handleLeftClick(){
@@ -546,10 +551,9 @@ class Albumlist extends Component{
 		}
 		else
 		return (
-			<div>
-				<a onClick={this.handleLeftClick}  hidefocus="true" className="Albumleft"></a>
-				<div className="albcontainer">
-					<ul style={{transition:`${this.state.move}`,left:`${this.state.coord}px`}} onTransitionEnd={this.onTransitionEnd} ref="albumlist" className="alb-list">
+			<div>				
+				<div className="albcontainer" style={{overflow:this.state.display}}>
+					<ul style={{transition:`${this.state.move}`,left:`${this.state.coord}px`,willChange: 'transform'}} onTransitionEnd={this.onTransitionEnd} ref="albumlist" className="alb-list">
 						{
 							this.state.Album.map((data,index)=>(
 								<Albumitem key={index} {...data} />
@@ -557,6 +561,7 @@ class Albumlist extends Component{
 						}
 					</ul>
 				</div>
+				<a onClick={this.handleLeftClick}  hidefocus="true" className="Albumleft"></a>
 				<a onClick={this.handleRightClick} hidefocus="true" className="Albumright"></a>
 			</div>
 		)
@@ -777,6 +782,7 @@ class MusicBarMaintain extends Component{
 			playways:'ordinal',
 			waysinfo:'循环',
 			display:'none',
+			listvisible:'hidden',
 			Voldisplay:'none',
 			id:0,
 			currentTime:0,
@@ -798,6 +804,7 @@ class MusicBarMaintain extends Component{
 		this.handleEnded = this.handleEnded.bind(this)
 		this.handleDirClick = this.handleDirClick.bind(this)
 		this.handleVolClick = this.handleVolClick.bind(this)
+		this.handleListButtonClick = this.handleListButtonClick.bind(this)
 	};
 
 	componentWillMount(){
@@ -805,11 +812,15 @@ class MusicBarMaintain extends Component{
 		fetchPicture('/playlist/detail?id=84593826').then(res =>{
 			let musiclist = res.playlist.tracks
 			for(let i = 0;i<musiclist.length;i++){
+				let time = Math.floor(musiclist[i].dt/1000)
 				let item = {
 					name:musiclist[i].name,
 					singername:musiclist[i].ar[0].name,
+					id:i,
 					url:'http://music.163.com/song/media/outer/url?id='+ musiclist[i].id +'.mp3',
 					iconUrl:musiclist[i].al.picUrl,
+					min:this.numfix(parseInt(parseInt(time)/60),2),
+					sec:this.numfix(parseInt(time)%60,2)
 				}
 				iteminfo.push(item)
 			}
@@ -817,10 +828,6 @@ class MusicBarMaintain extends Component{
 				iteminfo:iteminfo
 			})
 		})
-	}
-
-	fetchMusicUrl(id){
-		fetchPicture(`http://music.163.com/song/media/outer/url?id=${id}.mp3`)
 	}
 
 	handlePlayClick(){
@@ -943,6 +950,17 @@ class MusicBarMaintain extends Component{
 			})
 	}
 
+	handleListButtonClick(){
+		if(this.state.listvisible === 'hidden')
+			this.setState({
+				listvisible:'visible'
+			})
+		else
+			this.setState({
+				listvisible:'hidden'
+			})
+	}
+
 	componentDidMount(){
 		let audio = this.refs.audio
 		audio.volume = 0.5;
@@ -1025,6 +1043,15 @@ class MusicBarMaintain extends Component{
 		if(this.props.volume !==nextProps.volume){
 			audio.volume = (88-nextProps.volume)/88
 		}
+
+		if(this.props.songid !==nextProps.songid){
+			this.setState({
+				id:nextProps.songid,
+				status:'pause'
+			}, ()=>{
+				this.handlePlayClick()
+			})
+		}
 	}
 
 	render(){
@@ -1034,7 +1061,9 @@ class MusicBarMaintain extends Component{
 					<a hidefocus="true" className="MB-btn MB-before" onClick={this.handlePastClick}></a>
 					<a hidefocus="true" className={this.state.status === 'play' ? "MB-btn MB-pause" : "MB-btn MB-play"} onClick={this.handlePlayClick} ></a>
 					<a hidefocus="true" className="MB-btn MB-next" onClick={this.handleNextClick}></a>
-					<MusicBarList />
+					<div style={{visibility:this.state.listvisible}}>
+						<MusicBarList songinfo={this.state.iteminfo} />
+					</div>
 				</div>
 				<div className="MB-icon">
 					<img src={this.state.iteminfo[this.state.id] ? this.state.iteminfo[this.state.id].iconUrl: ''} alt="" width="34" height="35"/>
@@ -1061,9 +1090,9 @@ class MusicBarMaintain extends Component{
 						<a hidefocus="true" onClick={this.handleDirClick} className={'MB-playdir MB-'+this.state.playways} ></a>
 						<span className="MB-lists">
 							<span></span>
-							<a hidefocus="true" className="MB-listbutton" >{this.state.iteminfo.length}</a>
+							<a hidefocus="true" onClick={this.handleListButtonClick} className="MB-listbutton" >{this.state.iteminfo.length}</a>
 						</span>
-						<VolumeBar visiable={this.state.Voldisplay} />
+						<VolumeBar visible={this.state.Voldisplay} />
 				</div>
 				</div>
 			</div>
@@ -1210,7 +1239,7 @@ class VolumeBar extends Component{
 
 	render() {
 		return (
-			<div style={{display:this.props.visiable}} ref="volumebar" className="MB-VolBar">
+			<div style={{display:this.props.visible}} ref="volumebar" className="MB-VolBar">
 				<span onMouseDown={this.handleMouseDown} style={{marginTop:5+this.state.volume+'px'}} className="MB-Vbutton"></span>
 				<div  style={{height:88-this.state.volume+'px'}} className="MB-Volume">
 				</div>			
@@ -1219,10 +1248,10 @@ class VolumeBar extends Component{
 	}
 }
 
-const MusicBarList = () => (
+const MusicBarList = songinfo => (
 	<div className="MB-listcontainer">
-		<MBListHeader />
-		<MBListBody />
+		<MBListHeader {...songinfo} />
+		<MBListBody  {...songinfo} />
 	</div>
 )
 
@@ -1237,7 +1266,7 @@ class MBListHeader extends Component{
 			<div className="MB-listheader">
 					<div style={{position:'relative',height:'41px'}}>
 						<div className="MB-headerpart1">
-							<h4 className="MB-part1">播放列表(31)</h4>	
+							<h4 className="MB-part1">播放列表({this.props.songinfo.length !== 1 ? this.props.songinfo.length:0})</h4>	
 						</div>
 						<a hidefocus="true" className="MB-part2">
 						<span className="MB-part2icon"></span>
@@ -1259,20 +1288,62 @@ class MBListHeader extends Component{
 class MBListBody extends Component{
 	constructor(props){
 		super(props)
+		this.state={
+			scroll:0,
+			scrollbarheight:260,
+			scrollbar1scroll:0
+		}
+		this.handleScroll = this.handleScroll.bind(this)
+	}
+
+	handleScroll(e){
+		let songlist = this.refs.songlist;
+		let scrollbar1 = this.refs.scrollbar1;
+		let scrolldistance = 10;
+		let scrollbardistance = scrolldistance*(260-scrollbar1.offsetHeight)/(songlist.offsetHeight-260)
+		if(e.deltaY>0){
+			this.setState({
+				scroll:this.state.scroll-scrolldistance+(songlist.offsetHeight-260)<= 0 ? (260-songlist.offsetHeight) : this.state.scroll-scrolldistance,
+				scrollbar1scroll:this.state.scrollbar1scroll+scrollbardistance >= (260-scrollbar1.offsetHeight) ? (260-scrollbar1.offsetHeight) : this.state.scrollbar1scroll+scrollbardistance
+			})
+		}else{
+			this.setState({
+				scroll:this.state.scroll+scrolldistance >=0 ? 0 : this.state.scroll+scrolldistance,
+				scrollbar1scroll:this.state.scrollbar1scroll-scrollbardistance <=0 ? 0 : this.state.scrollbar1scroll-scrollbardistance
+			})
+		}
+	}
+
+	//visible area height is 260px
+	componentWillReceiveProps(nextProps){
+		if(this.props.songinfo.length !==nextProps.songinfo.length){
+			let scrollbarheight = 260*260/(nextProps.songinfo.length*28);
+			this.setState({
+				scrollbarheight:scrollbarheight
+			})
+		}
+	}
+
+	componentDidUpdate(){
+
 	}
 
 	render() {
 		return (
 			<div className="MB-listbody">
-				<img src="" alt="" className="MB-listbgimg" width="980" height="980"/>
+				<img src="//music.163.com/api/img/blur/7783442814172824" alt="" className="MB-listbgimg" width="980" height="980"/>
 				<div className="MB-listpart1bg"></div>
 				<div className="MB-listpart1body">
-					<ul style={{color:"#ccc",overflow:"hidden"}}>
-						<MBListItem />
+					<ul onWheel={this.handleScroll} ref="songlist" style={{color:"#ccc",overflow:"hidden",position:"absolute",top:this.state.scroll}}>
+						{
+							this.props.songinfo.map((item,index) =>(
+								<MBListItem key={index} name={item.name} singername={item.singername} id={item.id} min={item.min} sec={item.sec} />
+							))
+						}
 					</ul>
 				</div>
 				<div className="MB-listscrollbar1">
-					<span className="MB-scrollbar1button"></span>
+					<span className="MB-scrollbar1button" ref="scrollbar1" style={{height:this.state.scrollbarheight,top:this.state.scrollbar1scroll}}></span>
 				</div>
 				<div className="MB-listpart2bg"></div>
 				<MBLyrics />
@@ -1284,12 +1355,14 @@ class MBListBody extends Component{
 	}
 }
 
-const MBListItem = () => (
-	<li style={{float:'left',width:'100%'}}>
+const MBListItem = ({name,singername,id,min,sec}) => (
+	<li className="MB-listitem">
 		<div className="MB-itempart1">
 			<div className="MB-itempart1icon"></div>
 		</div>
-		<div className="MB-itempart2">asdadasd</div>
+		<div className="MB-itempart2" onClick={e =>{
+			store.dispatch(songclick(id))
+		}}>{name}</div>
 		<div className="MB-itempart3">
 			<div className="MB-itempart3icons">
 				<i className="MB-itempart3icon icn-del">删除</i>
@@ -1300,11 +1373,11 @@ const MBListItem = () => (
 		</div>
 		<div className="MB-itempart4">
 			<span style={{whiteSpace:'nowrap',color:'#ccc',lineHeight:'28px'}}>
-				<a hidefocus="true" className="MB-part4info">qwesad</a>
+				<a hidefocus="true" className="MB-part4info">{singername}</a>
 				/<span style={{whiteSpace:'nowrap',color:'#ccc'}}>asdd</span>
 			</span>
 		</div>
-		<div className="MB-itempart5">00:00</div>
+		<div className="MB-itempart5">{min}:{sec}</div>
 		<div className="MB-itempart6">
 			<a hidefocus="true" className="MB-part6icon"></a>
 		</div>

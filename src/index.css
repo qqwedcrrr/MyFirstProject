@@ -17,9 +17,9 @@ body, textarea, select, input, button,a{
     -webkit-text-size-adjust: none;
 }
 
-/*body{
+body{
     overflow: hidden;
-}*/
+}
 
 input, textarea, select, button, meter, progress {
     -webkit-writing-mode: horizontal-tb !important;
