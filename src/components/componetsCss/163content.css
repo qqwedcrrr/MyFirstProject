@@ -1143,6 +1143,7 @@
 	width: 100px;
 	height: 23px;
 	color: #fff;
+	text-indent: -9999px;
 }
 ..MB-part3icon{
 	float: left;

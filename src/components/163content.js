@@ -1296,22 +1296,28 @@ class MBListBody extends Component{
 		this.handleScroll = this.handleScroll.bind(this)
 	}
 
-	handleScroll(e){
-		let songlist = this.refs.songlist;
-		let scrollbar1 = this.refs.scrollbar1;
-		let scrolldistance = 10;
-		let scrollbardistance = scrolldistance*(260-scrollbar1.offsetHeight)/(songlist.offsetHeight-260)
-		if(e.deltaY>0){
+	handleScroll(e){	
+		document.onwheel = e =>{
+			let songlist = this.refs.songlist;
+			let scrollbar1 = this.refs.scrollbar1;
+			let scrolldistance = 10;
+			let scrollbardistance = scrolldistance*(260-scrollbar1.offsetHeight)/(songlist.offsetHeight-260)
+			if(e.deltaY>0){
 			this.setState({
 				scroll:this.state.scroll-scrolldistance+(songlist.offsetHeight-260)<= 0 ? (260-songlist.offsetHeight) : this.state.scroll-scrolldistance,
 				scrollbar1scroll:this.state.scrollbar1scroll+scrollbardistance >= (260-scrollbar1.offsetHeight) ? (260-scrollbar1.offsetHeight) : this.state.scrollbar1scroll+scrollbardistance
 			})
-		}else{
+			}else{
 			this.setState({
 				scroll:this.state.scroll+scrolldistance >=0 ? 0 : this.state.scroll+scrolldistance,
 				scrollbar1scroll:this.state.scrollbar1scroll-scrollbardistance <=0 ? 0 : this.state.scrollbar1scroll-scrollbardistance
 			})
+			}
 		}
+		document.onmouseout = e =>{		
+			document.onwheel = null;
+		}
+		
 	}
 
 	//visible area height is 260px
@@ -1324,17 +1330,13 @@ class MBListBody extends Component{
 		}
 	}
 
-	componentDidUpdate(){
-
-	}
-
 	render() {
 		return (
 			<div className="MB-listbody">
 				<img src="//music.163.com/api/img/blur/7783442814172824" alt="" className="MB-listbgimg" width="980" height="980"/>
 				<div className="MB-listpart1bg"></div>
 				<div className="MB-listpart1body">
-					<ul onWheel={this.handleScroll} ref="songlist" style={{color:"#ccc",overflow:"hidden",position:"absolute",top:this.state.scroll}}>
+					<ul onMouseOver={this.handleScroll} ref="songlist" style={{color:"#ccc",overflow:"hidden",position:"absolute",top:this.state.scroll}}>
 						{
 							this.props.songinfo.map((item,index) =>(
 								<MBListItem key={index} name={item.name} singername={item.singername} id={item.id} min={item.min} sec={item.sec} />

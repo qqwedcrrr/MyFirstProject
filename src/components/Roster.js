@@ -6,14 +6,6 @@ import { connect } from 'react-redux'
 import {mapStateToProps,mapDispatchToProps} from '../store/store'
 import { Viewpagecontent, Maincontent, MusicBarContain} from './163content'
 
-const navBar = {
-	position:'absolute',
-	left:'0',
-	width:'100%',
-	zIndex:'99',
-	clear:'both'
-}
-
 const top = {
 	position:'relative',
 	zIndex:'1000',
@@ -47,12 +39,39 @@ const navlist = [
 ]
 	
 class Roster extends Component {
+		constructor(props){
+		super(props)
+		this.state={
+			top:94
+		}
+		this.handleWheel = this.handleWheel.bind(this)
+	}
+
+	handleWheel(e){
+		document.onwheel = e =>{
+			let screenheight = window.innerHeight
+			if(e.deltaY>0){
+				this.setState({
+					top:this.state.top-80 <= (screenheight-2034) ? (screenheight-2034) : this.state.top-80
+				})
+			}else{
+				this.setState({
+					top:this.state.top+80 >= 94 ? 94 : this.state.top+80
+				})
+			}
+		}
+		document.onmouseout = e =>{		
+			document.onwheel = null;
+		}
+	}
+
 	render(){
 		const {navClick, chooseid} = this.props
 		return(
 			<div>
-				<div style={navBar}>
-					<div style={top}>
+				<div onMouseOver={this.handleWheel} style={{left:'0',position:'absolute',top:this.state.top,width:'100%'}} >
+					<div  style={{zIndex:'99',clear:'both',left:'0',position:'absolute',width:'100%'}}>
+						<div style={top}>
 						<div style={headerBar}>
 							<h1 className="logo">
 								<a className="logoAtag" hidefocus="true" href="/#">网易云音乐</a>
@@ -81,17 +100,54 @@ class Roster extends Component {
 							</div>
 						</div>
 						<NavBar2 {...chooseid} />
+						</div>
 					</div>
-				</div>
-				<div style={{overflow:'auto', minHeight:'1700px'}}>
-					<Viewpagecontent />
-					<Maincontent />		
-					<MusicBarContain />
-				</div>		
+					<div  style={{overflow:'auto', minHeight:'1700px'}}>
+						<Viewpagecontent />		
+						<Maincontent />			
+					</div>
+				</div>	
+				<MusicBarContain />	
 			</div>				
 		)
 	}
 }
+// class App extends Component{
+// 	constructor(props){
+// 		super(props)
+// 		this.state={
+// 			top:0
+// 		}
+// 		this.handleWheel = this.handleWheel.bind(this)
+// 	}
+
+// 	handleWheel(e){
+// 		document.onwheel = e =>{
+// 			let screenheight = window.innerHeight
+// 			if(e.deltaY>0){
+// 				this.setState({
+// 					top:this.state.top-80 <= (screenheight-2034) ? (screenheight-2034) : this.state.top-80
+// 				})
+// 			}else{
+// 				this.setState({
+// 					top:this.state.top+80 >= 0 ? 0 : this.state.top+80
+// 				})
+// 			}
+// 		}
+// 		document.onmouseout = e =>{		
+// 			document.onwheel = null;
+// 		}
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div ref="mainbody" onMouseOver={this.handleWheel} style={{position:'absolute',top:this.state.top,width:'100%'}}>
+//    				<Header />
+//     			<Main style={{clear:'both'}} />
+//   			</div>
+// 		)
+// 	}
+// }
 
 class Navitem extends Component{
 

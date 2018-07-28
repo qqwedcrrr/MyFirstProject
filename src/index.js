@@ -9,38 +9,49 @@ import Main from './config/router'
 import './index.css'
 
 
-class App extends Component{
-	constructor(props){
-		super(props)
-		this.state={
-			top:0
-		}
-		this.handleWheel = this.handleWheel.bind(this)
-	}
+// class App extends Component{
+// 	constructor(props){
+// 		super(props)
+// 		this.state={
+// 			top:0
+// 		}
+// 		this.handleWheel = this.handleWheel.bind(this)
+// 	}
 
-	handleWheel(e){
-		let bodyheight = this.refs.mainbody.offsetHeight
-		let screenheight = window.innerHeight
-		if(e.deltaY>0){
-			this.setState({
-				top:this.state.top-80 <= (screenheight-2034) ? (screenheight-2034) : this.state.top-80
-			})
-		}else{
-			this.setState({
-				top:this.state.top+80 >= 0 ? 0 : this.state.top+80
-			})
-		}
-	}
+// 	handleWheel(e){
+// 		document.onwheel = e =>{
+// 			let screenheight = window.innerHeight
+// 			if(e.deltaY>0){
+// 				this.setState({
+// 					top:this.state.top-80 <= (screenheight-2034) ? (screenheight-2034) : this.state.top-80
+// 				})
+// 			}else{
+// 				this.setState({
+// 					top:this.state.top+80 >= 0 ? 0 : this.state.top+80
+// 				})
+// 			}
+// 		}
+// 		document.onmouseout = e =>{		
+// 			document.onwheel = null;
+// 		}
+// 	}
 
-	render(){
-		return(
-			<div ref="mainbody" onWheel={this.handleWheel} style={{position:'absolute',top:this.state.top,width:'100%'}}>
+// 	render(){
+// 		return(
+// 			<div ref="mainbody" onMouseOver={this.handleWheel} style={{position:'absolute',top:this.state.top,width:'100%'}}>
+//    				<Header />
+//     			<Main style={{clear:'both'}} />
+//   			</div>
+// 		)
+// 	}
+// }
+const App = () =>(
+	<div >
    				<Header />
     			<Main style={{clear:'both'}} />
   			</div>
-		)
-	}
-}
+)
+
 
 
 ReactDOM.render(
