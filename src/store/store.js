@@ -14,7 +14,8 @@ function mapcurrentTime(state) {
 	return {
 		position: state.processclick.current,
 		volume: state.volumeclick.volume,
-		songid: state.songclick.id
+		songid: state.songclick.id,
+		songliststatus:state.songlistclose.liststatus
 	}
 }
 

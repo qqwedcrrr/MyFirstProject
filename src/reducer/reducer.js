@@ -85,4 +85,19 @@ function songclick(state={id:0}, action){
 	}
 }
 
-export default {counter, todolist,navchooser, processclick,volumeclick,songclick}
+function songlistclose(state={liststatus:'hidden'},action){
+	switch(action.type) {
+		case 'songlist_close':
+			return{
+				liststatus:'hidden'
+			}
+		case 'songlist_open':
+			return{
+				liststatus:'visible'
+			}
+		default:
+			return state
+	}	
+}
+
+export default {counter, todolist,navchooser, processclick,volumeclick,songclick,songlistclose}

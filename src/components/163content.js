@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './componetsCss/163content.css'
 import { connect } from 'react-redux'
 import { mapcurrentTime,store } from '../store/store'
-import { processdrop,volumedrag,songclick } from './../action/action'
+import { processdrop,volumedrag,songclick,songlistclose,songlistopen } from './../action/action'
 
 
 //const url = 'http://47.97.214.91:3389';
@@ -744,23 +744,57 @@ const Viewpagecontent = () => (
 class MusicBarContain extends Component{
 	constructor(props){
 		super(props)
+		this.state={
+			bottom:-45,
+			lock:'off',
+			className:'MB-unlockclick'
+		}
 		
+		this.handleLockClick = this.handleLockClick.bind(this)
+		this.handleonMouseOver = this.handleonMouseOver.bind(this)
+		this.handleonMouseOut = this.handleonMouseOut.bind(this)
 	};
 
 	componentWillUnmount(){
 
 	}
 
+	handleonMouseOut(){
+		if(this.state.lock !== 'on')
+		this.setState({
+			bottom:-45
+		})
+	}
+
+	handleonMouseOver(){
+		this.setState({
+			bottom:0
+		})
+	}
+
+	handleLockClick(){
+		if(this.state.lock === 'off')
+			this.setState({
+				lock:'on',
+				className:'MB-lockclick'
+			})
+		else
+			this.setState({
+				lock:'off',
+				className:'MB-unlockclick'
+			})
+	}
+
 	render(){
 		return(
-			<div className="MB-container">
+			<div onMouseOver={this.handleonMouseOver} onMouseOut={this.handleonMouseOut} style={{bottom:this.state.bottom}} className="MB-container">
 				<div className="MB-maincontain">
 					<div className="MB-touchbar"></div>
 					<div className="MB-main">
 						<MusicBarMaintain  />
 					</div>
 					<div className="MB-lockbutton"> 
-						<a hidefocus="true" className="MB-lockclick" ></a>
+						<a hidefocus="true" style={{backgroundPosition:this.state.bgposition}} onClick={this.handleLockClick} className={this.state.className} ></a>
 					</div>
 				</div>
 			</div>
@@ -952,13 +986,10 @@ class MusicBarMaintain extends Component{
 
 	handleListButtonClick(){
 		if(this.state.listvisible === 'hidden')
-			this.setState({
-				listvisible:'visible'
-			})
+			store.dispatch(songlistopen())
 		else
-			this.setState({
-				listvisible:'hidden'
-			})
+			store.dispatch(songlistclose())
+
 	}
 
 	componentDidMount(){
@@ -1052,6 +1083,10 @@ class MusicBarMaintain extends Component{
 				this.handlePlayClick()
 			})
 		}
+		if(this.state.listvisible !== nextProps.songliststatus)
+			this.setState({
+				listvisible:nextProps.songliststatus
+			})
 	}
 
 	render(){
@@ -1278,7 +1313,7 @@ class MBListHeader extends Component{
 						清除
 						</a>
 						<p className="MB-part4">asdqadads</p>
-						<span className="MB-part4icon"></span>
+						<span onClick={e =>{store.dispatch(songlistclose())}} className="MB-part4icon"></span>
 					</div>
 			</div>
 		);

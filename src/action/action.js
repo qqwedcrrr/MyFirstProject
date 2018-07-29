@@ -47,3 +47,15 @@ export const songclick = id =>{
 		id
 	}
 }
+
+export const songlistclose = () =>{
+	return{
+		type:'songlist_close'
+	}
+}
+
+export const songlistopen = () =>{
+	return{
+		type:'songlist_open'
+	}
+}
