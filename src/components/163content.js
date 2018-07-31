@@ -5,8 +5,8 @@ import { mapcurrentTime,store } from '../store/store'
 import { processdrop,volumedrag,songclick,songlistclose,songlistopen } from './../action/action'
 
 
-//const url = 'http://47.97.214.91:3389';
-const url = 'http://localhost:3001'
+const url = 'http://47.97.214.91:3389';
+//const url = 'http://localhost:3001'
 let nowadate = new Date();
 nowadate = nowadate.getTime();
 let i = 0;
@@ -553,7 +553,7 @@ class Albumlist extends Component{
 		return (
 			<div>				
 				<div className="albcontainer" style={{overflow:this.state.display}}>
-					<ul style={{transition:`${this.state.move}`,left:`${this.state.coord}px`,willChange: 'transform'}} onTransitionEnd={this.onTransitionEnd} ref="albumlist" className="alb-list">
+					<ul style={{transition:`${this.state.move}`,left:`${this.state.coord}px`,transform: 'translateZ(0)'}} onTransitionEnd={this.onTransitionEnd} ref="albumlist" className="alb-list">
 						{
 							this.state.Album.map((data,index)=>(
 								<Albumitem key={index} {...data} />
@@ -745,9 +745,9 @@ class MusicBarContain extends Component{
 	constructor(props){
 		super(props)
 		this.state={
-			bottom:-45,
-			lock:'off',
-			className:'MB-unlockclick'
+			bottom:0,
+			lock:'on',
+			className:'MB-lockclick'
 		}
 		
 		this.handleLockClick = this.handleLockClick.bind(this)
@@ -1089,6 +1089,8 @@ class MusicBarMaintain extends Component{
 			})
 	}
 
+
+
 	render(){
 		return(
 			<div className="MB-mbcontainer">
@@ -1096,9 +1098,7 @@ class MusicBarMaintain extends Component{
 					<a hidefocus="true" className="MB-btn MB-before" onClick={this.handlePastClick}></a>
 					<a hidefocus="true" className={this.state.status === 'play' ? "MB-btn MB-pause" : "MB-btn MB-play"} onClick={this.handlePlayClick} ></a>
 					<a hidefocus="true" className="MB-btn MB-next" onClick={this.handleNextClick}></a>
-					<div style={{visibility:this.state.listvisible}}>
-						<MusicBarList songinfo={this.state.iteminfo} />
-					</div>
+					<MusicBarListContainer songinfo={this.state.iteminfo}  visibility={this.state.listvisible} />
 				</div>
 				<div className="MB-icon">
 					<img src={this.state.iteminfo[this.state.id] ? this.state.iteminfo[this.state.id].iconUrl: ''} alt="" width="34" height="35"/>
@@ -1137,6 +1137,43 @@ class MusicBarMaintain extends Component{
 
 MusicBarMaintain = connect(mapcurrentTime)(MusicBarMaintain)
 
+class MusicBarListContainer extends Component{
+	constructor(props){
+		super(props)
+		this.state={
+			songinfo:[],
+			visibility:'hidden'
+		}
+	}
+
+	componentWillReceiveProps(nextProps){
+		if(this.props.songinfo !== nextProps.songinfo)
+			this.setState({
+				songinfo:nextProps.songinfo
+			})
+		if(this.props.visibility !== nextProps.visibility)
+			this.setState({
+				visibility:nextProps.visibility
+			})
+	}
+
+	shouldComponentUpdate(nextState){
+		if(this.state.visibility ==='hidden' && nextState.visibility === 'hidden')
+			return false
+		else
+			return true
+	}
+
+
+	render() {
+		return (
+			<div style={{visibility:this.state.visibility}}>
+				<MusicBarList songinfo={this.state.songinfo} />
+			</div>
+		);
+	}
+}
+
 class MusicBarControl extends Component{
 	constructor(props){
 		super(props)
@@ -1146,11 +1183,14 @@ class MusicBarControl extends Component{
 		}
 	}
 	
-	componentWillReceiveProps(nextProps){
-		this.setState({
-			name:nextProps.info.name,
-			singername:nextProps.info.singername
-		})
+	componentWillReceiveProps(nextProps){	
+		if(this.props.info.name !== nextProps.info.name || this.props.info.singername !== nextProps.info.singername){
+			this.setState({
+				name:nextProps.info.name,
+				singername:nextProps.info.singername
+			})
+		}
+			
 	}
 
 	render(){

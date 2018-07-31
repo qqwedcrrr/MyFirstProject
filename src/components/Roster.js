@@ -52,7 +52,7 @@ class Roster extends Component {
 			let screenheight = window.innerHeight
 			if(e.deltaY>0){
 				this.setState({
-					top:this.state.top-80 <= (screenheight-2034) ? (screenheight-2034) : this.state.top-80
+					top:this.state.top-80 <= (screenheight-1950) ? (screenheight-1950) : this.state.top-80
 				})
 			}else{
 				this.setState({
