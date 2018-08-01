@@ -5,7 +5,7 @@ import { mapcurrentTime,store } from '../store/store'
 import { processdrop,volumedrag,songclick,songlistclose,songlistopen } from './../action/action'
 
 
-const url = 'http://47.97.214.91:3389';
+const url = 'https://alexthrone.top:3389';
 //const url = 'http://localhost:3001'
 let nowadate = new Date();
 nowadate = nowadate.getTime();
