@@ -5,8 +5,8 @@ import { mapcurrentTime,store } from '../store/store'
 import { processdrop,volumedrag,songclick,songlistclose,songlistopen } from './../action/action'
 
 
-const url = 'https://alexthrone.top:3389';
-//const url = 'http://localhost:3001'
+//const url = 'https://alexthrone.top:3389';
+const url = 'http://localhost:3001'
 let nowadate = new Date();
 nowadate = nowadate.getTime();
 let i = 0;
@@ -978,17 +978,19 @@ class MusicBarMaintain extends Component{
 			this.setState({
 				Voldisplay:'block'
 			})
-		else
+		else{
 			this.setState({
 				Voldisplay:'none'
 			})
+		}
 	}
 
 	handleListButtonClick(){
+		let dispatch = this.props.dispatch;
 		if(this.state.listvisible === 'hidden')
-			store.dispatch(songlistopen())
+			dispatch(songlistopen())
 		else
-			store.dispatch(songlistclose())
+			dispatch(songlistclose())
 
 	}
 

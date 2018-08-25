@@ -1,10 +1,49 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import Roster from './../components/Roster'
-import Home from './../components/Home'
-import Schedule from './../components/Schedule'
-import Counter from './../components/Counter'
-import Todo from './../components/Todolist'
+import { Switch,
+    Route,
+    Link
+     } from 'react-router-dom';
+
+import Loadable from 'react-loadable';
+
+const loadingComponent = ({ isLoading, error }) => {
+  // Handle the loading state
+  if (isLoading) {
+      return <div>Loading...</div>;
+  }
+  // Handle the error state
+  else if (error) {
+      return <div>Sorry, there was a problem loading the page.</div>;
+  }
+  else {
+      return null;
+  }
+};
+
+const Home = Loadable({
+  loader: () => import('./../components/Home'),
+  loading: loadingComponent
+});
+
+const Roster= Loadable({
+  loader: () => import('./../components/Roster'),
+  loading: loadingComponent
+});
+
+const Schedule= Loadable({
+  loader: () => import('./../components/Schedule'),
+  loading: loadingComponent
+});
+
+const Counter= Loadable({
+  loader: () => import('./../components/Counter'),
+  loading: loadingComponent
+});
+
+const Todo= Loadable({
+  loader: () => import('./../components/Todolist'),
+  loading: loadingComponent
+});
 
 // const Main = () => (
 //   <main>
@@ -19,15 +58,15 @@ import Todo from './../components/Todolist'
 
 const Main = function(){
 	return(
-	  <main>
+	<div>
 	    <Switch>
-	      <Route exact path='/' component={Home}/>
-	      <Route path='/roster' component={Roster}/>
-	      <Route path='/schedule' component={Schedule}/>
-	      <Route path='/Counter' component={Counter}/>
-	      <Route path='/Todo' component={Todo}/>
+			<Route exact path='/' component={Home}/>
+	     	<Route path='/roster' component={Roster}/>
+	     	<Route path='/schedule' component={Schedule}/>
+	     	<Route path='/Counter' component={Counter}/>
+	     	<Route path='/Todo' component={Todo}/>	
 	    </Switch>
-	  </main>
+	</div>
 	)
 } 
 
