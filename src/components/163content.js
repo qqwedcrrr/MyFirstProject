@@ -207,8 +207,6 @@ class Viewpage extends Component{
 		})
     }
 
-
-
 	render(){
 		return(
 			<div className="viewpageBG" style={{backgroundImage:"url('"+this.state.bgcolor+"')"}}>
@@ -347,7 +345,7 @@ const Rcontent = () =>(
 
 
 const Maincontent = () => (
-	<div style={{ width:'100%', backgroundColor:'#f5f5f5', position:'absolute',marginTop:'440px'}}>
+	<div id="maincontent" style={{ width:'100%', backgroundColor:'#f5f5f5', position:'absolute',marginTop:'440px'}}>
 		<div className="maincontent" >
 			<div style={{float:'left',width:'100%',marginRight:'-250px', position:'relative'}}>
 				<Lcontent />
@@ -545,6 +543,7 @@ class Albumlist extends Component{
 				disabled:'false'
 		})	
 	}
+
 	render(){
 		if(this.state.Album === []){
 			return <div></div>
@@ -973,25 +972,39 @@ class MusicBarMaintain extends Component{
 		}
 	}
 
-	handleVolClick(){
-		if(this.state.Voldisplay === 'none')
+	handleVolClick(e){
+		if(this.state.Voldisplay === 'none'){
+			e.stopPropagation();
 			this.setState({
 				Voldisplay:'block'
 			})
-		else{
-			this.setState({
-				Voldisplay:'none'
-			})
-		}
+			document.getElementById('maincontent')
+			.addEventListener('click',this.handleVolhidden.bind(this));
+		}	
+		else
+			this.handleVolhidden();
 	}
 
-	handleListButtonClick(){
+	handleVolhidden(){
+		this.setState({
+			Voldisplay:'none'
+		})
+	}
+
+	handleListhidden(){
 		let dispatch = this.props.dispatch;
-		if(this.state.listvisible === 'hidden')
+		dispatch(songlistclose())
+	}
+
+	handleListButtonClick(e){
+		let dispatch = this.props.dispatch;
+		if(this.state.listvisible === 'hidden'){
 			dispatch(songlistopen())
+			document.getElementById('maincontent')
+			.addEventListener('click',this.handleListhidden.bind(this))
+		}
 		else
 			dispatch(songlistclose())
-
 	}
 
 	componentDidMount(){
@@ -1002,6 +1015,10 @@ class MusicBarMaintain extends Component{
 
 	componentWillUnmount(){
 		clearInterval(this.timeId)
+		document.getElementById('maincontent')
+		.removeEventListener('click',this.handleListhidden);
+		document.getElementById('maincontent')
+		.removeEventListener('click',this.handleVolhidden)
 	}
 
 	musicBarLength(){
@@ -1090,8 +1107,6 @@ class MusicBarMaintain extends Component{
 				listvisible:nextProps.songliststatus
 			})
 	}
-
-
 
 	render(){
 		return(
