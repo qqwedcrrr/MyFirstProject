@@ -974,24 +974,23 @@ class MusicBarMaintain extends Component{
 
 	handleVolClick(e){
 		if(this.state.Voldisplay === 'none'){
-			e.stopPropagation();
 			this.setState({
 				Voldisplay:'block'
 			})
 			document.getElementById('maincontent')
-			.addEventListener('click',this.handleVolhidden.bind(this));
+			.addEventListener('click',this.handleVolhidden);
 		}	
 		else
 			this.handleVolhidden();
 	}
 
-	handleVolhidden(){
+	handleVolhidden = (e) => {
 		this.setState({
 			Voldisplay:'none'
 		})
 	}
 
-	handleListhidden(){
+	handleListhidden = (e) =>{
 		let dispatch = this.props.dispatch;
 		dispatch(songlistclose())
 	}
@@ -1001,7 +1000,7 @@ class MusicBarMaintain extends Component{
 		if(this.state.listvisible === 'hidden'){
 			dispatch(songlistopen())
 			document.getElementById('maincontent')
-			.addEventListener('click',this.handleListhidden.bind(this))
+			.addEventListener('click',this.handleListhidden)
 		}
 		else
 			dispatch(songlistclose())
@@ -1385,7 +1384,8 @@ class MBListBody extends Component{
 			scrollbarheight:260,
 			scrollbar1scroll:0
 		}
-		this.handleScroll = this.handleScroll.bind(this)
+		this.handleScroll = this.handleScroll.bind(this);
+ 		this.handleOnMouseDown = this.handleOnMouseDown.bind(this)
 	}
 
 	handleScroll(e){	
@@ -1409,6 +1409,9 @@ class MBListBody extends Component{
 		document.onmouseout = e =>{		
 			document.onwheel = null;
 		}
+	}
+
+	handleOnMouseDown(e){
 		
 	}
 
@@ -1437,7 +1440,7 @@ class MBListBody extends Component{
 					</ul>
 				</div>
 				<div className="MB-listscrollbar1">
-					<span className="MB-scrollbar1button" ref="scrollbar1" style={{height:this.state.scrollbarheight,top:this.state.scrollbar1scroll}}></span>
+					<span className="MB-scrollbar1button" onMouseDown={this.handleOnMouseDown} ref="scrollbar1" style={{height:this.state.scrollbarheight,top:this.state.scrollbar1scroll}}></span>
 				</div>
 				<div className="MB-listpart2bg"></div>
 				<MBLyrics />
