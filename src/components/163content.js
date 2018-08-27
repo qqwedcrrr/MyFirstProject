@@ -984,13 +984,13 @@ class MusicBarMaintain extends Component{
 			this.handleVolhidden();
 	}
 
-	handleVolhidden = (e) => {
+	handleVolhidden = () => {
 		this.setState({
 			Voldisplay:'none'
 		})
 	}
 
-	handleListhidden = (e) =>{
+	handleListhidden = () =>{
 		let dispatch = this.props.dispatch;
 		dispatch(songlistclose())
 	}
