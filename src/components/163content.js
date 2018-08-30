@@ -5,8 +5,8 @@ import { mapcurrentTime,store } from '../store/store'
 import { processdrop,volumedrag,songclick,songlistclose,songlistopen } from './../action/action'
 
 
-//const url = 'https://alexthrone.top:3389';
-const url = 'http://localhost:3001'
+const url = 'https://alexthrone.top:3389';
+//const url = 'http://localhost:3001'
 let nowadate = new Date();
 nowadate = nowadate.getTime();
 let i = 0;
@@ -808,6 +808,7 @@ class MusicBarMaintain extends Component{
 			iteminfo:[{
 					name:'',
 					singername:'',
+					songid:'',
 					url:'',
 					iconUrl:''
 				}],
@@ -842,7 +843,7 @@ class MusicBarMaintain extends Component{
 
 	componentWillMount(){
 		let iteminfo = []
-		fetchPicture('/playlist/detail?id=84593826').then(res =>{
+		fetchPicture('/playlist/detail?id=2278767768').then(res =>{
 			let musiclist = res.playlist.tracks
 			for(let i = 0;i<musiclist.length;i++){
 				let time = Math.floor(musiclist[i].dt/1000)
@@ -850,7 +851,7 @@ class MusicBarMaintain extends Component{
 					name:musiclist[i].name,
 					singername:musiclist[i].ar[0].name,
 					id:i,
-					url:'http://music.163.com/song/media/outer/url?id='+ musiclist[i].id +'.mp3',
+					songid:musiclist[i].id,
 					iconUrl:musiclist[i].al.picUrl,
 					min:this.numfix(parseInt(parseInt(time)/60),2),
 					sec:this.numfix(parseInt(time)%60,2)
@@ -984,7 +985,7 @@ class MusicBarMaintain extends Component{
 			this.handleVolhidden();
 	}
 
-	handleVolhidden = () => {
+	handleVolhidden = () =>{
 		this.setState({
 			Voldisplay:'none'
 		})
@@ -1079,7 +1080,6 @@ class MusicBarMaintain extends Component{
 				console.log('err')
 		}
 		
-		
 	}
 
 	componentWillReceiveProps(nextProps){
@@ -1114,7 +1114,7 @@ class MusicBarMaintain extends Component{
 					<a hidefocus="true" className="MB-btn MB-before" onClick={this.handlePastClick}></a>
 					<a hidefocus="true" className={this.state.status === 'play' ? "MB-btn MB-pause" : "MB-btn MB-play"} onClick={this.handlePlayClick} ></a>
 					<a hidefocus="true" className="MB-btn MB-next" onClick={this.handleNextClick}></a>
-					<MusicBarListContainer songinfo={this.state.iteminfo}  visibility={this.state.listvisible} />
+					<MusicBarListContainer songinfo={this.state.iteminfo} id={this.state.id} passedtime={this.state.passedtime} visibility={this.state.listvisible} />
 				</div>
 				<div className="MB-icon">
 					<img src={this.state.iteminfo[this.state.id] ? this.state.iteminfo[this.state.id].iconUrl: ''} alt="" width="34" height="35"/>
@@ -1125,7 +1125,7 @@ class MusicBarMaintain extends Component{
 					<MusicBarControl info={this.state.iteminfo[this.state.id]} />
 					<MusicBar currentTime={this.state.currentTime} bufferedTime={this.state.bufferedTime} targetTime={this.state.targetTime} />
 				</div>
-				<audio onEnded={this.handleEnded} src={this.state.iteminfo[this.state.id].url}  ref="audio">
+				<audio onEnded={this.handleEnded} src={`http://music.163.com/song/media/outer/url?id=${this.state.iteminfo[this.state.id].songid}.mp3`}  ref="audio">
 					</audio>
 				<div style={{position:'relative', marginTop:'30px',float:'left',minWidth:'80px'}}>
 					<span className="MB-passedtime">
@@ -1184,7 +1184,7 @@ class MusicBarListContainer extends Component{
 	render() {
 		return (
 			<div style={{visibility:this.state.visibility}}>
-				<MusicBarList songinfo={this.state.songinfo} />
+				<MusicBarList passedtime={this.props.passedtime} id={this.props.id} songinfo={this.state.songinfo} />
 			</div>
 		);
 	}
@@ -1282,7 +1282,6 @@ class MusicBar extends Component{
 		}
 	}
 
-
 	render(){
 		return(
 			<div onClick={this.handleBarClick} ref="musicbar" className="MB-musicbar">
@@ -1339,17 +1338,35 @@ class VolumeBar extends Component{
 	}
 }
 
-const MusicBarList = songinfo => (
+const MusicBarList = ({songinfo,passedtime,id}) => (
 	<div className="MB-listcontainer">
-		<MBListHeader {...songinfo} />
-		<MBListBody  {...songinfo} />
+		<MBListHeader songinfo={songinfo} id={id} />
+		<MBListBody passedtime={passedtime} id={id} songinfo={songinfo} />
 	</div>
 )
+
+
 
 
 class MBListHeader extends Component{
 	constructor(props){
 		super(props)
+		this.state={
+			songinfo:[],
+			songname:''
+		}
+	}
+
+	componentWillReceiveProps(nextProps){
+		if((nextProps.songinfo)&&(nextProps.songinfo !== this.props.songinfo)){
+			this.setState({
+				songinfo:nextProps.songinfo
+			})
+		}
+		if((nextProps.id !== undefined)&&(nextProps.id !== this.props.id))
+			this.setState({
+				songname:this.state.songinfo[nextProps.id].name
+			})
 	}
 
 	render() {
@@ -1357,7 +1374,7 @@ class MBListHeader extends Component{
 			<div className="MB-listheader">
 					<div style={{position:'relative',height:'41px'}}>
 						<div className="MB-headerpart1">
-							<h4 className="MB-part1">播放列表({this.props.songinfo.length !== 1 ? this.props.songinfo.length:0})</h4>	
+							<h4 className="MB-part1">播放列表({this.state.songinfo.length >= 1 ? this.state.songinfo.length:0})</h4>	
 						</div>
 						<a hidefocus="true" className="MB-part2">
 						<span className="MB-part2icon"></span>
@@ -1368,7 +1385,7 @@ class MBListHeader extends Component{
 						<span className="MB-part3icon"></span>
 						清除
 						</a>
-						<p className="MB-part4">asdqadads</p>
+						<p className="MB-part4">{this.state.songname}</p>
 						<span onClick={e =>{store.dispatch(songlistclose())}} className="MB-part4icon"></span>
 					</div>
 			</div>
@@ -1392,7 +1409,7 @@ class MBListBody extends Component{
 		document.onwheel = e =>{
 			let songlist = this.refs.songlist;
 			let scrollbar1 = this.refs.scrollbar1;
-			let scrolldistance = 10;
+			let scrolldistance = 20;
 			let scrollbardistance = scrolldistance*(260-scrollbar1.offsetHeight)/(songlist.offsetHeight-260)
 			if(e.deltaY>0){
 			this.setState({
@@ -1423,7 +1440,7 @@ class MBListBody extends Component{
 				scrollbarheight:scrollbarheight
 			})
 		}
-	}
+	} 
 
 	render() {
 		return (
@@ -1443,7 +1460,7 @@ class MBListBody extends Component{
 					<span className="MB-scrollbar1button" onMouseDown={this.handleOnMouseDown} ref="scrollbar1" style={{height:this.state.scrollbarheight,top:this.state.scrollbar1scroll}}></span>
 				</div>
 				<div className="MB-listpart2bg"></div>
-				<MBLyrics />
+				<MBLyrics {...this.props} />
 				<div className="MB-listscrollbar2">
 					<span className="MB-scrollbar2button"></span>
 				</div>
@@ -1484,9 +1501,39 @@ const MBListItem = ({name,singername,id,min,sec}) => (
 class MBLyrics extends Component{
 	constructor(props){
 		super(props)
+		this.state={
+			iconshow:false,
+			lyric:"请欣赏纯音乐"
+		}
+	}
+
+	shouldComponentUpdate(){
+		return false
+	}
+
+	componentWillReceiveProps(nextProps){
+		// console.log(nextProps)
+		// if((nextProps.songinfo.length > 0)&&(nextProps.id !== this.props.id)){
+		// 	let songid = nextProps.songinfo[nextProps.id].songid;
+		// 	console.log(songid)
+		// 	fetchPicture(`/lyric?id=${songid}`).then(res =>{
+		// 		console.log(res)
+		// 		if(res.nolyric === false)
+		// 			this.setState({
+		// 				lyric:"请欣赏纯音乐"
+		// 			})
+		// 		else{
+		// 			let lyric = res.lrc.lyric.split('\n');
+		// 			let tlyric = res.tlyric.lyric.split('\n')
+		// 			console.log(lyric,tlyric)
+		// 		}
+
+		// 	})
+		// }
 	}
 
 	render() {
+		console.log(this.state.lyric)
 		return (
 			<div>
 				<div className="MB-ask">
@@ -1496,15 +1543,15 @@ class MBLyrics extends Component{
 					<a hidefocus="true" className="">报错</a>
 				</div>
 				<div className="MB-lyrics">
-					<Lyricsitem />
+					<Lyricsitem lyric={this.state.lyric} />
 				</div>
 			</div>
 		);
 	}
 }
 
-const Lyricsitem = () => (
-	<p className="MB-lyricsitem">asdadaa</p>
+const Lyricsitem = ({lyric}) => (
+	<p className="MB-lyricsitem">{lyric}</p>
 )
 
 
