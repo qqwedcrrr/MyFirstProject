@@ -47,9 +47,9 @@ import './index.css'
 // }
 const App = () =>(
 	<div >
-   				<Header />
-    			<Main style={{clear:'both'}} />
-  			</div>
+   		<Header />
+    	<Main style={{clear:'both'}} />
+  	</div>
 )
 
 
