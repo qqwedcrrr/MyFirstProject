@@ -1512,24 +1512,24 @@ class MBLyrics extends Component{
 	}
 
 	componentWillReceiveProps(nextProps){
-		// console.log(nextProps)
-		// if((nextProps.songinfo.length > 0)&&(nextProps.id !== this.props.id)){
-		// 	let songid = nextProps.songinfo[nextProps.id].songid;
-		// 	console.log(songid)
-		// 	fetchPicture(`/lyric?id=${songid}`).then(res =>{
-		// 		console.log(res)
-		// 		if(res.nolyric === false)
-		// 			this.setState({
-		// 				lyric:"请欣赏纯音乐"
-		// 			})
-		// 		else{
-		// 			let lyric = res.lrc.lyric.split('\n');
-		// 			let tlyric = res.tlyric.lyric.split('\n')
-		// 			console.log(lyric,tlyric)
-		// 		}
+		console.log(nextProps)
+		if((nextProps.songinfo.length > 0)&&(nextProps.id !== this.props.id)){
+			let songid = nextProps.songinfo[nextProps.id].songid;
+			console.log(songid)
+			fetchPicture(`/lyric?id=${songid}`).then(res =>{
+				console.log(res)
+				if(res.nolyric === false)
+					this.setState({
+						lyric:"请欣赏纯音乐"
+					})
+				else{
+					let lyric = res.lrc.lyric.split('\n');
+					let tlyric = res.tlyric.lyric.split('\n')
+					console.log(lyric,tlyric)
+				}
 
-		// 	})
-		// }
+			})
+		}
 	}
 
 	render() {

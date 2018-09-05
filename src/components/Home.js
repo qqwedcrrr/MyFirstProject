@@ -83,7 +83,7 @@ const Icoord = [
 	},
 	{
 		x:0,
-		y:30
+		y:25
 	},
 	{
 		x:0,
@@ -123,27 +123,78 @@ const Tcoord = [
 const Acoord = [
 	{
 		x:20,
-		y:30
+		y:60,
+	},
+	{	
+		count:'bezierCurveTo',
+		c1x:20,
+		c1y:0,
+		c2x:120,
+		c2y:0,
+		ex:120,
+		ey:60
 	},
 	{
-		c:'bezierCurveTo',
-		x:70,
-		y:80,
+		x:130,
+		y:170,
 
 	},
 	{
-		x:35,
-		y:0,
-		m:true
+		count:'arc',
+		mx:730,
+		my:0,
+		r:622,
+		angle1:161,
+		angle2:165
 	},
 	{
-		x:35,
-		y:240,
+		m:true,
+		x:120,
+		y:80
 	},
 	{
-		x:65,
-		y:240,
+		x:80,
+		y:90
+	},
+	{	
+		count:'bezierCurveTo',
+		c1x:-5,
+		c1y:100,
+		c2x:-5,
+		c2y:240,
+		ex:100,
+		ey:180
+	},
+	{
+		x:130,
+		y:165
 	}
+]
+
+const Ocoord = [
+	{
+		x:20,
+		y:120
+	},
+	{	
+		count:'bezierCurveTo',
+		c1x:20,
+		c1y:0,
+		c2x:140,
+		c2y:0,
+		ex:140,
+		ey:120
+	},
+	{	
+		count:'bezierCurveTo',
+		c1x:140,
+		c1y:240,
+		c2x:20,
+		c2y:240,
+		ex:20,
+		ey:120
+	}
+
 ]
 
 class HomeLogo extends Component{
@@ -158,6 +209,33 @@ class HomeLogo extends Component{
 	drawBackground(){
 		let canvas1 = this.refs.canvas1;
 		let ctx = canvas1.getContext('2d')
+		let recoord = [
+			{
+				coord:Zcoord,
+				x:40,
+				y:10
+			},
+			{
+				coord:Icoord,
+				x:260,
+				y:14
+			},
+			{
+				coord:Tcoord,
+				x:300,
+				y:10
+			},
+			{
+				coord:Acoord,
+				x:400,
+				y:50
+			},
+			{
+				coord:Ocoord,
+				x:560,
+				y:50
+			},
+		]
 		let offscreenCanvas = document.createElement('canvas')
 		let offCtx = offscreenCanvas.getContext('2d')
 		if(offscreenCanvas.width  < window.innerWidth){
@@ -169,36 +247,46 @@ class HomeLogo extends Component{
             offscreenCanvas.height = window.innerHeight;
         }
 		// offCtx.beginPath();
-		offCtx.lineJoin="round"
+		offCtx.lineCap="round"
 		offCtx.lineWidth="20"
 		var gradient=offCtx.createLinearGradient(0,0,offscreenCanvas.width,offscreenCanvas.height);
 		gradient.addColorStop("0","white");
-		gradient.addColorStop("0.5","blue");
-		gradient.addColorStop("1.0","black");
+		gradient.addColorStop("0.15","blue");
+		gradient.addColorStop("0.3","red");
 		offCtx.strokeStyle=gradient;
-		this.drawLetter(Zcoord,offCtx,40,10);
-		this.drawLetter(Icoord,offCtx,260,20);
-		this.drawLetter(Tcoord,offCtx,300,10)
-
-		
+		let i = 0
+		this.timeId = setInterval(then =>{
+			console.log(i,recoord)
+			if(i===5)
+				clearInterval(this.timeId);
+			else{
+				this.drawLetter(recoord[i].coord,offCtx,recoord[i].x,recoord[i].y)
+				ctx.drawImage(offscreenCanvas,0,0,offscreenCanvas.width,offscreenCanvas.height)
+				i+=1
+			}
+		},500)
 		// offCtx.font="80px Georgia";
 		// offCtx.fillText("Zitao",100,250);
-		
-
-		ctx.drawImage(offscreenCanvas,0,0,offscreenCanvas.width,offscreenCanvas.height)
 	}
 
 	drawLetter(coord,ctx,baseX,baseY){
 		try{
 			ctx.beginPath();
-			console.log(coord)
 			ctx.moveTo(coord[0].x+baseX,coord[0].y+baseY);
 			for(let i = 1; i<coord.length; i++){
-				if(!coord[i].hasOwnProperty('m'))
+				if(!coord[i].hasOwnProperty('m') && !coord[i].hasOwnProperty('count'))
 					ctx.lineTo(coord[i].x+baseX,coord[i].y+baseY);
-				if(coord[i].hasOwnProperty('c')){
-					swich(coord[i].c){
-						case 
+				if(coord[i].hasOwnProperty('count')){
+					switch(coord[i].count){
+						case 'bezierCurveTo':
+						console.log(coord[i])
+							ctx.bezierCurveTo(coord[i].c1x+baseX,coord[i].c1y+baseY,coord[i].c2x+baseX,coord[i].c2y+baseY,coord[i].ex+baseX,coord[i].ey+baseY);
+							break;
+						case 'arc':
+							ctx.arc(coord[i].mx+baseX,coord[i].my+baseY,coord[i].r,coord[i].angle2*0.1*Math.PI/18,coord[i].angle1*0.1*Math.PI/18,true)
+							break;
+						default:
+							console.log('err in drawLetterr')
 					}
 				}
 				else{
