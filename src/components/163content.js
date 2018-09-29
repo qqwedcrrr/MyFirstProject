@@ -328,11 +328,10 @@ const LCcontentItem = ({item}) =>(
 const RCloginConfirm = () => (
 	<div className="RCloginconf">
 		<div style={{margin:'20px 20px'}}>
-			<p style={{width:'205px', lineHeight:'22px',color:'#666'}}>登录网易云音乐，可以享受无限收藏的乐趣，并且无限同步到手机</p>
+			<p style={{width:'205px', lineHeight:'22px',color:'#666',display:'inline-block'}}>登录网易云音乐，可以享受无限收藏的乐趣，并且无限同步到手机</p>
 		</div>
 		<a className="lgcf-btn">用户登录</a>
 	</div>
-
 )
 
 const Rcontent = () =>(
