@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import './componetsCss/163content.css'
 import { connect } from 'react-redux'
-import { mapcurrentTime,store } from '../store/store'
-import { processdrop,volumedrag,songclick,songlistclose,songlistopen } from './../action/action'
+import { mapcurrentTime,mapLoginPopOut,store } from '../store/store'
+import { processdrop,volumedrag,songclick,songlistclose,songlistopen,login} from './../action/action'
 
 
-const url = 'https://alexthrone.top:3389';
-//const url = 'http://localhost:3001'
+//const url = 'https://alexthrone.top:3389';
+const url = 'http://localhost:3001'
 let nowadate = new Date();
 nowadate = nowadate.getTime();
 let i = 0;
@@ -53,6 +53,8 @@ const fadeOver = {
 	transition:'none',
 	opacity:'1'
 }
+
+
 
 async function fetchPicture(newurl){
 	try{
@@ -330,7 +332,7 @@ const RCloginConfirm = () => (
 		<div style={{margin:'20px 20px'}}>
 			<p style={{width:'205px', lineHeight:'22px',color:'#666',display:'inline-block'}}>登录网易云音乐，可以享受无限收藏的乐趣，并且无限同步到手机</p>
 		</div>
-		<a className="lgcf-btn">用户登录</a>
+		<a className="lgcf-btn" onClick={()=>{store.dispatch(login())}}>用户登录</a>
 	</div>
 )
 
@@ -816,7 +818,7 @@ class MusicBarMaintain extends Component{
 			waysinfo:'循环',
 			display:'none',
 			listvisible:'hidden',
-			Voldisplay:'none',
+			voldisplay:'none',
 			id:0,
 			currentTime:0,
 			bufferedTime:0,
@@ -973,9 +975,9 @@ class MusicBarMaintain extends Component{
 	}
 
 	handleVolClick(e){
-		if(this.state.Voldisplay === 'none'){
+		if(this.state.voldisplay === 'none'){
 			this.setState({
-				Voldisplay:'block'
+				voldisplay:'block'
 			})
 			document.getElementById('maincontent')
 			.addEventListener('click',this.handleVolhidden);
@@ -986,7 +988,7 @@ class MusicBarMaintain extends Component{
 
 	handleVolhidden = () =>{
 		this.setState({
-			Voldisplay:'none'
+			voldisplay:'none'
 		})
 	}
 
@@ -1036,7 +1038,6 @@ class MusicBarMaintain extends Component{
 				min:this.numfix(parseInt(parseInt(audio.duration)/60),2),
 				sec:this.numfix(parseInt(audio.duration)%60,2)
 			}
-
 		})
 	}
 
@@ -1078,7 +1079,6 @@ class MusicBarMaintain extends Component{
 			default:
 				console.log('err')
 		}
-		
 	}
 
 	componentWillReceiveProps(nextProps){
@@ -1142,7 +1142,7 @@ class MusicBarMaintain extends Component{
 							<span></span>
 							<a hidefocus="true" onClick={this.handleListButtonClick} className="MB-listbutton" >{this.state.iteminfo.length}</a>
 						</span>
-						<VolumeBar visible={this.state.Voldisplay} />
+						<VolumeBar visible={this.state.voldisplay} />
 				</div>
 				</div>
 			</div>

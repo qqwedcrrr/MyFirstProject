@@ -59,3 +59,8 @@ export const songlistopen = () =>{
 		type:'songlist_open'
 	}
 }
+export const login = () =>{
+	return{
+		type:'login'
+	}
+}

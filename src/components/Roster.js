@@ -3,12 +3,12 @@ import usericon from './../resource/usericon.jpg'
 import './componetsCss/Roster.css'
 import NavBar2 from './common'
 import { connect } from 'react-redux'
-import {mapStateToProps,mapDispatchToProps} from '../store/store'
+import {mapStateToProps,mapDispatchToProps,mapLoginPopOut} from '../store/store'
 import { Viewpagecontent, Maincontent, MusicBarContain} from './163content'
 
 const top = {
 	position:'relative',
-	zIndex:'1000',
+	zIndex:'25',
 	boxSizing:'border-box',
 	backgroundColor:'#242424',
 }
@@ -106,12 +106,54 @@ class Roster extends Component {
 						<Viewpagecontent />		
 						<Maincontent />			
 					</div>
+					
 				</div>	
 				<MusicBarContain />	
+				<LoginForm />
 			</div>				
 		)
 	}
 }
+
+const fadeIn = {
+	transition:'opacity 0.8s ease-in 0s',
+	opacity:'1',
+	visibility:'visible'
+}
+const fadeOut = {
+	transition:'opacity 0.8s ease-out 0s',
+	opacity:'0.2',
+	visibility:'hidden'
+}
+const fadeOver = {
+	transition:'none',
+	opacity:'1'
+}
+
+let LoginForm = ({login}) => (
+	<div className="login-bg" style={login ? fadeIn : fadeOut}>
+		<div className="login-container">
+			<div style={{display:'table-cell',textAlign:'center'}}>
+				<form style={{width:'250px', display:'inline-block'}}>
+					<div className="login-input marginTop50">
+						<label htmlFor="username">用户名</label>
+						<input type="text"/>
+					</div>
+					<div className="login-input">
+						<label htmlFor="password">密码</label>
+						<input type="password"/>
+					</div>
+					<div  className="login-input">
+						<button type="submit" className="login-btn">登录</button>
+					</div>
+				</form>
+			</div>	
+		</div>
+	</div>
+)
+
+LoginForm = connect(mapLoginPopOut)(LoginForm)
+
 // class App extends Component{
 // 	constructor(props){
 // 		super(props)

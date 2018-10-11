@@ -26,6 +26,12 @@ function mapStateToProps(state) {
 		chooseid: state.navchooser
 	}
 }
+
+function mapLoginPopOut(state){
+	return{
+		login:state.login.login
+	}
+}
 // Map Redux actions to component props
 function mapDispatchToProps(dispatch) {
 	return {
@@ -35,4 +41,6 @@ function mapDispatchToProps(dispatch) {
 	}
 }
 
-export {store, mapDispatchToProps, mapStateToProps ,mapcurrentTime}
+
+
+export {store, mapDispatchToProps, mapStateToProps ,mapcurrentTime,mapLoginPopOut}

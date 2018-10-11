@@ -100,4 +100,13 @@ function songlistclose(state={liststatus:'hidden'},action){
 	}	
 }
 
-export default {counter, todolist,navchooser, processclick,volumeclick,songclick,songlistclose}
+function login(state={login:false},action){
+	if(action.type === 'login')
+		return{
+			login:true
+		}
+	else
+		return state
+}
+
+export default {counter, todolist,navchooser, processclick,volumeclick,songclick,songlistclose,login}
