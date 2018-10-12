@@ -80,7 +80,7 @@ class Viewpage extends Component{
 		this.handleRightClick = this.handleRightClick.bind(this)
 	};
 
-	componentWillMount() {
+	componentDidMount() {
 		let viewPage = fetchPicture('/banner').then(res =>{
 			banner = res.banners;
 			maxlength = res.banners.length-1;
@@ -96,6 +96,8 @@ class Viewpage extends Component{
 				flag:1
 			})
 		});
+		this.timeId = setInterval(
+			i=>this.showfade(), 1000)
 	}
 
 	handlePointClick(id){
@@ -128,11 +130,6 @@ class Viewpage extends Component{
 		this.showfade()
 		})
 	}
-
-	componentDidMount() {
-		this.timeId = setInterval(
-		i=>this.showfade(), 1000)
-  	}
 
     componentWillUnmount() {
     	clearInterval(this.timeId)
@@ -255,7 +252,7 @@ class Lcontent extends Component{
 		}
 	};
 
-	componentWillMount(){
+	componentDidMount(){
 		fetchPicture(`/top/playlist?limit=8&order=hot?timestamp=${nowadate}`).then(res =>{
 			let playlist = res.playlists;
 			let content = [];
@@ -368,7 +365,7 @@ class RCsinger extends Component{
 		}
 	};
 
-	componentWillMount(){
+	componentDidMount(){
 		let singer =[]
 		fetchPicture('/artist/list?cat=5001&limit=5').then(res =>{	
 			for(let i = 0;i<res.artists.length;i++){
@@ -466,7 +463,7 @@ class Albumlist extends Component{
 		this.onTransitionEnd = this.onTransitionEnd.bind(this)
 	};
 
-	componentWillMount(){
+	componentDidMount(){
 		let Album =[]
 		let imgs = []
 		fetchPicture('/top/album?offset=0&limit=10').then(res =>{	
@@ -485,9 +482,6 @@ class Albumlist extends Component{
 				Album:Album
 			})
 		})
-	}
-
-	componentDidMount(){
 		setTimeout(this.setState({
 			display:'hidden'
 		}), 2000)
@@ -607,7 +601,7 @@ class Getsonglist extends Component{
 		}
 	};
 
-	componentWillMount(){
+	componentDidMount(){
 		let list1 = []
 		let list2 = []
 		let list3 = []
@@ -755,10 +749,6 @@ class MusicBarContain extends Component{
 		this.handleonMouseOut = this.handleonMouseOut.bind(this)
 	};
 
-	componentWillUnmount(){
-
-	}
-
 	handleonMouseOut(){
 		if(this.state.lock !== 'on')
 		this.setState({
@@ -842,8 +832,10 @@ class MusicBarMaintain extends Component{
 		this.handleListButtonClick = this.handleListButtonClick.bind(this)
 	};
 
-	componentWillMount(){
+	componentDidMount(){
 		let iteminfo = []
+		let audio = this.refs.audio
+		audio.volume = 0.5;
 		fetchPicture('/playlist/detail?id=2278767768').then(res =>{
 			let musiclist = res.playlist.tracks
 			for(let i = 0;i<musiclist.length;i++){
@@ -1006,12 +998,6 @@ class MusicBarMaintain extends Component{
 		}
 		else
 			dispatch(songlistclose())
-	}
-
-	componentDidMount(){
-		let audio = this.refs.audio
-		audio.volume = 0.5;
-		
 	}
 
 	componentWillUnmount(){

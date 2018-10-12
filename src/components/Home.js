@@ -256,7 +256,6 @@ class HomeLogo extends Component{
 		offCtx.strokeStyle=gradient;
 		let i = 0
 		this.timeId = setInterval(then =>{
-			console.log(i,recoord)
 			if(i===5)
 				clearInterval(this.timeId);
 			else{
