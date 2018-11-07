@@ -1,4 +1,4 @@
-import React,{Component} from 'react'
+import React, { Component } from 'react'
 
 
 
@@ -12,48 +12,52 @@ const Schedule = () => (
   </div>
 )
 
-// class Schedule extends Component{
-// 	constructor(props){
-// 		super(props)
-// 		this.state={
-// 			name:'',
-// 			singername:'bbb'
-// 		}
-// 		this.handleOnClick = this.handleOnClick.bind(this)
-// 	}
+class MouseTracking extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      x: 100,
+      y: 100
+    }
+    this.handleMouseMove = this.handleMouseMove.bind(this)
+  }
 
-// 	handleOnClick(e){
-// 		document.onclick = e =>{
-// 			console.log(this.state.singername)
-// 			this.setState({
-// 				singername:'123123'
-// 			})
-// 			console.log(this.state.singername)
-// 		}
-// 	}
-	
-// 	componentWillReceiveProps(nextProps){	
-// 		if(this.props.info.name !== nextProps.info.name || this.props.info.singername !== nextProps.info.singername){
-// 			this.setState({
-// 				name:nextProps.info.name,
-// 				singername:nextProps.info.singername
-// 			})
-// 		}
-			
-// 	}
+  handleMouseMove(e) {
+    this.setState({
+      x: e.clientX,
+      y: e.clientY
+    })
+  }
 
-// 	render(){
-// 		return(
-// 			<div onMouseDown={this.handleOnClick} className="MB-songinfo">
-// 				<a hidefocus="true" className="MB-songname">{this.state.name}</a>
-// 				<a hidefocus="true" className="MB-songmv"></a>
-// 				<span className="MB-restinfo">
-// 					<a hidefocus="true" className="MB-singername">{this.state.singername}</a>
-// 					<a hidefocus="true" className="MB-recommand"></a>
-// 				</span>
-// 			</div>
-// 		)
-// 	}
-// }
+  render() {
+    let { x, y } = { x: this.state.x, y: this.state.y }
+    return (
+      <div onMouseMove={this.handleMouseMove}
+        style={{
+          background: '#aa0000', width: '200px', height: '200px',
+          position: 'absolute', left: x - 100, top: y - 100
+        }}
+      >{this.props.render(this.state)}
+      </div>
+    )
+  }
+}
 
-export default Schedule
+const CatMouse = mouse => (
+  <div style={{
+    background: '#ddd000', width: '200px', height: '200px',
+    position: 'absolute', left: mouse.x, top: mouse.y
+  }}></div>
+)
+
+const Cat = () => {
+  return (
+    <div>
+      <MouseTracking render={mouse => (
+        <CatMouse mouse={mouse} />)} />
+    </div>
+  )
+}
+
+
+export default Cat
